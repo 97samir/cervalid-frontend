@@ -1,0 +1,294 @@
+/*
+|--------------------------------------------------------------------------
+| Verification
+*/
+
+.verification-page {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hero
+*/
+
+.verification-hero {
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #0d6efd, #4b8cff);
+
+  color: #fff;
+
+  padding: 3rem;
+}
+
+.verification-hero h1 {
+  font-weight: 700;
+}
+
+.verification-hero p {
+  opacity: 0.92;
+  margin-bottom: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Search Card
+*/
+
+.verification-search-card {
+  margin-top: -40px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.verification-search-card .card-body {
+  padding: 2rem;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Result
+*/
+
+.verification-result {
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  border: none;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Status Banner
+*/
+
+.verification-banner {
+  padding: 1.25rem 1.5rem;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 1rem;
+}
+
+.verification-banner-success {
+  background: #eafaf1;
+
+  color: #198754;
+}
+
+.verification-banner-warning {
+  background: #fff3cd;
+
+  color: #856404;
+}
+
+.verification-banner-danger {
+  background: #fdeaea;
+
+  color: #dc3545;
+}
+
+.verification-banner i {
+  font-size: 2rem;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Cards
+*/
+
+.verification-info-card {
+  border: none;
+
+  border-radius: 14px;
+
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.verification-info-card .card-header {
+  background: #fff;
+
+  font-weight: 600;
+
+  border-bottom: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Summary Items
+*/
+
+.verification-summary-item {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 0.85rem 0;
+
+  border-bottom: 1px solid #ececec;
+}
+
+.verification-summary-item:last-child {
+  border-bottom: none;
+}
+
+.verification-summary-label {
+  color: #6c757d;
+
+  font-size: 0.92rem;
+}
+
+.verification-summary-value {
+  font-weight: 600;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Verification Level
+*/
+
+.verification-level {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.verification-level-local {
+  background: #f8f9fa;
+  color: #495057;
+}
+
+.verification-level-hash {
+  background: #cff4fc;
+  color: #055160;
+}
+
+.verification-level-blockchain {
+  background: #d1e7dd;
+  color: #146c43;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hash
+*/
+
+.verification-hash {
+  word-break: break-all;
+  font-family: monospace;
+  font-size: 0.9rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+/*
+|--------------------------------------------------------------------------
+| History
+*/
+
+.verification-history-table td {
+  vertical-align: middle;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Empty
+*/
+
+.verification-empty {
+  padding: 4rem 1rem;
+
+  text-align: center;
+
+  color: #6c757d;
+}
+
+.verification-empty i {
+  font-size: 3rem;
+
+  margin-bottom: 1rem;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Responsive
+*/
+
+@media (max-width: 768px) {
+  .verification-hero {
+    padding: 2rem;
+  }
+
+  .verification-search-card {
+    margin-top: -20px;
+  }
+}
+
+
+/*
+| Result Header
+|--------------------------------------------------------------------------
+*/
+
+.verification-result-title{
+
+    font-weight:700;
+
+    margin-bottom:.5rem;
+}
+
+.verification-result-description{
+
+    color:#6c757d;
+
+    margin-bottom:2rem;
+}
+
+/*
+| Transition
+|--------------------------------------------------------------------------
+*/
+
+.verification-result-wrapper{
+
+    animation: verificationFade .45s ease;
+
+}
+
+@keyframes verificationFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

@@ -1,0 +1,211 @@
+
+C:\WORKSPACE_INTELLIJ IDEA\CERVALID PLATAFORMA WEB\FRONTEND\SRC
+|   App.css
+|   App.jsx
+|   index.css
+|   main.jsx
+|   
++---app
+|   +---providers
+|   |       AuthProvider.jsx
+|   |       
+|   +---routes
+|   |       AppRouter.jsx
+|   |       InstitutionGuard.jsx
+|   |       PrivateRoute.jsx
+|   |       RoleGuard.jsx
+|   |       
+|   \---store
+|       \---auth
+|               AuthContext.js
+|               AuthStoreProvider.jsx
+|               useAuthStore.js
+|               
++---assets
+|   |   react.svg
+|   |   
+|   \---img
++---core
+|   +---api
+|   |       apiClient.js
+|   |       blockchainApi.js
+|   |       
+|   +---config
+|   |       apiConfig.js
+|   |       env.js
+|   |       
+|   +---hooks
+|   |       useInstitutionContext.js
+|   |       
+|   +---security
+|   |       authStrategy.js
+|   |       jwtDecoder.js
+|   |       tokenManager.js
+|   |       useRoleRedirect.js
+|   |       
+|   \---utils
+|           alerts.js
+|           
++---features
+|   +---auth
+|   |   +---api
+|   |   |       authApi.js
+|   |   |       
+|   |   +---components
+|   |   |       ActivateAccountForm.jsx
+|   |   |       LoginForm.jsx
+|   |   |       
+|   |   +---hooks
+|   |   \---pages
+|   |           ActivateAccountPage.jsx
+|   |           LoginPage.jsx
+|   |           SelectInstitutionPage.jsx
+|   |           
+|   +---institution
+|   |   +---api
+|   |   |       institutionApi.js
+|   |   |       
+|   |   +---components
+|   |   |       DashboardStats.jsx
+|   |   |       UserInfoCard.jsx
+|   |   |       
+|   |   \---pages
+|   |           InstitutionDashboardPage.jsx
+|   |           InstitutionProfilePage.jsx
+|   |           
+|   +---institution-request
+|   |   +---api
+|   |   |       institutionRequestApi.js
+|   |   |       
+|   |   +---components
+|   |   |       ApproveInstitutionModal.jsx
+|   |   |       DigitalPresenceFields.jsx
+|   |   |       InstitutionRequestForm.jsx
+|   |   |       InstitutionRequestTable.jsx
+|   |   |       RejectInstitutionModal.jsx
+|   |   |       
+|   |   \---pages
+|   |           InstitutionRequestAdminPage.jsx
+|   |           InstitutionRequestPage.jsx
+|   |           
+|   +---invitations
+|   |   +---api
+|   |   |       invitationsApi.js
+|   |   |       
+|   |   +---components
+|   |   |       InvitationsTable.jsx
+|   |   |       InviteUserForm.jsx
+|   |   |       
+|   |   \---pages
+|   |           InstitutionInvitationsPage.jsx
+|   |           InviteUserPage.jsx
+|   |           
+|   +---public
+|   |   +---components
+|   |   |       PublicCertificateHeader.jsx
+|   |   |       PublicTraceability.jsx
+|   |   |       PublicValidationBadge.jsx
+|   |   |       PublicVerifyButton.jsx
+|   |   |       
+|   |   \---pages
+|   |           PublicCertificatePage.jsx
+|   |           
+|   +---recruiter
+|   |   \---pages
+|   |           RecruiterVerifyPage.jsx
+|   |           
+|   +---student
+|   |   +---api
+|   |   |       studentApi.js
+|   |   |       
+|   |   +---components
+|   |   |   +---certificates
+|   |   |   |       CertificateActions.jsx
+|   |   |   |       CertificateCard.jsx
+|   |   |   |       CertificateHeader.jsx
+|   |   |   |       CertificatesList.jsx
+|   |   |   |       CertificateTimeline.jsx
+|   |   |   |       CertificateValidation.jsx
+|   |   |   |       
+|   |   |   +---dashboard
+|   |   |   |       QuickActions.jsx
+|   |   |   |       QuickVerify.jsx
+|   |   |   |       RecentCertificates.jsx
+|   |   |   |       SummaryCards.jsx
+|   |   |   |       TraceabilityPreview.jsx
+|   |   |   |       
+|   |   |   +---traceability
+|   |   |   |       Timeline.jsx
+|   |   |   |       Timeline.module.css
+|   |   |   |       TimelineItem.jsx
+|   |   |   |       
+|   |   |   \---verify
+|   |   |           VerifyForm.jsx
+|   |   |           VerifyResult.jsx
+|   |   |           
+|   |   +---hooks
+|   |   |       useStudentCertificates.js
+|   |   |       useVerifyDocument.js
+|   |   |       
+|   |   +---mock
+|   |   |       certificates.mock.js
+|   |   |       
+|   |   \---pages
+|   |           StudentCertificateDetailPage.jsx
+|   |           StudentCertificatesPage.jsx
+|   |           StudentDashboardPage.jsx
+|   |           StudentHistoryPage.jsx
+|   |           StudentProfilePage.jsx
+|   |           StudentVerifyPage.jsx
+|   |           
+|   +---superadmin
+|   |   +---api
+|   |   |       superAdminApi.js
+|   |   |       
+|   |   +---components
+|   |   |       AdminDashboardStats.jsx
+|   |   |       AdminUserInfoCard.jsx
+|   |   |       InstitutionListCard.jsx
+|   |   |       
+|   |   +---institutions
+|   |   |   +---api
+|   |   |   |       institutionApi.js
+|   |   |   |       
+|   |   |   +---components
+|   |   |   |       InstitutionsTable.jsx
+|   |   |   |       InstitutionStatusToggle.jsx
+|   |   |   |       
+|   |   |   \---pages
+|   |   |           InstitutionsPage.jsx
+|   |   |           
+|   |   \---pages
+|   |           AdminDashboardSection.jsx
+|   |           SuperAdminDashboardPage.jsx
+|   |           
+|   \---users
+|       +---api
+|       |       userApi.js
+|       |       
+|       +---components
+|       |       UserRoleSelect.jsx
+|       |       UsersTable.jsx
+|       |       UserStatusToggle.jsx
+|       |       
+|       \---pages
+|               InstitutionUsersPage.jsx
+|               
++---pages
+|       AboutPage.jsx
+|       HomePage.jsx
+|       TestApiPage.jsx
+|       UnauthorizedPage.jsx
+|       
++---services
+\---shared
+    +---components
+    |       Navbar.jsx
+    |       ProtectedLayout.jsx
+    |       Sidebar.jsx
+    |       
+    +---layouts
+    \---utils

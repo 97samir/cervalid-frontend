@@ -1,0 +1,31 @@
+/* PAGE*/
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: var(--color-muted);
+}
+
+/* CARDS */
+.section-card {
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+/* BADGES */
+.badge-soft {
+    border-radius: 999px;
+    padding: 0.5rem 0.85rem;
+}
+
+/* TRANSITIONS */
+.transition {
+    transition: var(--transition);
+}

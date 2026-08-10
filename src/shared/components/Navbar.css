@@ -1,0 +1,62 @@
+/* NAVBAR */
+.navbar-custom {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    height: 72px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 0 2rem; */
+    padding: 1rem 2rem;
+}
+
+/* IZQUIERDA */
+.navbar-title h5 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.navbar-title small {
+    color: #6b7280;
+}
+
+/* USUARIO */
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.navbar-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.navbar-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.navbar-user-info strong {
+    color: #111827;
+    font-size: 0.95rem;
+}
+
+.navbar-user-info span {
+    color: #6b7280;
+    font-size: 0.82rem;
+}
