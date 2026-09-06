@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
+
 import { useCertificates } from "../hooks/useCertificates";
+
 import CertificateStatusBadge from "./CertificateStatusBadge";
 import CertificateTypeBadge from "./CertificateTypeBadge";
 
-export default function CertificateCard({ studentPublicId }) {
+import { formatDateTime } from "@/shared/utils/dateUtils";
 
+export default function CertificateCard({ studentPublicId }) {
+    
     const {
         data: certificates = [],
         isLoading,
@@ -32,7 +36,9 @@ export default function CertificateCard({ studentPublicId }) {
     return (
         <div className="card border-0 shadow-sm rounded-4">
         <div className="card-body">
-            {/* HEADER */}
+            {/* =================================================
+                        HEADER
+                    ================================================== */}
 
             <div className="d-flex justify-content-between align-items-start mb-4">
             <div>
@@ -42,15 +48,15 @@ export default function CertificateCard({ studentPublicId }) {
                 </h5>
 
                 <p className="text-muted mb-0">
-                    {certificates.length > 0 ? (
-                        <>
-                            {certificates.length} certificado
-                            {certificates.length !== 1 ? "s" : ""} disponible
-                            {certificates.length !== 1 ? "s" : ""}.
-                        </>
-                    ) : (
-                        "Aún no existen certificados disponibles."
-                    )}
+                {certificates.length > 0 ? (
+                    <>
+                    {certificates.length} certificado
+                    {certificates.length !== 1 ? "s" : ""} disponible
+                    {certificates.length !== 1 ? "s" : ""}.
+                    </>
+                ) : (
+                    "Aún no existen certificados disponibles."
+                )}
                 </p>
             </div>
 
@@ -64,7 +70,9 @@ export default function CertificateCard({ studentPublicId }) {
             )}
             </div>
 
-            {/* EMPTY */}
+            {/* =================================================
+                        EMPTY
+                    ================================================== */}
 
             {certificates.length === 0 && (
             <div className="text-center py-5">
@@ -79,13 +87,15 @@ export default function CertificateCard({ studentPublicId }) {
                 <h6 className="mt-3">No existen certificados emitidos</h6>
 
                 <p className="text-muted mb-0">
-                    Los certificados estarán disponibles cuando un 
-                    historial académico finalizado sea emitido.
+                Los certificados estarán disponibles cuando un historial académico
+                finalizado sea emitido.
                 </p>
             </div>
             )}
 
-            {/* TABLA */}
+            {/* =================================================
+                        TABLA
+                    ================================================== */}
 
             {certificates.length > 0 && (
             <div className="table-responsive">
@@ -93,35 +103,63 @@ export default function CertificateCard({ studentPublicId }) {
                 <thead className="table-light">
                     <tr>
                     <th>Número</th>
+
                     <th>Tipo</th>
+
+                    <th>Credencial</th>
+
                     <th>Estado</th>
+
                     <th>Emitido</th>
-                    <th style={{ width: 120 }}></th>
+
+                    <th
+                        style={{
+                        width: 120,
+                        }}
+                    ></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {certificates.slice(0, 3).map((certificate) => (
                     <tr key={certificate.publicId}>
-                        <td className="fw-semibold">
-                        {certificate.certificateNumber}
+                        {/* NÚMERO */}
+
+                        <td>
+                        <span className="fw-semibold">
+                            {certificate.certificateNumber}
+                        </span>
                         </td>
+
+                        {/* TIPO */}
 
                         <td>
                         <CertificateTypeBadge type={certificate.type} />
                         </td>
 
+                        {/* TÍTULO */}
+
+                        <td>
+                        <span className="fw-semibold" title={certificate.title}>
+                            {certificate.title}
+                        </span>
+                        </td>
+
+                        {/* ESTADO */}
+
                         <td>
                         <CertificateStatusBadge status={certificate.status} />
                         </td>
 
+                        {/* FECHA DE EMISIÓN */}
+
                         <td>
-                            {certificate.issuedAt 
-                                ? new Date(certificate.issuedAt)
-                                    .toLocaleDateString()
-                                : "-"
-                            }
+                        <span className="text-muted">
+                            {formatDateTime(certificate.issuedAt)}
+                        </span>
                         </td>
+
+                        {/* ACCIÓN */}
 
                         <td className="text-end">
                         <Link

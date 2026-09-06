@@ -49,12 +49,18 @@ export const navigationTitles = {
 
     "/institution/profile": {
         title: "Perfil Institucional",
-        subtitle: "Información de la institución."
+        subtitle: "Información general y datos institucionales."
     },
 
     "/institution/invitations": {
         title: "Invitaciones",
         subtitle: "Controle las invitaciones enviadas."
-    }
+    },
+
+    // TIMELINE
+    "/institution/students/:publicId/timeline": {
+        title: "Trazabilidad académica",
+        subtitle: "Historial cronológico de la actividad académica registrada del estudiante."
+    },
 
 };

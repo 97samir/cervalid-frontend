@@ -7,4 +7,6 @@ export const certificateService = {
     getCertificateDetail: api.getCertificateDetail,
     issueCertificate: api.issueCertificate,
     revokeCertificate: api.revokeCertificate,
+    updateCertificateCredential: api.updateCertificateCredential,
+    updateCertificateDocument: api.updateCertificateDocument,
 };

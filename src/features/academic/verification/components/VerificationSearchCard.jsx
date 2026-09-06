@@ -1,12 +1,11 @@
 import { useState } from "react";
-//import { useParams } from "react-router-dom";
-import "../styles/verification.css";
+
+import "../styles/certificateVerification.css";
 
 export default function VerificationSearchCard({ 
     loading = false, 
-    onVerify,
+    onVerify 
 }) {
-
     const [form, setForm] = useState({
         certificateNumber: "",
         hash: "",
@@ -23,87 +22,125 @@ export default function VerificationSearchCard({
         e.preventDefault();
 
         onVerify(form);
-
-        setForm({
-            certificateNumber: "",
-            hash: "",
-        });
     };
 
     return (
-        <div className="card verification-search-card">
-        <div className="card-body">
-            <div className="mb-4">
-            <h3 className="fw-bold mb-2">Verificación de certificados</h3>
+        <div className="verification-search-card">
+        {/* HEADER */}
 
-            <p className="text-muted mb-0">
-                Comprueba la autenticidad de un certificado académico emitido por
-                una institución registrada en Cervalid.
-            </p>
+        <div className="verification-search-header">
+            <div className="verification-search-icon">
+            <i className="bi bi-search" aria-hidden="true"></i>
             </div>
 
-            <form onSubmit={handleSubmit}>
-            {/* Número */}
+            <div>
+            <h2 id="verification-form-title">Verificar por código</h2>
 
-            <div className="mb-4">
-                <label className="form-label fw-semibold">
+            <p>
+                Ingresa los datos que aparecen en el certificado para comprobar su
+                autenticidad.
+            </p>
+            </div>
+        </div>
+
+        {/* FORM */}
+
+        <form onSubmit={handleSubmit} className="verification-search-form">
+            {/* CERTIFICATE NUMBER */}
+
+            <div className="verification-field">
+            <label htmlFor="certificateNumber" className="verification-label">
                 Número de certificado
-                </label>
+            </label>
+
+            <div className="verification-input-wrapper">
+                <i
+                className="bi bi-file-earmark-text verification-input-icon"
+                aria-hidden="true"
+                ></i>
 
                 <input
+                id="certificateNumber"
                 type="text"
-                className="form-control"
+                className="form-control verification-input"
                 name="certificateNumber"
                 placeholder="Ej. CERT-2026-9D324517"
                 value={form.certificateNumber}
                 onChange={handleChange}
+                autoComplete="off"
                 required
                 />
-
-                <div className="form-text">
-                Identificador único del certificado.
-                </div>
             </div>
 
-            {/* Hash */}
+            <div className="verification-field-help">
+                <i className="bi bi-info-circle" aria-hidden="true"></i>
 
-            <div className="mb-4">
-                <label className="form-label fw-semibold">
-                Código de verificación (Hash)
-                </label>
+                <span>Identificador único que aparece en el certificado.</span>
+            </div>
+            </div>
+
+            {/* HASH */}
+
+            <div className="verification-field">
+            <label htmlFor="hash" className="verification-label">
+                Código de verificación
+            </label>
+
+            <div className="verification-input-wrapper">
+                <i
+                className="bi bi-fingerprint verification-input-icon verification-textarea-icon"
+                aria-hidden="true"
+                ></i>
 
                 <textarea
-                rows="4"
-                className="form-control"
+                id="hash"
+                rows="1"
+                className="form-control verification-input verification-textarea"
                 name="hash"
+                placeholder="Ingresa el código de verificación incluido en el certificado."
                 value={form.hash}
                 onChange={handleChange}
-                placeholder="Ingrese el código de verificación incluido en el certificado."
                 required
                 />
-
-                <div className="form-text">
-                Este hash garantiza la integridad del documento.
-                </div>
             </div>
 
-            <div className="d-grid">
-                <button className="btn btn-primary btn-lg" 
-                disabled={loading}>
-                {loading ? (
-                    <>
-                    <span className="spinner-border spinner-border-sm me-2" />
-                    Verificando...
-                    </>
-                ) : (
-                    <>
-                    <i className="bi bi-shield-check me-2" />
-                    Verificar certificado
-                    </>
-                )}
-                </button>
+            <div className="verification-field-help">
+                <i className="bi bi-shield-check" aria-hidden="true"></i>
+
+                <span>Se utiliza para comprobar la integridad del documento.</span>
             </div>
-            </form>
+            </div>
+
+            {/* SUBMIT */}
+
+            <button
+            type="submit"
+            className="btn verification-submit-btn"
+            disabled={loading}
+            >
+            {loading ? (
+                <>
+                <span
+                    className="spinner-border spinner-border-sm me-2"
+                    aria-hidden="true"
+                ></span>
+                Verificando certificado...
+                </>
+            ) : (
+                <>
+                <i className="bi bi-shield-check me-2" aria-hidden="true"></i>
+                Verificar certificado
+                </>
+            )}
+            </button>
+        </form>
+
+        {/* SECURITY NOTE */}
+
+        <div className="verification-security-note">
+            <i className="bi bi-lock-fill" aria-hidden="true"></i>
+
+            <span>La consulta es pública y no requiere iniciar sesión.</span>
         </div>
         </div>
     );

@@ -25,6 +25,7 @@ export default function AchievementTable({ achievements }) {
                     <th>Tipo</th>
                     <th>Emisor</th>
                     <th>Fecha</th>
+                    <th>Periodo académico</th>
                     <th>Estado</th>
                     <th width="120"></th>
                 </tr>
@@ -42,6 +43,8 @@ export default function AchievementTable({ achievements }) {
                     <td>{achievement.issuer || "-"}</td>
 
                     <td>{formatAchievementDate(achievement.achievedDate)}</td>
+
+                    <td className="fw-semibold">{achievement.academicPeriod || "General"}</td>
 
                     <td>
                     <AchievementStatusBadge status={achievement.status} />

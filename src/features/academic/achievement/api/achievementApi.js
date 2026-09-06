@@ -23,13 +23,13 @@ export const getAchievement = async (achievementPublicId) => {
 };
 
 // Crea un logro
-export const createAchievement = async ({ studentPublicId, data }) => {
+export const createAchievement = async ({ 
+    studentPublicId, 
+    data 
+}) => {
     const response = await apiClient.post(
         `/academic/achievements/students/${studentPublicId}`,
-        {
-        ...data,
-        studentPublicId,
-        },
+        data,
     );
 
     return response.data;

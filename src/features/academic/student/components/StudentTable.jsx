@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import StudentStatusBadge from "./StudentStatusBadge";
-import { studentStatusLabels } from "@/shared/utils/enumUtils";
+import { studentStatusLabels, academicProgramLabels } from "@/shared/utils/enumUtils";
 
 export default function StudentTable({ 
     students, 
@@ -18,6 +18,7 @@ export default function StudentTable({
                         <tr>
                             <th className="text-nowrap py-3">Código</th>
                             <th className="text-nowrap py-3">Estudiante</th>
+                            <th className="text-nowrap py-3">Programa académico</th>
                             <th className="text-nowrap py-3">Correo electrónico</th>
                             <th className="text-nowrap py-3">Estado</th>
                             {/* <th className="text-nowrap py-3">Institución</th> */}
@@ -38,6 +39,18 @@ export default function StudentTable({
 
                                     <td className="text-nowrap py-3">
                                         {student.fullName}
+                                    </td>
+
+                                    {/* <td className="py-3">
+                                        {student.program || (
+                                            <span className="text-muted">
+                                                Sin asignar
+                                            </span>
+                                        )}
+                                    </td> */}
+
+                                    <td className="text-nowrap py-3">
+                                        {academicProgramLabels[student.program] ?? "Sin asignar"}
                                     </td>
 
                                     <td className="text-nowrap py-3">

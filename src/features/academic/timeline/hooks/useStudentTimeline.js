@@ -8,6 +8,29 @@ export const useStudentTimeline = (
     filters = {}
 ) => {
 
+    const params = {
+        page,
+        size,
+        ...(filters.keyword?.trim()
+            ? { keyword: filters.keyword.trim() }
+            : {}),
+        ...(filters.type
+            ? { type: filters.type }
+            : {}),
+        ...(filters.source
+            ? { source: filters.source }
+            : {}),
+        ...(filters.referenceType
+            ? { referenceType: filters.referenceType }
+            : {}),
+        ...(filters.fromDate
+            ? { fromDate: filters.fromDate }
+            : {}),
+        ...(filters.toDate
+            ? { toDate: filters.toDate }
+            : {}),
+    };
+
     return useQuery({
 
         queryKey: [
@@ -21,11 +44,7 @@ export const useStudentTimeline = (
         queryFn: () =>
             timelineService.getStudentTimeline(
                 studentPublicId,
-                {
-                    page,
-                    size,
-                    ...filters,
-                }
+                params
             ),
 
         enabled: !!studentPublicId,

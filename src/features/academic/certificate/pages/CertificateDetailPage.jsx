@@ -1,13 +1,18 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import CertificateSummaryCard from "../components/CertificateSummaryCard";
+import CertificateDocumentModal from "../components/CertificateDocumentModal";
 
 import { useCertificate } from "../hooks/useCertificate";
 import { useRevokeCertificate } from "../hooks/useRevokeCertificate";
+import { useUpdateCertificateDocument } from "../hooks/useUpdateCertificateDocument";
 
 export default function CertificateDetailPage() {
 
     const { certificatePublicId } = useParams();
+
+    const [showDocumentModal, setShowDocumentModal] = useState(false);
 
     const {
         data: certificate,
@@ -16,6 +21,8 @@ export default function CertificateDetailPage() {
     } = useCertificate(certificatePublicId);
 
     const revokeMutation = useRevokeCertificate();
+
+    const documentMutation = useUpdateCertificateDocument();
 
     if (isLoading) {
         return (
@@ -45,31 +52,56 @@ export default function CertificateDetailPage() {
         revokeMutation.mutate(certificate.certificate.publicId);
     };
 
+    const handleDocumentSubmit = (payload) => {
+        documentMutation.mutate(
+        {
+            certificatePublicId,
+            ...payload,
+        },
+        {
+            onSuccess: () => {
+            setShowDocumentModal(false);
+
+            alert("El documento fue registrado correctamente.");
+            },
+
+            onError: (error) => {
+            console.error("Error registrando documento:", error);
+
+            alert("No fue posible registrar el documento.");
+            },
+        },
+        );
+    };
+
     return (
         <div className="container-fluid">
-            {/* <div className="card shadow-sm border-0 mb-4"></div> */}
-            <div className="mb-4">
-                <div className="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        {/* <h2 className="fw-bold">Certificado Académico</h2>
+        <div className="mb-4">
+            <div className="card-body d-flex justify-content-between align-items-center">
+            <div />
 
-                        <p className="text-muted mb-0">
-                        Información completa del certificado.
-                        </p> */}
-                    </div>
-
-                    <Link to={-1} className="btn btn-outline-secondary">
-                        <i className="bi bi-arrow-left me-2"></i>
-                        Volver
-                    </Link>
-                </div>
+            <Link to={-1} className="btn btn-outline-secondary">
+                <i className="bi bi-arrow-left me-2"></i>
+                Volver
+            </Link>
             </div>
+        </div>
 
-            <CertificateSummaryCard
-                certificate={certificate}
-                onRevoke={handleRevoke}
-                revoking={revokeMutation.isPending}
-            />
+        <CertificateSummaryCard
+            certificate={certificate}
+            onRevoke={handleRevoke}
+            revoking={revokeMutation.isPending}
+            onDocumentAction={() => setShowDocumentModal(true)}
+        />
+
+        <CertificateDocumentModal
+            //key={certificate?.certificate?.publicId}
+            show={showDocumentModal}
+            onClose={() => setShowDocumentModal(false)}
+            onSubmit={handleDocumentSubmit}
+            submitting={documentMutation.isPending}
+            certificate={certificate.certificate}
+        />
         </div>
     );
 }

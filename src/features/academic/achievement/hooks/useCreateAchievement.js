@@ -10,14 +10,13 @@ export const useCreateAchievement = () => {
         mutationFn: achievementService.createAchievement,
 
         onSuccess: (_, variables) => {
-            queryClient.invalidateQueries({
-                queryKey: ["student-achievements", 
-                    variables.studentPublicId],
-            });
 
-            // queryClient.invalidateQueries({
-            //     queryKey: ["achievements"],
-            // });
+            queryClient.invalidateQueries({
+                queryKey: [
+                    "student-achievements",
+                    variables.studentPublicId,
+                ],
+            });
         },
     });
 };

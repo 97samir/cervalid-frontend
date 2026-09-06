@@ -3,12 +3,26 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import AchievementForm from "../components/AchievementForm";
 
 import { useCreateAchievement } from "../hooks/useCreateAchievement";
+import { useStudentTranscripts } from "@/features/academic/transcript/hooks/useStudentTranscripts";
 
 export default function AchievementCreatePage() {
 
     const navigate = useNavigate();
     const { studentPublicId } = useParams();
     const mutation = useCreateAchievement();
+
+    const { 
+        data: transcripts = [], 
+        isLoading: transcriptsLoading 
+    } = useStudentTranscripts(studentPublicId);
+
+    const academicPeriods = [
+        ...new Set(
+        transcripts
+            .map((transcript) => transcript.academicPeriod)
+            .filter(Boolean),
+        ),
+    ];
 
     return (
         <div className="container-fluid">
@@ -30,18 +44,18 @@ export default function AchievementCreatePage() {
         </div>
 
         <AchievementForm
-            loading={mutation.isPending}
+            academicPeriods={academicPeriods}
+            loading={
+                mutation.isPending || 
+                transcriptsLoading
+            }
             submitLabel="Guardar logro"
             onSubmit={(form) =>
             mutation.mutate(
                 {
                 studentPublicId,
-                data: {
-                    ...form,
-                    studentPublicId,
+                data: form,
                 },
-                },
-
                 {
                 onSuccess() {
                     navigate(

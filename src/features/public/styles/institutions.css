@@ -1,0 +1,439 @@
+/* =========================================================
+   INSTITUTIONS LANDING PAGE
+   ========================================================= */
+
+.institutions-hero {
+    padding: 6rem 0;
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(13, 110, 253, 0.08),
+            transparent 35%
+        ),
+        var(--color-background);
+}
+
+.institutions-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(13, 110, 253, 0.08);
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+}
+
+.institutions-hero-title {
+    max-width: 700px;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.institutions-hero-title span {
+    color: var(--color-primary);
+}
+
+.institutions-hero-description {
+    max-width: 650px;
+    margin-top: 1.5rem;
+    color: var(--color-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.institutions-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.institutions-hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.institutions-hero-trust div {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.institutions-hero-trust i {
+    color: var(--color-success);
+}
+
+
+/* HERO CARD */
+
+.institutions-hero-card {
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+}
+
+.institution-dashboard-preview {
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--color-background);
+}
+
+.institution-preview-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.preview-logo {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--color-primary);
+    color: white;
+    font-weight: 700;
+}
+
+.institution-preview-header div:nth-child(2) {
+    flex: 1;
+}
+
+.institution-preview-header strong,
+.institution-preview-header small {
+    display: block;
+}
+
+.institution-preview-header small {
+    margin-top: 0.15rem;
+    color: var(--color-muted);
+}
+
+.institution-preview-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.preview-stat {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+}
+
+.preview-stat span,
+.preview-stat small {
+    display: block;
+}
+
+.preview-stat span {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+}
+
+.preview-stat strong {
+    display: block;
+    margin: 0.4rem 0;
+    font-size: 1.5rem;
+}
+
+.preview-stat small {
+    color: var(--color-success);
+    font-size: 0.75rem;
+}
+
+.preview-verification {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+}
+
+.preview-verification-icon {
+    color: var(--color-success);
+    font-size: 1.5rem;
+}
+
+.preview-verification div:nth-child(2) {
+    flex: 1;
+}
+
+.preview-verification strong,
+.preview-verification small {
+    display: block;
+}
+
+.preview-verification small {
+    margin-top: 0.2rem;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   BENEFITS
+   ========================================================= */
+
+.section-padding {
+    padding: 6rem 0;
+}
+
+.section-heading {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.section-eyebrow {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    color: var(--color-primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.section-heading h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.section-heading h2 span {
+    color: var(--color-primary);
+}
+
+.section-heading p {
+    margin-top: 1rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+}
+
+.institution-benefit-card {
+    height: 100%;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    transition: transform var(--transition),
+                box-shadow var(--transition);
+}
+
+.institution-benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.institution-benefit-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    border-radius: 12px;
+    background: rgba(13, 110, 253, 0.08);
+    color: var(--color-primary);
+    font-size: 1.35rem;
+}
+
+.institution-benefit-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.institution-benefit-card p {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    color: var(--color-muted);
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   PROCESS
+   ========================================================= */
+
+.institutions-process {
+    background: var(--color-background);
+}
+
+.institution-process-card {
+    position: relative;
+    height: 100%;
+    padding: 2rem 1.5rem;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+}
+
+.institution-process-number {
+    color: var(--color-primary);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+}
+
+.institution-process-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.25rem 0;
+    border-radius: 14px;
+    background: rgba(13, 110, 253, 0.08);
+    color: var(--color-primary);
+    font-size: 1.4rem;
+}
+
+.institution-process-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.institution-process-card p {
+    margin: 0.75rem 0 0;
+    color: var(--color-muted);
+    line-height: 1.6;
+}
+
+.institution-process-arrow {
+    position: absolute;
+    top: 50%;
+    right: -1rem;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.institutions-cta {
+    padding: 5rem 0;
+}
+
+.institutions-cta-card {
+    padding: 3.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.institutions-cta-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    opacity: 0.8;
+}
+
+.institutions-cta-card h2 {
+    max-width: 750px;
+    margin-top: 0.75rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.institutions-cta-card p {
+    max-width: 650px;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    opacity: 0.9;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .institutions-hero {
+        padding: 4rem 0;
+    }
+
+    .institutions-hero-card {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .institution-process-arrow {
+        display: none;
+    }
+
+    .institutions-cta-card {
+        padding: 2.5rem;
+    }
+
+}
+
+@media (max-width: 575.98px) {
+
+    .institutions-hero {
+        padding: 3rem 0;
+    }
+
+    .institutions-hero-title {
+        font-size: 2.35rem;
+    }
+
+    .institutions-hero-actions {
+        flex-direction: column;
+    }
+
+    .institutions-hero-actions .btn {
+        width: 100%;
+    }
+
+    .institutions-hero-trust {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .institution-preview-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .section-padding {
+        padding: 4rem 0;
+    }
+
+    .institutions-cta {
+        padding: 3rem 0;
+    }
+
+    .institutions-cta-card {
+        padding: 2rem;
+    }
+
+    .institutions-cta-card .btn {
+        width: 100%;
+    }
+
+}

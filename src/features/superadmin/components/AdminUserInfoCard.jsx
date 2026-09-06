@@ -1,32 +1,64 @@
+import { getRoleLabel } from "@/shared/utils/roleUtils";
+
 const AdminUserInfoCard = ({ user }) => {
+    
     return (
-        <div className="card mb-4 shadow-sm">
-        <div className="card-body">
-            <h5 className="card-title">Datos generales</h5>
+        <div className="card border-0 shadow-sm mb-4">
+        {/* HEADER */}
+        <div className="card-header bg-white py-3 border-bottom">
+            <h5 className="mb-0 fw-bold">
+            <i className="bi bi-person-vcard me-2 text-primary"></i>
+            Datos generales
+            </h5>
+        </div>
 
-            <p className="mb-1">
-            <strong>Nombres:</strong> {user?.name}
-            </p>
+        {/* BODY */}
+        <div className="card-body p-4">
+            <div className="row g-4">
+            {/* COLUMNA IZQUIERDA */}
+            <div className="col-md-6">
+                <div className="mb-3">
+                <small className="text-muted d-block">Nombres</small>
 
-            <p className="mb-1">
-            <strong>Apellidos:</strong> {user?.lastName}
-            </p>
+                <span className="fw-semibold">{user?.name || "-"}</span>
+                </div>
 
-            <p className="mb-1">
-            <strong>Email:</strong> {user?.email}
-            </p>
+                <div className="mb-3">
+                <small className="text-muted d-block">Apellidos</small>
 
-            <p className="mb-1">
-            <strong>DNI / CE:</strong> {user?.documentType} - {user?.document}
-            </p>
+                <span className="fw-semibold">{user?.lastName || "-"}</span>
+                </div>
 
-            <p className="mb-1">
-            <strong>Teléfono:</strong> {user?.phone}
-            </p>
+                <div>
+                <small className="text-muted d-block">Documento</small>
 
-            <p className="mb-1">
-            <strong>Rol:</strong> {user?.role}
-            </p>
+                <span className="fw-semibold">{user?.document || "-"}</span>
+                </div>
+            </div>
+
+            {/* COLUMNA DERECHA */}
+            <div className="col-md-6">
+                <div className="mb-3">
+                <small className="text-muted d-block">Correo electrónico</small>
+
+                <span className="fw-semibold text-break">
+                    {user?.email || "-"}
+                </span>
+                </div>
+
+                <div className="mb-3">
+                <small className="text-muted d-block">Teléfono</small>
+
+                <span className="fw-semibold">{user?.phone || "-"}</span>
+                </div>
+
+                <div>
+                <small className="text-muted d-block">Rol</small>
+
+                <span className="fw-semibold">{getRoleLabel(user?.role)}</span>
+                </div>
+            </div>
+            </div>
         </div>
         </div>
     );

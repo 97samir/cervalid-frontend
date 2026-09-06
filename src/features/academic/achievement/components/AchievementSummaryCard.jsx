@@ -17,8 +17,8 @@ export default function AchievementSummaryCard({
         <div className="card shadow-sm border-0 mb-4">
         <div className="card-header bg-white">
             <div className="d-flex justify-content-between align-items-center">
-            <div>
-                <h5 className="fw-bold mb-1">
+            <div className="mb-2 mt-2">
+                <h5 className="fw-bold mb-2">
                 <i className="bi bi-trophy me-2 text-warning"></i>
                 Logro
                 </h5>
@@ -47,67 +47,73 @@ export default function AchievementSummaryCard({
 
         <div className="card-body">
             <div className="row g-4">
-            <div className="col-lg-8">
-                <div className="mb-4">
-                <h6 className="fw-bold">Información</h6>
+                <div className="col-lg-8">
+                    <div className="mb-4">
+                        <h6 className="fw-bold">Información</h6>
 
-                <div className="row g-3 mt-2">
-                    <div className="col-md-6">
-                    <small className="text-muted">Tipo</small>
+                        <div className="row g-3 mt-2">
+                            <div className="col-md-6">
+                                <small className="text-muted">Tipo</small>
+                                <br />
+                                <AchievementTypeBadge type={achievement.type} />
+                            </div>
 
-                    <br />
+                            <div className="col-md-6">
+                                <small className="text-muted">Estado</small>
+                                <br />
+                                <AchievementStatusBadge status={achievement.status} />
+                            </div>
 
-                    <AchievementTypeBadge type={achievement.type} />
+                            <div className="col-md-6">
+                                <small className="text-muted">Emisor</small>
+                                <div className="fw-semibold">{achievement.issuer || "-"}</div>
+                            </div>
+
+                            <div className="col-md-6">
+                                <small className="text-muted">Fecha</small>
+                                <div className="fw-semibold">
+                                    {formatAchievementDate(achievement.achievedDate)}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div className="col-md-6">
-                    <small className="text-muted">Estado</small>
-
-                    <br />
-
-                    <AchievementStatusBadge status={achievement.status} />
-                    </div>
-
-                    <div className="col-md-6">
-                    <small className="text-muted">Emisor</small>
-
-                    <div className="fw-semibold">{achievement.issuer || "-"}</div>
-                    </div>
-
-                    <div className="col-md-6">
-                    <small className="text-muted">Fecha</small>
-
-                    <div className="fw-semibold">
-                        {formatAchievementDate(achievement.achievedDate)}
-                    </div>
-                    </div>
-                </div>
-                </div>
-
-                <hr />
-
-                <h6 className="fw-bold">Descripción</h6>
-
-                <p className="text-muted mb-0">{achievement.description || "-"}</p>
-            </div>
-
-            <div className="col-lg-4">
-                <div className="card bg-light border-0">
-                <div className="card-body">
-                    <h6 className="fw-bold">Resumen</h6>
-
-                    <p className="mb-2">Tipo</p>
-
-                    <AchievementTypeBadge type={achievement.type} />
 
                     <hr />
 
-                    <p className="mb-2">Estado</p>
+                    <div className="mb-2">
+                        <div className="row g-3">
+                            <div className="col-md-6">
+                                <small className="text-muted">Periodo académico</small>
+                                <br />
+                                <div className="fw-semibold">{achievement.academicPeriod || "General"}</div>
+                            </div>
 
-                    <AchievementStatusBadge status={achievement.status} />
+                            <div className="col-md-6">
+                                <small className="text-muted">Descripción</small>
+                                <br />
+                                <div className="fw-semibold">{achievement.description || "-"}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div className="col-lg-4">
+                    <div className="card bg-light border-0">
+                    <div className="card-body">
+                        <h6 className="fw-bold">Resumen</h6>
+
+                        <p className="mb-2">Tipo</p>
+
+                        <AchievementTypeBadge type={achievement.type} />
+
+                        <hr />
+
+                        <p className="mb-2">Estado</p>
+
+                        <AchievementStatusBadge status={achievement.status} />
+                    </div>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         </div>

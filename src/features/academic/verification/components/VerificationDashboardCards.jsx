@@ -10,7 +10,7 @@ export default function VerificationDashboardCards({ dashboard }) {
         },
 
         {
-        title: "Certificados consultados",
+        title: "Total certificados",
         value: dashboard.uniqueCertificates,
         icon: "bi-award",
         color: "success",

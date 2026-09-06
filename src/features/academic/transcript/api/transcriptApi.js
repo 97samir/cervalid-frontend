@@ -30,12 +30,14 @@ export const createTranscript = async ({ studentPublicId, data }) => {
 
 // Finaliza un transcript
 export const finalizeTranscript = async (transcriptPublicId) => {
-    await apiClient.post(`/academic/transcripts/${transcriptPublicId}/finalize`);
+    await apiClient.post(
+        `/academic/transcripts/${transcriptPublicId}/finalize`);
 };
 
 // Emite un transcript
 export const issueTranscript = async (transcriptPublicId) => {
-    await apiClient.post(`/academic/transcripts/${transcriptPublicId}/issue`);
+    await apiClient.post(
+        `/academic/transcripts/${transcriptPublicId}/issue`);
 };
 
 //Agrega un curso

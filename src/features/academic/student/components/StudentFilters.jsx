@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useAuthStore from "@/app/store/auth/useAuthStore";
+import { academicProgramLabels } from "@/shared/utils/enumUtils";
 
 export default function StudentFilters({
     //filters,
@@ -11,6 +12,7 @@ export default function StudentFilters({
 
     const [localFilters, setLocalFilters] = useState({
         studentCode: "",
+        program: "",
         status: "",
         institutionId: user?.institutionId || ""
     });
@@ -41,6 +43,7 @@ export default function StudentFilters({
 
         const reset = {
             studentCode: "",
+            program: "",
             status: "",
             institutionId: user?.institutionId || ""
         };
@@ -65,7 +68,7 @@ export default function StudentFilters({
                     <div className="row g-3 align-items-end">
 
                         {/* Código */}
-                        <div className="col-md-4">
+                        <div className="col-12 col-lg-3">
 
                             <label className="form-label">
                                 Código estudiante
@@ -81,8 +84,31 @@ export default function StudentFilters({
                             />
                         </div>
 
+                        <div className="col-12 col-lg-4">
+                            <label className="form-label">
+                                Programa académico
+                            </label>
+
+                            <select
+                                name="program"
+                                className="form-select"
+                                value={localFilters.program}
+                                onChange={handleChange}
+                            >
+                                <option value="">Todos</option>
+
+                                {Object.entries(academicProgramLabels).map(
+                                    ([value, label]) => (
+                                        <option key={value} value={value}>
+                                            {label}
+                                        </option>
+                                    )
+                                )}
+                            </select>
+                        </div>
+
                         {/* Estado */}
-                        <div className="col-md-4">
+                        <div className="col-12 col-lg-2">
 
                             <label className="form-label">
                                 Estado
@@ -103,7 +129,7 @@ export default function StudentFilters({
 
                         {/* BOTONES */}
 
-                        <div className="col-md-4">
+                        <div className="col-12 col-lg-3">
 
                             <div className="d-flex gap-2 mt-4">
 

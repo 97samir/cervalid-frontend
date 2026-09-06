@@ -27,13 +27,9 @@ export default function VerificationSummaryFilters({
     const handleClear = () => {
         const empty = {
         search: "",
-
         status: "",
-
         type: "",
-
         fromDate: "",
-
         toDate: "",
         };
 
@@ -54,7 +50,7 @@ export default function VerificationSummaryFilters({
                 name="search"
                 value={form.search}
                 onChange={handleChange}
-                placeholder="Código o estudiante..."
+                placeholder="Código de certificado..."
                 />
             </div>
 
@@ -67,13 +63,10 @@ export default function VerificationSummaryFilters({
                 value={form.status}
                 onChange={handleChange}
                 >
-                <option value="">Todos</option>
-
-                <option value="VALID">Válidos</option>
-
-                <option value="INVALID">Inválidos</option>
-
-                <option value="REVOKED">Revocados</option>
+                    <option value="">Todos</option>
+                    <option value="VALID">Válidos</option>
+                    <option value="INVALID">Inválidos</option>
+                    <option value="REVOKED">Revocados</option>
                 </select>
             </div>
 

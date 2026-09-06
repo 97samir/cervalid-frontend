@@ -6,7 +6,30 @@ export function getNavigationInfo(pathname) {
         (a, b) => b[0].length - a[0].length,
     );
 
-    const match = routes.find(([route]) => pathname.startsWith(route));
+    const match = routes.find(([route]) => {
+        
+        // Ruta dinámica
+        if (route.includes(":")) {
+
+            const routePattern = route
+                .split("/")
+                .map((segment) => {
+                    if (segment.startsWith(":")) {
+                        return "[^/]+";
+                    }
+
+                    return segment;
+                })
+                .join("/");
+
+            const regex = new RegExp(`^${routePattern}$`);
+
+            return regex.test(pathname);
+        }
+
+        // Ruta normal
+        return pathname === route || pathname.startsWith(`${route}/`);
+    });
 
     if (!match) {
         return {

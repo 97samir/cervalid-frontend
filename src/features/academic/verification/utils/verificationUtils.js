@@ -95,11 +95,12 @@ export const formatVerificationDateOnly = (value) => {
 
     const date = new Date(value);
 
-    if (Number.isNaN(date.getTime())) {
-        return value;
-    }
-
-    return new Intl.DateTimeFormat("es-PE", {
-        dateStyle: "long",
-    }).format(date);
+    return date.toLocaleDateString(
+        "es-PE",
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        }
+    );
 };

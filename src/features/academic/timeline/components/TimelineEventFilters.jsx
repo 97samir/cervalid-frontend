@@ -4,7 +4,12 @@ import {
     timelineSourceLabels,
 } from "../utils/timelineEventUtils";
 
-export default function TimelineEventFilters({ filters, onChange, onClear }) {
+export default function TimelineEventFilters({ 
+    filters, 
+    onChange, 
+    onClear,
+}) {
+
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -16,19 +21,27 @@ export default function TimelineEventFilters({ filters, onChange, onClear }) {
 
     const hasFilters = Object.values(filters).some((value) => value !== "");
 
+    const isDateRangeInvalid =
+        filters.fromDate && 
+        filters.toDate && 
+        filters.fromDate > filters.toDate;
+
     return (
         <section className="timeline-filters">
+        {/* HEADER */}
+
         <div className="timeline-filters-header">
             <div>
             <div className="d-flex align-items-center gap-2">
                 <i className="bi bi-funnel text-primary"></i>
 
                 <span className="fw-semibold">Filtrar actividad</span>
+                
             </div>
 
-            <small className="text-muted">
+            {/* <small className="text-muted">
                 Refina los eventos mostrados en la trazabilidad.
-            </small>
+            </small> */}
             </div>
 
             {hasFilters && (
@@ -36,9 +49,11 @@ export default function TimelineEventFilters({ filters, onChange, onClear }) {
             )}
         </div>
 
+        {/* FILTROS */}
+
         <div className="row g-3 align-items-end">
             {/* BUSCAR */}
-
+            {/*
             <div className="col-12 col-xl-4">
             <label className="form-label small fw-semibold">
                 Buscar actividad
@@ -58,8 +73,12 @@ export default function TimelineEventFilters({ filters, onChange, onClear }) {
                 placeholder="Descripción o actividad..."
                 />
             </div>
-            </div>
 
+            <small className="text-muted">
+                La búsqueda se ejecuta automáticamente.
+            </small> 
+            </div>
+                */}
             {/* TIPO */}
 
             <div className="col-12 col-md-6 col-xl-2">
@@ -102,10 +121,12 @@ export default function TimelineEventFilters({ filters, onChange, onClear }) {
             </select>
             </div>
 
-            {/* CATEGORÍA */}
+            {/* RELACIONADO CON */}
 
             <div className="col-12 col-md-6 col-xl-2">
-            <label className="form-label small fw-semibold">Categoría</label>
+            <label className="form-label small fw-semibold">
+                Relacionado con
+            </label>
 
             <select
                 name="referenceType"
@@ -113,7 +134,7 @@ export default function TimelineEventFilters({ filters, onChange, onClear }) {
                 onChange={handleChange}
                 className="form-select"
             >
-                <option value="">Todas</option>
+                <option value="">Todos</option>
 
                 {Object.entries(timelineReferenceLabels).map(([value, label]) => (
                 <option key={value} value={value}>
@@ -121,6 +142,36 @@ export default function TimelineEventFilters({ filters, onChange, onClear }) {
                 </option>
                 ))}
             </select>
+            </div>
+
+            {/* DESDE */}
+
+            <div className="col-12 col-md-6 col-xl-2">
+            <label className="form-label small fw-semibold">Desde</label>
+
+            <input
+                type="date"
+                name="fromDate"
+                value={filters.fromDate}
+                onChange={handleChange}
+                className="form-control"
+                max={filters.toDate || undefined}
+            />
+            </div>
+
+            {/* HASTA */}
+
+            <div className="col-12 col-md-6 col-xl-2">
+            <label className="form-label small fw-semibold">Hasta</label>
+
+            <input
+                type="date"
+                name="toDate"
+                value={filters.toDate}
+                onChange={handleChange}
+                className="form-control"
+                min={filters.fromDate || undefined}
+            />
             </div>
 
             {/* LIMPIAR */}
@@ -137,6 +188,65 @@ export default function TimelineEventFilters({ filters, onChange, onClear }) {
             </button>
             </div>
         </div>
+
+        {/* ERROR FECHAS */}
+
+        {isDateRangeInvalid && (
+            <div className="timeline-filter-date-error mt-3">
+            <i className="bi bi-exclamation-circle"></i>
+
+            <span>
+                La fecha "Desde" no puede ser posterior a la fecha "Hasta".
+            </span>
+            </div>
+        )}
+
+        {/* FILTROS ACTIVOS 
+
+            {hasFilters && (
+                <div className="timeline-active-filters">
+                <span className="timeline-active-filters-label">Filtros:</span>
+
+                {filters.keyword && (
+                    <span className="timeline-filter-chip">
+                    Búsqueda: {filters.keyword}
+                    </span>
+                )}
+
+                {filters.type && (
+                    <span className="timeline-filter-chip">
+                    Tipo: {timelineEventLabels[filters.type]?.label ?? filters.type}
+                    </span>
+                )}
+
+                {filters.source && (
+                    <span className="timeline-filter-chip">
+                    Origen: {timelineSourceLabels[filters.source] ?? filters.source}
+                    </span>
+                )}
+
+                {filters.referenceType && (
+                    <span className="timeline-filter-chip">
+                    Relacionado:{" "}
+                    {timelineReferenceLabels[filters.referenceType] ??
+                        filters.referenceType}
+                    </span>
+                )}
+
+                {filters.fromDate && (
+                    <span className="timeline-filter-chip">
+                    Desde: {filters.fromDate}
+                    </span>
+                )}
+
+                {filters.toDate && (
+                    <span className="timeline-filter-chip">
+                    Hasta: {filters.toDate}
+                    </span>
+                )}
+                </div>
+            )}
+                */}
         </section>
     );
 }

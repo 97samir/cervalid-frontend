@@ -1,28 +1,33 @@
 import InstitutionRequestForm from "../components/InstitutionRequestForm";
+import "../styles/institutionRequest.css";
 
-const InstitutionRequestPage = () => {
+export default function InstitutionRequestPage() {
+
     return (
-        <div className="container mt-5">
+        <div className="institution-request-page">
+        <div className="container">
+            <div className="institution-request-wrapper">
+            {/* HEADER */}
+            <header className="institution-request-header">
+                <div className="institution-request-icon">
+                <i className="bi bi-building-add" aria-hidden="true"></i>
+                </div>
 
-        <div className="row justify-content-center">
-            <div className="col-md-8">
+                <div>
+                <h1>Registrar institución</h1>
 
-            {/* header */}
-            <div className="text-center mb-4">
-                <h2>Registrar institución</h2>
-                <p className="text-muted">
-                Solicita acceso a Cervalid para gestionar certificaciones académicas verificables.
+                <p>
+                    Solicita acceso a Cervalid para gestionar certificaciones
+                    académicas verificables.
                 </p>
-            </div>
+                </div>
+            </header>
 
-            {/* formulario */}
+            {/* FORM */}
             <InstitutionRequestForm />
-
             </div>
         </div>
-
         </div>
     );
 };
 
-export default InstitutionRequestPage;

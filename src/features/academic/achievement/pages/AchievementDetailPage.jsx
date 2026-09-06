@@ -5,6 +5,7 @@ import AchievementEditModal from "../components/AchievementEditModal";
 import { useAchievement } from "../hooks/useAchievement";
 import { useUpdateAchievement } from "../hooks/useUpdateAchievement";
 import { useDeactivateAchievement } from "../hooks/useDeactivateAchievement";
+import { useStudentTranscripts } from "@/features/academic/transcript/hooks/useStudentTranscripts";
 
 export default function AchievementDetailPage() {
 
@@ -19,6 +20,20 @@ export default function AchievementDetailPage() {
 
     const updateMutation = useUpdateAchievement();
     const deactivateMutation = useDeactivateAchievement();
+
+    const {
+        data: transcripts = [],
+    } = useStudentTranscripts(
+        achievement?.studentPublicId
+    );
+
+    const academicPeriods = [
+        ...new Set(
+        transcripts
+            .map((transcript) => transcript.academicPeriod)
+            .filter(Boolean),
+        ),
+    ];
 
     if (isLoading) {
         return (
@@ -78,6 +93,7 @@ export default function AchievementDetailPage() {
         <AchievementEditModal
             show={showEdit}
             achievement={achievement}
+            academicPeriods={academicPeriods}
             loading={updateMutation.isPending}
             onClose={() => setShowEdit(false)}
             onSubmit={(form) =>

@@ -1,3 +1,10 @@
+import {
+    academicProgramLabels,
+    academicFacultyLabels,
+    modalityLabels,
+} from "@/shared/utils/enumUtils";
+
+
 export const timelineEventLabels = {
     STUDENT_REGISTERED: {
         label: "Estudiante registrado",
@@ -110,12 +117,7 @@ export const timelineEventLabels = {
     },
 };
 
-/*
-|--------------------------------------------------------------------------
-| Tipo de referencia
-|--------------------------------------------------------------------------
-*/
-
+/* Tipo de referencia */
 export const timelineReferenceLabels = {
 
     STUDENT: "Estudiante",
@@ -128,25 +130,23 @@ export const timelineReferenceLabels = {
     MANUAL: "Registro manual",
 };
 
-/*
-|--------------------------------------------------------------------------
-| Origen del evento
-|--------------------------------------------------------------------------
-*/
-
+// Origen del evento
 export const timelineSourceLabels = {
     SYSTEM: "Sistema",
     INSTITUTION_ADMIN: "Administrador institucional",
 };
 
-/*
-|--------------------------------------------------------------------------
-| Etiquetas de metadata
-|--------------------------------------------------------------------------
-*/
-
+// Etiquetas de metadata
 export const timelineMetadataLabels = {
     studentCode: "Código del estudiante",
+    admissionDate: "Fecha de admisión",
+    graduationDate: "Fecha de graduación",
+
+    cycle: "Ciclo académico",
+    faculty: "Facultad",
+    modality: "Modalidad de estudio",
+    program: "Programa académico",
+    awardedAt: "Fecha de Otorgamiento",
     period: "Periodo académico",
     courses: "Cursos",
     certificateNumber: "Número de certificado",
@@ -160,12 +160,7 @@ export const timelineMetadataLabels = {
     competency: "Competencia",
 };
 
-/*
-|--------------------------------------------------------------------------
-| Valores de metadata
-|--------------------------------------------------------------------------
-*/
-
+//Valores de metadata
 export const timelineMetadataValueLabels = {
     DEGREE: "Título académico",
     CERTIFICATION: "Certificación",
@@ -176,14 +171,12 @@ export const timelineMetadataValueLabels = {
     INACTIVE: "Inactivo",
     MANUAL: "Registro manual",
     SYSTEM: "Sistema",
+    VIRTUAL: "Virtual",
+    PRESENCIAL: "Presencial",
+    SEMIPRESENCIAL: "Semipresencial"
 };
 
-/*
-|--------------------------------------------------------------------------
-| Helpers
-|--------------------------------------------------------------------------
-*/
-
+//  Helpers
 export const getTimelineEventLabel = (type) => {
     return timelineEventLabels[type]?.label ?? "Evento académico";
 };
@@ -208,18 +201,19 @@ export const getTimelineMetadataValueLabel = (value) => {
     return timelineMetadataValueLabels[value] ?? value;
 };
 
-/*
-|--------------------------------------------------------------------------
-| Formatear valores de metadata
-|--------------------------------------------------------------------------
-*/
-
+//Formatear valores de metadata
 export const formatTimelineMetadata = (key, value) => {
+
     if (value === null || value === undefined || value === "") {
         return "-";
     }
 
-    if (key === "achievedDate") {
+    // fechas
+    if (
+        key === "awardedAt" ||
+        key === "achievedDate" ||
+        key === "admissionDate" ||
+        key === "graduationDate") {
         const date = new Date(value);
 
         if (!Number.isNaN(date.getTime())) {
@@ -236,7 +230,18 @@ export const formatTimelineMetadata = (key, value) => {
     if (typeof value === "object") {
         return JSON.stringify(value);
     }
-
+    
+    // enums academicos
+    if (key === "program") { 
+        return academicProgramLabels[value] ?? value; 
+    } 
+    if (key === "faculty") { 
+        return academicFacultyLabels[value] ?? value; 
+    } 
+    if (key === "modality") { 
+        return modalityLabels[value] ?? value; 
+    }
+    
     return getTimelineMetadataValueLabel(value);
 };
 

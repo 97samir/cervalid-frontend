@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { modalityLabels } from "@/shared/utils/enumUtils";
+
+import { 
+    modalityLabels,
+    academicProgramLabels,
+    academicFacultyLabels,
+ } from "@/shared/utils/enumUtils";
+
 import AcademicProfileEditModal from "./AcademicProfileEditModal";
 import { useUpdateProfile } from "../hooks/useUpdateProfile";
 
@@ -78,7 +84,8 @@ export default function AcademicProfileCard({
 
                         <div className="fw-semibold">
                             <i className="bi bi-mortarboard me-2 text-primary"></i>
-                            {profile.program}
+                            {/* {profile.program} */}
+                            {academicProgramLabels[profile.program] ?? "-"}
                         </div>
                         </div>
 
@@ -87,7 +94,8 @@ export default function AcademicProfileCard({
 
                         <div className="fw-semibold">
                             <i className="bi bi-building me-2 text-primary"></i>
-                            {profile.faculty}
+                            {/* {profile.faculty} */}
+                            {academicFacultyLabels[profile.faculty] ?? "-"}
                         </div>
                         </div>
 

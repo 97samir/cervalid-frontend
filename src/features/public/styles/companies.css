@@ -1,0 +1,449 @@
+/* =========================================================
+   COMPANIES PAGE
+   ========================================================= */
+
+.section-padding {
+    padding: 90px 0;
+}
+
+.section-eyebrow,
+.companies-eyebrow {
+    display: inline-block;
+    margin-bottom: 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.companies-hero {
+    padding: 110px 0 90px;
+    background: var(--color-surface);
+}
+
+.companies-hero-title {
+    max-width: 760px;
+    margin-bottom: 24px;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.08;
+}
+
+.companies-hero-title span {
+    color: var(--color-primary);
+}
+
+.companies-hero-description {
+    max-width: 650px;
+    margin-bottom: 32px;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+}
+
+.companies-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.companies-hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 28px;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.companies-hero-trust div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.companies-hero-trust i {
+    color: var(--color-success);
+}
+
+/* =========================================================
+   VERIFICATION CARD
+   ========================================================= */
+
+.companies-verification-card {
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+}
+
+.verification-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.verification-card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: rgba(13, 110, 253, 0.1);
+    color: var(--color-primary);
+    font-size: 1.4rem;
+}
+
+.verification-card-header span {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.7rem;
+    color: var(--color-muted);
+}
+
+.verification-card-header strong {
+    font-size: 1rem;
+}
+
+.verification-card-body {
+    padding-top: 22px;
+}
+
+.verification-field {
+    margin-bottom: 20px;
+}
+
+.verification-field small {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--color-muted);
+}
+
+.verification-field strong {
+    font-size: 0.95rem;
+}
+
+.verification-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    background: rgba(25, 135, 84, 0.08);
+}
+
+.verification-status > i {
+    color: var(--color-success);
+    font-size: 1.5rem;
+}
+
+.verification-status strong,
+.verification-status span {
+    display: block;
+}
+
+.verification-status span {
+    margin-top: 3px;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+}
+
+/* =========================================================
+   PROBLEM
+   ========================================================= */
+
+.companies-problem {
+    background: var(--color-background);
+}
+
+.section-heading {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.section-heading h2 {
+    margin-bottom: 15px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 750;
+}
+
+.section-heading p {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.7;
+}
+
+.problem-card {
+    height: 100%;
+    padding: 30px;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.problem-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    border-radius: var(--radius-md);
+    background: rgba(220, 53, 69, 0.08);
+    color: var(--color-danger);
+    font-size: 1.4rem;
+}
+
+.problem-card h3,
+.benefit-card h3,
+.process-card h3 {
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+}
+
+.problem-card p,
+.benefit-card p,
+.process-card p {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.65;
+}
+
+/* =========================================================
+   BENEFITS
+   ========================================================= */
+
+.companies-benefits {
+    background: var(--color-surface);
+}
+
+.benefit-card {
+    height: 100%;
+    padding: 30px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    transition: transform var(--transition),
+                box-shadow var(--transition);
+}
+
+.benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.benefit-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    border-radius: var(--radius-md);
+    background: rgba(13, 110, 253, 0.1);
+    color: var(--color-primary);
+    font-size: 1.4rem;
+}
+
+/* =========================================================
+   PROCESS
+   ========================================================= */
+
+.companies-process {
+    background: var(--color-background);
+}
+
+.process-card {
+    position: relative;
+    height: 100%;
+    padding: 30px;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.process-number {
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--color-primary);
+}
+
+.process-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background: rgba(13, 110, 253, 0.1);
+    color: var(--color-primary);
+    font-size: 1.3rem;
+}
+
+/* =========================================================
+   PLANS
+   ========================================================= */
+
+.companies-plans {
+    background: var(--color-surface);
+}
+
+.plan-card {
+    position: relative;
+    height: 100%;
+    padding: 32px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+}
+
+.plan-card-highlighted {
+    border: 2px solid var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.plan-badge {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 14px;
+    border-radius: 50px;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.plan-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.plan-description {
+    min-height: 50px;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.plan-price {
+    margin: 25px 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.plan-features {
+    min-height: 190px;
+    margin: 0 0 28px;
+    padding: 0;
+    list-style: none;
+}
+
+.plan-features li {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.plan-features i {
+    color: var(--color-success);
+}
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.companies-cta {
+    background: var(--color-background);
+}
+
+.companies-cta-card {
+    padding: 55px;
+    border-radius: var(--radius-lg);
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.companies-cta-card .section-eyebrow {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.companies-cta-card h2 {
+    max-width: 700px;
+    margin-bottom: 15px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 750;
+}
+
+.companies-cta-card p {
+    max-width: 700px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.7;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .companies-hero {
+        padding: 80px 0;
+    }
+
+    .companies-hero-title {
+        font-size: 3rem;
+    }
+
+    .companies-verification-card {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .section-padding {
+        padding: 65px 0;
+    }
+
+    .companies-hero-title {
+        font-size: 2.4rem;
+    }
+
+    .companies-hero-actions {
+        flex-direction: column;
+    }
+
+    .companies-hero-actions .btn {
+        width: 100%;
+    }
+
+    .companies-hero-trust {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .companies-cta-card {
+        padding: 35px 25px;
+    }
+
+}

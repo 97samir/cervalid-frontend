@@ -1,5 +1,4 @@
 // Maneja las operaciones relacionadas a invitaciones de usuarios
-
 import apiClient from "@/core/api/apiClient";
 
 export const sendInvitation = async (data) => {

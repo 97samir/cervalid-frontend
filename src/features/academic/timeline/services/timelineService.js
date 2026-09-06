@@ -2,11 +2,20 @@ import { timelineApi } from "../api/timelineApi";
 
 export const timelineService = {
 
-    getStudentTimeline: async (studentPublicId, params) => {
+    getStudentTimeline: async (studentPublicId, params = {}) => {
         const response = await timelineApi.getStudentTimeline(
             studentPublicId,
             params
         );
+
+        return response.data;
+    },
+
+    getStudentTimelineSummary: async (studentPublicId) => {
+        const response =
+            await timelineApi.getStudentTimelineSummary(
+                studentPublicId
+            );
 
         return response.data;
     },
@@ -25,12 +34,6 @@ export const timelineService = {
 
     deleteEvent: async (publicId) => {
         const response = await timelineApi.deleteEvent(publicId);
-
-        return response.data;
-    },
-
-    searchTimeline: async (data, params) => {
-        const response = await timelineApi.searchTimeline(data, params);
 
         return response.data;
     },

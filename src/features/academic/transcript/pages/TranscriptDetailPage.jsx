@@ -1,19 +1,21 @@
-import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import TranscriptItemModal from "../components/TranscriptItemModal";
 import TranscriptSummaryCard from "../components/TranscriptSummaryCard";
 import TranscriptItemsTable from "../components/TranscriptItemsTable";
+import IssueCertificateModal from "../components/IssueCertificateModal";
 
 import { useTranscript } from "../hooks/useTranscript";
 import { useAddTranscriptItem } from "../hooks/useAddTranscriptItem";
 import { useUpdateTranscriptItem } from "../hooks/useUpdateTranscriptItem";
 import { useDeleteTranscriptItem } from "../hooks/useDeleteTranscriptItem";
 import { useFinalizeTranscript } from "../hooks/useFinalizeTranscript";
-//import { useIssueTranscript } from "../hooks/useIssueTranscript";
+
 import { useIssueCertificate } from "../../certificate/hooks/useIssueCertificate";
 
 export default function TranscriptDetailPage() {
-
+    
     const EMPTY_ITEM = {
         courseCode: "",
         courseName: "",
@@ -22,9 +24,13 @@ export default function TranscriptDetailPage() {
     };
 
     const [showModal, setShowModal] = useState(false);
+    const [showIssueModal, setShowIssueModal] = useState(false);
     const [editingItem, setEditingItem] = useState(null);
     const [form, setForm] = useState(EMPTY_ITEM);
+
     const { transcriptPublicId } = useParams();
+
+    const navigate = useNavigate();
 
     const {
         data: transcript,
@@ -55,148 +61,167 @@ export default function TranscriptDetailPage() {
     }
 
     const handleCreate = () => {
-
         setEditingItem(null);
         setForm(EMPTY_ITEM);
         setShowModal(true);
     };
 
     const handleEdit = (item) => {
-
         setEditingItem(item);
 
         setForm({
-            courseCode: item.courseCode,
-            courseName: item.courseName,
-            credits: item.credits,
-            grade: item.grade,
+        courseCode: item.courseCode ?? "",
+        courseName: item.courseName ?? "",
+        credits: item.credits ?? 1,
+        grade: item.grade ?? "",
         });
 
         setShowModal(true);
     };
 
     const handleDelete = (itemPublicId) => {
+        const confirmed = window.confirm("¿Está seguro de eliminar este curso?");
 
-        const confirmDelete = window.confirm(
-            "¿Está seguro de eliminar este curso?");
+        if (!confirmed) return;
 
-            if (!confirmDelete) return;
-
-            deleteMutation.mutate({
-                transcriptPublicId,
-                itemPublicId,
-            });
-
+        deleteMutation.mutate({
+        transcriptPublicId,
+        itemPublicId,
+        });
     };
 
     const handleCloseModal = () => {
-
         setShowModal(false);
         setEditingItem(null);
         setForm(EMPTY_ITEM);
     };
 
     const handleSubmitItem = (formData) => {
-
         const options = {
-            onSuccess: () => {
-                handleCloseModal();
-            }
+        onSuccess: () => {
+            handleCloseModal();
+        },
         };
 
-        if(editingItem){
-
-            updateMutation.mutate(
-                {
-                    transcriptPublicId,
-                    itemPublicId: editingItem.publicId,
-                    data: formData,
-                },
-                options
-            );
-        }else{
-
-            addMutation.mutate(
-                {
-                    transcriptPublicId,
-                    data: formData,
-                },
-                options
-            );
+        if (editingItem) {
+        updateMutation.mutate(
+            {
+            transcriptPublicId,
+            itemPublicId: editingItem.publicId,
+            data: formData,
+            },
+            options,
+        );
+        } else {
+        addMutation.mutate(
+            {
+            transcriptPublicId,
+            data: formData,
+            },
+            options,
+        );
         }
     };
 
     const handleFinalize = () => {
-
         const confirmed = window.confirm(
-            "¿Está seguro de finalizar este historial académico?"
+        "¿Está seguro de finalizar este historial académico?",
         );
 
-        if(!confirmed) return;
+        if (!confirmed) return;
 
         finalizeMutation.mutate(transcriptPublicId);
     };
 
     const handleIssue = () => {
+        setShowIssueModal(true);
+    };
 
-        const confirmed = window.confirm(
-            "¿Desea emitir el certificado oficial asociado a este historial académico?"
+    const handleCloseIssueModal = () => {
+        setShowIssueModal(false);
+    };
+
+    const handleSubmitIssue = (formData) => {
+        issueMutation.mutate(
+        {
+            transcriptPublicId,
+            type: formData.type,
+            title: formData.title,
+            awardedAt: formData.awardedAt,
+            documentHash: formData.documentHash || null,
+            documentUrl: formData.documentUrl || null,
+        },
+        {
+            onSuccess: () => {
+            setShowIssueModal(false);
+            },
+        },
         );
-
-        if(!confirmed) return;
-
-        issueMutation.mutate(transcriptPublicId);
     };
 
     return (
         <div className="container-fluid">
-            {/* Header */}
+        {/* HEADER*/}
 
-            <div className="card shadow-sm border-0 mb-4">
-                <div className="card-body d-flex justify-content-between align-items-center">
-                <div>
-                    <h2 className="fw-bold mb-1">Historial Académico</h2>
+        <div className="card shadow-sm border-0 mb-4">
+            <div className="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h2 className="fw-bold mb-1">Historial Académico</h2>
 
-                    <p className="text-muted mb-0">
-                    Consulte y administre los cursos registrados.
-                    </p>
-                </div>
-
-                <Link to={-1} className="btn btn-outline-secondary">
-                    Volver
-                </Link>
-                </div>
+                <p className="text-muted mb-0">
+                Consulte y administre los cursos registrados.
+                </p>
             </div>
 
-            {/* <TranscriptCard transcript={transcript} /> */}
-            
-            <TranscriptSummaryCard
-                transcript={transcript}
-                onFinalize={handleFinalize}
-                onIssue={handleIssue}
-                finalizing={finalizeMutation.isPending}
-                issuing={issueMutation.isPending}
-            />
+            <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => navigate(-1)}
+            >
+                Volver
+            </button>
+            </div>
+        </div>
 
-            <TranscriptItemsTable
-                transcript={transcript}
-                onCreate={handleCreate}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-            />
+        {/*  RESUMEN*/}
 
-            <TranscriptItemModal
-                show={showModal}
-                form={form}
-                setForm={setForm}
-                editingItem={editingItem}
-                onClose={handleCloseModal}
-                onSubmit={handleSubmitItem}
-                loading={
-                    addMutation.isPending ||
-                    updateMutation.isPending
-                }
-            />
+        <TranscriptSummaryCard
+            transcript={transcript}
+            onFinalize={handleFinalize}
+            onIssue={handleIssue}
+            finalizing={finalizeMutation.isPending}
+            issuing={issueMutation.isPending}
+        />
+
+        {/*  CURSOS*/}
+
+        <TranscriptItemsTable
+            transcript={transcript}
+            onCreate={handleCreate}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+        />
+
+        {/*  MODAL CURSO */}
+
+        <TranscriptItemModal
+            show={showModal}
+            form={form}
+            setForm={setForm}
+            editingItem={editingItem}
+            onClose={handleCloseModal}
+            onSubmit={handleSubmitItem}
+            loading={addMutation.isPending || updateMutation.isPending}
+        />
+
+        {/*  MODAL EMISIÓN */}
+
+        <IssueCertificateModal
+            show={showIssueModal}
+            onClose={handleCloseIssueModal}
+            onSubmit={handleSubmitIssue}
+            loading={issueMutation.isPending}
+        />
         </div>
     );
 }

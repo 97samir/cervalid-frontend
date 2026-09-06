@@ -38,9 +38,7 @@ export default function TimelineEventDetailModal({ publicId, onClose }) {
         }}
         >
         <div className="timeline-modal-dialog">
-            {/* =====================================================
-                        HEADER
-                    ===================================================== */}
+            {/* HEADER */}
 
             <div className="timeline-modal-header">
             <div className="d-flex align-items-center gap-3">
@@ -67,9 +65,7 @@ export default function TimelineEventDetailModal({ publicId, onClose }) {
             />
             </div>
 
-            {/* =====================================================
-                        BODY
-                    ===================================================== */}
+            {/* BODY */}
 
             <div className="timeline-modal-body">
             {/* LOADING */}
@@ -99,9 +95,7 @@ export default function TimelineEventDetailModal({ publicId, onClose }) {
 
             {event && !isLoading && !error && (
                 <>
-                {/* =================================================
-                                    DESCRIPTION
-                                ================================================= */}
+                {/*  DESCRIPTION */}
 
                 <div className="timeline-detail-description">
                     <div className="timeline-detail-section-label">Descripción</div>
@@ -111,9 +105,7 @@ export default function TimelineEventDetailModal({ publicId, onClose }) {
                     </div>
                 </div>
 
-                {/* =================================================
-                                    GENERAL INFORMATION
-                                ================================================= */}
+                {/* GENERAL INFORMATION */}
 
                 <div className="timeline-detail-section">
                     <div className="timeline-detail-section-title">
@@ -206,16 +198,14 @@ export default function TimelineEventDetailModal({ publicId, onClose }) {
                     </div>
                 </div>
 
-                {/* =================================================
-                                    METADATA
-                                ================================================= */}
+                {/* METADATA */}
 
                 {event.metadataJson &&
                     Object.keys(event.metadataJson).length > 0 && (
                     <div className="timeline-detail-section">
                         <div className="timeline-detail-section-title">
-                        <i className="bi bi-list-check me-2"></i>
-                        Información adicional
+                            <i className="bi bi-list-check me-2"></i>
+                            Información adicional
                         </div>
 
                         <div className="row g-3">
@@ -230,6 +220,7 @@ export default function TimelineEventDetailModal({ publicId, onClose }) {
                                     <div className="timeline-metadata-value text-break">
                                         {formatTimelineMetadata(key, value)}
                                     </div>
+
                                 </div>
                             </div>
                             ),
@@ -241,9 +232,7 @@ export default function TimelineEventDetailModal({ publicId, onClose }) {
             )}
             </div>
 
-            {/* =====================================================
-                        FOOTER
-                    ===================================================== */}
+            {/*  FOOTER */}
 
             <div className="timeline-modal-footer">
             <button

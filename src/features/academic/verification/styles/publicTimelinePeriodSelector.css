@@ -1,0 +1,231 @@
+/* =========================================================
+                    SELECTOR
+========================================================= */
+
+.public-timeline-period-selector {
+    position: relative;
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    padding: 0.5rem 0 0.75rem;
+
+    scrollbar-width: thin;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* =========================================================
+                    TRACK
+========================================================= */
+
+.public-timeline-period-track {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    width: max-content;
+    min-width: 100%;
+
+    padding: 0.5rem 1rem 0;
+}
+
+
+/* =========================================================
+                    LÍNEA
+========================================================= */
+
+.public-timeline-period-track::before {
+    content: "";
+
+    position: absolute;
+
+    top: 1.15rem;
+
+    left: 1rem;
+    right: 1rem;
+
+    height: 2px;
+
+    background: var(--bs-border-color);
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+                    PERÍODO
+========================================================= */
+
+.public-timeline-period {
+    position: relative;
+
+    min-width: 110px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 0.35rem;
+
+    padding: 0 0.75rem;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--bs-secondary-color);
+
+    text-align: center;
+
+    cursor: pointer;
+
+    z-index: 1;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.public-timeline-period:hover {
+    color: var(--bs-primary);
+}
+
+
+/* =========================================================
+                    PUNTO
+========================================================= */
+
+.public-timeline-period-dot {
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--bs-body-bg);
+
+    border: 2px solid var(--bs-border-color);
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.public-timeline-period-dot span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    transition: background-color 0.2s ease;
+}
+
+
+/* =========================================================
+                    LABEL
+========================================================= */
+
+.public-timeline-period-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: font-weight 0.2s ease;
+}
+
+.public-timeline-period-year {
+    font-size: 0.7rem;
+
+    color: var(--bs-secondary-color);
+
+    white-space: nowrap;
+
+    transition: color 0.2s ease;
+}
+
+
+/* =========================================================
+                    ACTIVO
+========================================================= */
+
+.public-timeline-period.is-active {
+    color: var(--bs-primary);
+}
+
+.public-timeline-period.is-active .public-timeline-period-dot {
+    border-color: var(--bs-primary);
+
+    background: var(--bs-body-bg);
+
+    transform: scale(1.15);
+}
+
+.public-timeline-period.is-active .public-timeline-period-dot span {
+    background: var(--bs-primary);
+}
+
+.public-timeline-period.is-active .public-timeline-period-label {
+    font-weight: 700;
+}
+
+.public-timeline-period.is-active .public-timeline-period-year {
+    color: var(--bs-primary);
+}
+
+
+/* =========================================================
+                    FOCUS
+========================================================= */
+
+.public-timeline-period:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 4px;
+
+    border-radius: 0.5rem;
+}
+
+
+/* =========================================================
+                    RESPONSIVE
+========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .public-timeline-period-track {
+        justify-content: flex-start;
+
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .public-timeline-period-track::before {
+        left: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .public-timeline-period {
+        min-width: 95px;
+
+        padding: 0 0.5rem;
+    }
+
+    .public-timeline-period-label {
+        font-size: 0.75rem;
+    }
+
+    .public-timeline-period-year {
+        font-size: 0.65rem;
+    }
+}

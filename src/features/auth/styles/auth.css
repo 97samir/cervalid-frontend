@@ -1,0 +1,915 @@
+/* =========================================================
+   AUTH LAYOUT
+========================================================= */
+
+.auth-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.auth-main {
+  flex: 1;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.auth-header {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.auth-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #111827;
+  font-size: 1.35rem;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.auth-brand:hover {
+  color: #111827;
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.auth-page {
+  min-height: calc(100vh - 72px);
+  padding: 56px 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.auth-card-wrapper {
+  width: 100%;
+  max-width: 460px;
+}
+
+.auth-card-wide {
+  max-width: 680px;
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.auth-page-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-page-heading h1 {
+  margin: 12px 0 8px;
+
+  color: #111827;
+
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+.auth-page-heading p {
+  margin: 0;
+
+  color: #6b7280;
+  font-size: 0.98rem;
+}
+
+.auth-page-icon {
+  width: 52px;
+  height: 52px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #eef2ff;
+  color: #4f46e5;
+
+  font-size: 1.35rem;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.auth-card {
+    width: 100%;
+
+    padding: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.auth-form-group {
+  margin-bottom: 20px;
+}
+
+.auth-form-group label,
+.auth-form-section .form-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.auth-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.auth-input-wrapper .auth-input {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding-top: 10px;
+    padding-right: 14px;
+    padding-bottom: 10px;
+    padding-left: 44px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    color: #111827;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.auth-input-wrapper .auth-input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+.auth-input-wrapper .auth-input:focus {
+    border-color: #6366f1;
+
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.auth-input-icon {
+    position: absolute;
+
+    z-index: 2;
+
+    left: 14px;
+    top: 50%;
+
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-50%);
+
+    color: #9ca3af;
+
+    font-size: 0.95rem;
+
+    pointer-events: none;
+}
+
+.auth-password-input {
+    padding-right: 48px !important;
+}
+
+.auth-input:focus {
+  border-color: #6366f1;
+
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.auth-input-icon {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #9ca3af;
+
+  pointer-events: none;
+}
+
+.auth-password-input {
+  padding-right: 46px;
+}
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+.auth-password-toggle {
+    position: absolute;
+
+    z-index: 3;
+
+    right: 10px;
+    top: 50%;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    transform: translateY(-50%);
+
+    border: 0;
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #6b7280;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.auth-password-toggle:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.auth-password-toggle:focus-visible {
+    outline: none;
+
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+
+    color: #4f46e5;
+}
+
+/* =========================================================
+   LABEL / FORGOT PASSWORD
+========================================================= */
+
+.auth-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.auth-forgot-link {
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+
+  color: #4f46e5;
+
+  font-size: 0.82rem;
+
+  cursor: pointer;
+}
+
+.auth-forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+.auth-options {
+  margin: 6px 0 22px;
+}
+
+.auth-options .form-check-label {
+  color: #6b7280;
+  font-size: 0.86rem;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.auth-submit-btn {
+  min-height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #4f46e5;
+  color: #ffffff;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  background: #4338ca;
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.auth-alert {
+  display: flex;
+  align-items: flex-start;
+
+  margin-bottom: 20px;
+
+  border-radius: 9px;
+
+  font-size: 0.88rem;
+}
+
+/* =========================================================
+   SECONDARY ACTION
+========================================================= */
+
+.auth-secondary-action {
+  margin-top: 22px;
+
+  padding-top: 22px;
+
+  border-top: 1px solid #e5e7eb;
+
+  text-align: center;
+
+  color: #6b7280;
+
+  font-size: 0.86rem;
+}
+
+.auth-secondary-link {
+  display: block;
+
+  margin: 6px auto 0;
+
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+
+  color: #4f46e5;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.auth-secondary-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   FORM SECTIONS
+========================================================= */
+
+.auth-form-section {
+  margin-bottom: 30px;
+
+  padding-bottom: 28px;
+
+  border-bottom: 1px solid #eef0f3;
+}
+
+.auth-form-section:last-of-type {
+  margin-bottom: 24px;
+}
+
+.auth-section-heading {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.auth-section-heading > i {
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #f1f5f9;
+  color: #4f46e5;
+}
+
+.auth-section-heading h2 {
+  margin: 0 0 3px;
+
+  color: #111827;
+
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.auth-section-heading p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 0.82rem;
+}
+
+.auth-form-section .form-text {
+  font-size: 0.78rem;
+}
+
+/* =========================================================
+   INSTITUTION SELECTION
+========================================================= */
+
+.institution-selection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.institution-selection-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 16px;
+
+  text-align: left;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+
+  cursor: pointer;
+}
+
+.institution-selection-item:hover:not(:disabled) {
+  border-color: #a5b4fc;
+  background: #f8faff;
+
+  transform: translateY(-1px);
+}
+
+.institution-selection-item.selected {
+  border-color: #6366f1;
+  background: #eef2ff;
+}
+
+.institution-selection-item:disabled {
+  cursor: wait;
+}
+
+.institution-selection-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #f1f5f9;
+  color: #4f46e5;
+}
+
+.institution-selection-content {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.institution-selection-content strong {
+  color: #111827;
+
+  font-size: 0.95rem;
+}
+
+.institution-selection-content span {
+  color: #6b7280;
+
+  font-size: 0.78rem;
+}
+
+.institution-selection-arrow {
+  color: #9ca3af;
+}
+
+.institution-selection-help {
+  display: flex;
+
+  gap: 9px;
+
+  margin-top: 18px;
+  padding: 13px;
+
+  border-radius: 9px;
+
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 0.78rem;
+}
+
+.institution-selection-help i {
+  margin-top: 2px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.auth-footer {
+  padding: 22px 0;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e5e7eb;
+
+  color: #6b7280;
+
+  font-size: 0.78rem;
+}
+
+.auth-footer .container {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.auth-footer-links {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+}
+
+.auth-footer-links a {
+  color: #4f46e5;
+
+  text-decoration: none;
+}
+
+.auth-footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 576px) {
+  .auth-page {
+    padding: 32px 15px;
+  }
+
+  .auth-card {
+    padding: 22px 18px;
+    border-radius: 12px;
+  }
+
+  .auth-page-heading h1 {
+    font-size: 1.6rem;
+  }
+
+  .auth-label-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .auth-footer .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .auth-footer-links {
+    justify-content: center;
+  }
+
+  /* DEMO */
+    .demo-accounts-list {
+        grid-template-columns: 1fr;
+    }
+
+    .demo-account-item {
+        padding: 10px;
+    }
+
+    .demo-account-item-email {
+        font-size: 0.72rem;
+    }
+
+    .demo-accounts-password {
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================================================
+   DEMO ACCOUNTS
+========================================================= */
+
+.demo-accounts {
+  margin-top: 24px;
+  padding-top: 24px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+.demo-accounts-header {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 16px;
+}
+
+.demo-accounts-icon {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #f1f5f9;
+  color: #4f46e5;
+
+  font-size: 0.95rem;
+}
+
+.demo-accounts-title {
+  margin: 0 0 3px;
+
+  color: #111827;
+
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.demo-accounts-description {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   DEMO ACCOUNT LIST
+========================================================= */
+.demo-accounts-list {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+}
+
+.demo-account-item {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 11px 10px;
+
+    text-align: left;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    color: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+    cursor: pointer;
+}
+
+.demo-account-item:hover {
+  border-color: #c7d2fe;
+  background: #f8faff;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+}
+
+.demo-account-item:focus-visible {
+  outline: none;
+
+  border-color: #6366f1;
+
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.demo-account-item:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   DEMO ACCOUNT ICON
+========================================================= */
+
+.demo-account-item-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #f8fafc;
+  color: #4f46e5;
+
+  font-size: 0.9rem;
+}
+
+/* =========================================================
+   DEMO ACCOUNT CONTENT
+========================================================= */
+
+.demo-account-item-content {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.demo-account-item-role {
+  color: #374151;
+
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.demo-account-item-email {
+  overflow: hidden;
+
+  color: #6b7280;
+
+  font-size: 0.75rem;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   DEMO ACCOUNT ARROW
+========================================================= */
+
+.demo-account-item-arrow {
+  flex-shrink: 0;
+
+  color: #9ca3af;
+
+  font-size: 0.8rem;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.demo-account-item:hover .demo-account-item-arrow {
+  color: #4f46e5;
+
+  transform: translateX(2px);
+}
+
+/* =========================================================
+   DEMO PASSWORD
+========================================================= */
+
+.demo-accounts-password {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 14px;
+  padding: 10px 12px;
+
+  border-radius: 8px;
+
+  background: #f8fafc;
+
+  color: #64748b;
+
+  font-size: 0.75rem;
+}
+
+.demo-accounts-password i {
+  flex-shrink: 0;
+
+  color: #4f46e5;
+}
+
+.demo-accounts-password strong {
+  color: #374151;
+
+  font-weight: 600;
+}

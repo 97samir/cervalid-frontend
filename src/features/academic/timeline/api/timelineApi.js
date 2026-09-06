@@ -10,6 +10,11 @@ export const timelineApi = {
             { params }
         ),
 
+    getStudentTimelineSummary: (studentPublicId) =>
+        apiClient.get(
+            `${BASE_URL}/student/${studentPublicId}/summary`
+        ),
+
     getEventById: (publicId) =>
         apiClient.get(`${BASE_URL}/${publicId}`),
 
@@ -18,9 +23,6 @@ export const timelineApi = {
 
     deleteEvent: (publicId) =>
         apiClient.delete(`${BASE_URL}/${publicId}`),
-
-    searchTimeline: (data, params = {}) =>
-        apiClient.post(`${BASE_URL}/search`, data, { params }),
 
     getSummary: () =>
         apiClient.get(`${BASE_URL}/summary`),

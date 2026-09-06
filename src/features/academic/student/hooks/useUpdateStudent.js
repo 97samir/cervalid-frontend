@@ -10,7 +10,9 @@ export const useUpdateStudent = () => {
         studentApi.updateStudent(publicId, data),
 
         onSuccess: () => {
-        queryClient.invalidateQueries(["students"]);
+            queryClient.invalidateQueries({
+                queryKey: ["students"],
+            });
         }
     });
 };

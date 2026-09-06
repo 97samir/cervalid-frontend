@@ -6,6 +6,7 @@ export const useDeactivateCompetency = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
+
         mutationFn: competencyService.deactivateCompetency,
 
         onSuccess: (_, competencyPublicId) => {
@@ -14,14 +15,9 @@ export const useDeactivateCompetency = () => {
                 queryKey: ["competency", competencyPublicId],
             });
 
-            // Refresca cualquier listado de competencias
-            // queryClient.invalidateQueries({
-            //     queryKey: ["student-competencies"],
-            // });
-
             // Refresca los listados paginados
             queryClient.invalidateQueries({
-                queryKey: ["competencies"],
+                queryKey: ["student-competencies"],
             });
         },
     });

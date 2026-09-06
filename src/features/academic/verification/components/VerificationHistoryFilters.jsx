@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function VerificationHistoryFilters({ 
-    filters, 
-    onFilter 
-}) {
+export default function VerificationHistoryFilters({ filters, onFilter }) {
     const [form, setForm] = useState(filters);
 
     useEffect(() => {
@@ -28,9 +25,9 @@ export default function VerificationHistoryFilters({
 
     const handleClear = () => {
         const empty = {
-        search: "",
+        //search: "",
         status: "",
-        type: "",
+        //type: "",
         fromDate: "",
         toDate: "",
         };
@@ -44,19 +41,9 @@ export default function VerificationHistoryFilters({
         <form className="card shadow-sm border-0 mb-4" onSubmit={handleSubmit}>
         <div className="card-body">
             <div className="row g-3">
-            <div className="col-lg-4">
-                <label className="form-label">Certificado</label>
-
-                <input
-                className="form-control"
-                name="search"
-                placeholder="Número de certificado..."
-                value={form.search}
-                onChange={handleChange}
-                />
-            </div>
-
-            <div className="col-lg-2">
+            
+            {/* ESTADO */}
+            <div className="col-lg-3">
                 <label className="form-label">Estado</label>
 
                 <select
@@ -65,19 +52,17 @@ export default function VerificationHistoryFilters({
                 value={form.status}
                 onChange={handleChange}
                 >
-                <option value="">Todos</option>
-
-                <option value="VALID">Válidos</option>
-
-                <option value="INVALID">Inválidos</option>
-
-                <option value="REVOKED">Revocados</option>
-
-                <option value="NOT_FOUND">No encontrados</option>
+                    <option value="">Todos</option>
+                    <option value="VALID">Válidos</option>
+                    <option value="INVALID">Inválidos</option>
+                    <option value="REVOKED">Revocados</option>
+                    {/* <option value="NOT_FOUND">No encontrados</option> */}
                 </select>
             </div>
 
-            <div className="col-lg-2">
+            {/* DESDE */}
+
+            <div className="col-lg-3">
                 <label className="form-label">Desde</label>
 
                 <input
@@ -89,7 +74,9 @@ export default function VerificationHistoryFilters({
                 />
             </div>
 
-            <div className="col-lg-2">
+            {/* HASTA */}
+
+            <div className="col-lg-3">
                 <label className="form-label">Hasta</label>
 
                 <input
@@ -101,7 +88,9 @@ export default function VerificationHistoryFilters({
                 />
             </div>
 
-            <div className="col-lg-2 d-flex align-items-end gap-2">
+            {/* BOTONES */}
+
+            <div className="col-lg-3 d-flex align-items-end gap-2">
                 <button
                 type="button"
                 className="btn btn-outline-secondary flex-fill"

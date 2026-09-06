@@ -7,21 +7,26 @@ export function useVerificationHistory(
     size,
     filters,
 ) {
+
+    const searchFilters = {
+        ...filters,
+        certificatePublicId,
+    };
+
     return useQuery({
         queryKey: [
-        "certificate-verification-history",
-        certificatePublicId,
-        page,
-        size,
-        filters,
-        ],
-
-        queryFn: () =>
-        verificationService.getCertificateVerificationHistory(
+            "certificate-verification-history",
             certificatePublicId,
             page,
             size,
             filters,
+        ],
+
+        queryFn: () =>
+        verificationService.searchVerificationHistory(
+            page,
+            size,
+            searchFilters,
         ),
 
         enabled: !!certificatePublicId,

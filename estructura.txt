@@ -1,19 +1,25 @@
-
+Listado de rutas de carpetas para el volumen Windows-SSD
+El número de serie del volumen es 000001C4 6627:F176
 C:\WORKSPACE_INTELLIJ IDEA\CERVALID PLATAFORMA WEB\FRONTEND\SRC
 |   App.css
 |   App.jsx
-|   index.css
 |   main.jsx
 |   
 +---app
 |   +---providers
-|   |       AuthProvider.jsx
+|   |       ReactQueryProvider.jsx
 |   |       
 |   +---routes
+|   |       AcademicRoutes.jsx
 |   |       AppRouter.jsx
+|   |       AuthRoutes.jsx
 |   |       InstitutionGuard.jsx
+|   |       InstitutionRoutes.jsx
 |   |       PrivateRoute.jsx
+|   |       PublicRoutes.jsx
 |   |       RoleGuard.jsx
+|   |       ScrollToTop.jsx
+|   |       SuperAdminRoutes.jsx
 |   |       
 |   \---store
 |       \---auth
@@ -47,19 +53,304 @@ C:\WORKSPACE_INTELLIJ IDEA\CERVALID PLATAFORMA WEB\FRONTEND\SRC
 |           alerts.js
 |           
 +---features
+|   +---academic
+|   |   +---achievement
+|   |   |   +---api
+|   |   |   |       achievementApi.js
+|   |   |   |       
+|   |   |   +---components
+|   |   |   |       AchievementCard.jsx
+|   |   |   |       AchievementEditModal.jsx
+|   |   |   |       AchievementForm.jsx
+|   |   |   |       AchievementStatusBadge.jsx
+|   |   |   |       AchievementSummaryCard.jsx
+|   |   |   |       AchievementTable.jsx
+|   |   |   |       AchievementTypeBadge.jsx
+|   |   |   |       
+|   |   |   +---hooks
+|   |   |   |       useAchievement.js
+|   |   |   |       useCreateAchievement.js
+|   |   |   |       useDeactivateAchievement.js
+|   |   |   |       useStudentAchievements.js
+|   |   |   |       useUpdateAchievement.js
+|   |   |   |       
+|   |   |   +---pages
+|   |   |   |       AchievementCreatePage.jsx
+|   |   |   |       AchievementDetailPage.jsx
+|   |   |   |       AchievementListPage.jsx
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       achievementService.js
+|   |   |   |       
+|   |   |   \---utils
+|   |   |           achievementDateUtils.js
+|   |   |           
+|   |   +---certificate
+|   |   |   +---api
+|   |   |   |       certificateApi.js
+|   |   |   |       
+|   |   |   +---components
+|   |   |   |       CertificateCard.jsx
+|   |   |   |       CertificateDocumentModal.jsx
+|   |   |   |       CertificateStatusBadge.jsx
+|   |   |   |       CertificateSummaryCard.jsx
+|   |   |   |       CertificateTable.jsx
+|   |   |   |       CertificateTypeBadge.jsx
+|   |   |   |       
+|   |   |   +---hooks
+|   |   |   |       useCertificate.js
+|   |   |   |       useCertificates.js
+|   |   |   |       useIssueCertificate.js
+|   |   |   |       useRevokeCertificate.js
+|   |   |   |       useUpdateCertificateCredential
+|   |   |   |       useUpdateCertificateDocument
+|   |   |   |       
+|   |   |   +---pages
+|   |   |   |       CertificateDetailPage.jsx
+|   |   |   |       CertificateListPage.jsx
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       certificateService.js
+|   |   |   |       
+|   |   |   \---utils
+|   |   +---competency
+|   |   |   +---api
+|   |   |   |       competencyApi.js
+|   |   |   |       
+|   |   |   +---components
+|   |   |   |       CompetencyCard.jsx
+|   |   |   |       CompetencyEditModal.jsx
+|   |   |   |       CompetencyForm.jsx
+|   |   |   |       CompetencyLevelBadge.jsx
+|   |   |   |       CompetencySourceBadge.jsx
+|   |   |   |       CompetencyStatusBadge.jsx
+|   |   |   |       CompetencySummaryCard.jsx
+|   |   |   |       
+|   |   |   +---hooks
+|   |   |   |       useCompetency.js
+|   |   |   |       useCreateCompetency.js
+|   |   |   |       useDeactivateCompetency.js
+|   |   |   |       useDeleteCompetency.js
+|   |   |   |       useStudentCompetencies.js
+|   |   |   |       useUpdateCompetency.js
+|   |   |   |       
+|   |   |   +---pages
+|   |   |   |       CompetencyCreatePage.jsx
+|   |   |   |       CompetencyDetailPage.jsx
+|   |   |   |       CompetencyListPage.jsx
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       competencyService.js
+|   |   |   |       
+|   |   |   \---utils
+|   |   |           competencyDateUtils.js
+|   |   |           competencyMapper.js
+|   |   |           
+|   |   +---profile
+|   |   |   +---api
+|   |   |   |       academicProfileApi.js
+|   |   |   |       
+|   |   |   +---components
+|   |   |   |       AcademicProfileCard.jsx
+|   |   |   |       AcademicProfileEditModal.jsx
+|   |   |   |       AcademicProfileForm.jsx
+|   |   |   |       
+|   |   |   +---hooks
+|   |   |   |       useAcademicProfile.js
+|   |   |   |       useCreateProfile.js
+|   |   |   |       useStudentProfile.js
+|   |   |   |       useUpdateProfile.js
+|   |   |   |       
+|   |   |   +---pages
+|   |   |   |       AcademicProfileCreatePage.jsx
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       academicProfileService.js
+|   |   |   |       
+|   |   |   \---utils
+|   |   |           academicProfileMapper.js
+|   |   |           
+|   |   +---student
+|   |   |   +---api
+|   |   |   |       studentApi.js
+|   |   |   |       
+|   |   |   +---components
+|   |   |   |       StudentCard.jsx
+|   |   |   |       StudentDetailCard.jsx
+|   |   |   |       StudentEditModal.jsx
+|   |   |   |       StudentFilters.jsx
+|   |   |   |       StudentForm.jsx
+|   |   |   |       StudentStatusBadge.jsx
+|   |   |   |       StudentTable.jsx
+|   |   |   |       
+|   |   |   +---hooks
+|   |   |   |       useCreateStudent.js
+|   |   |   |       useDeleteStudent.js
+|   |   |   |       useRegisterStudent.js
+|   |   |   |       useStudent.js
+|   |   |   |       useStudents.js
+|   |   |   |       useUpdateStudent.js
+|   |   |   |       
+|   |   |   +---pages
+|   |   |   |       StudentCreatePage.jsx
+|   |   |   |       StudentDashboardPage.jsx
+|   |   |   |       StudentDetailPage.jsx
+|   |   |   |       StudentListPage.jsx
+|   |   |   |       StudentRegisterPage.jsx
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       studentService.js
+|   |   |   |       
+|   |   |   \---utils
+|   |   |           studentMapper.js
+|   |   |           studentValidation.js
+|   |   |           
+|   |   +---timeline
+|   |   |   |   index.js
+|   |   |   |   
+|   |   |   +---api
+|   |   |   |       timelineApi.js
+|   |   |   |       
+|   |   |   +---components
+|   |   |   |       TimelineEventCard.jsx
+|   |   |   |       TimelineEventDetailModal.jsx
+|   |   |   |       TimelineEventFilters.jsx
+|   |   |   |       TimelineEventHeaders.jsx
+|   |   |   |       TimelineEventPagination.jsx
+|   |   |   |       TimelineItem.jsx
+|   |   |   |       TimelineSummary.jsx
+|   |   |   |       
+|   |   |   +---hooks
+|   |   |   |       useCreateTimelineEvent.js
+|   |   |   |       useDebounce.js
+|   |   |   |       useDeleteTimelineEvent.js
+|   |   |   |       useStudentTimeline.js
+|   |   |   |       useStudentTimelineSummary.js
+|   |   |   |       useTimelineEvent.js
+|   |   |   |       
+|   |   |   +---pages
+|   |   |   |       StudentTimelinePage.jsx
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       timelineService.js
+|   |   |   |       
+|   |   |   +---styles
+|   |   |   |       timeline-modal.css
+|   |   |   |       timeline.css
+|   |   |   |       
+|   |   |   \---utils
+|   |   |           timelineDateUtils.js
+|   |   |           timelineEventUtils.js
+|   |   |           
+|   |   +---transcript
+|   |   |   +---api
+|   |   |   |       transcriptApi.js
+|   |   |   |       
+|   |   |   +---components
+|   |   |   |       IssueCertificateModal.jsx
+|   |   |   |       TranscriptBlockchainCard.jsx
+|   |   |   |       TranscriptCard.jsx
+|   |   |   |       TranscriptForm.jsx
+|   |   |   |       TranscriptItemModal.jsx
+|   |   |   |       TranscriptItemsTable.jsx
+|   |   |   |       TranscriptStatistics.jsx
+|   |   |   |       TranscriptStatusBadge.jsx
+|   |   |   |       TranscriptSummaryCard.jsx
+|   |   |   |       TranscriptTable.jsx
+|   |   |   |       
+|   |   |   +---hooks
+|   |   |   |       useAddTranscriptItem.js
+|   |   |   |       useCreateTranscript.js
+|   |   |   |       useDeleteTranscriptItem.js
+|   |   |   |       useFinalizeTranscript.js
+|   |   |   |       useIssueTranscript.js
+|   |   |   |       useStudentTranscripts.js
+|   |   |   |       useTranscript.js
+|   |   |   |       useUpdateTranscriptItem.js
+|   |   |   |       
+|   |   |   +---pages
+|   |   |   |       TranscriptCreatePage.jsx
+|   |   |   |       TranscriptDetailPage.jsx
+|   |   |   |       TranscriptListPage.jsx
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       transcriptService.js
+|   |   |   |       
+|   |   |   \---utils
+|   |   |           transcriptDateUtils.js
+|   |   |           transcriptMapper.js
+|   |   |           
+|   |   \---verification
+|   |       +---api
+|   |       |       verificationApi.js
+|   |       |       
+|   |       +---components
+|   |       |       PublicTimelineEmpty.jsx
+|   |       |       PublicTimelineHeader.jsx
+|   |       |       PublicTimelineItem.jsx
+|   |       |       PublicTimelinePeriod.jsx
+|   |       |       PublicTimelinePeriodSelector.jsx
+|   |       |       PublicTimelineSummary.jsx
+|   |       |       VerificationDashboardCards.jsx
+|   |       |       VerificationHistoryFilters.jsx
+|   |       |       VerificationHistoryPagination.jsx
+|   |       |       VerificationHistoryTable.jsx
+|   |       |       VerificationLevelBadge.jsx
+|   |       |       VerificationResultCard.jsx
+|   |       |       VerificationSearchCard.jsx
+|   |       |       VerificationStatusBadge.jsx
+|   |       |       VerificationSummaryFilters.jsx
+|   |       |       VerificationSummaryTable.jsx
+|   |       |       
+|   |       +---hooks
+|   |       |       useInstitutionVerificationHistory.js
+|   |       |       usePublicCertificateTimeline.js
+|   |       |       useVerificationDashboard.js
+|   |       |       useVerificationHistory.js
+|   |       |       useVerificationSummary.js
+|   |       |       useVerifyCertificate.js
+|   |       |       useVerifyPublicCertificate.js
+|   |       |       
+|   |       +---pages
+|   |       |       CertificateVerificationHistoryPage.jsx
+|   |       |       CertificateVerificationPage.jsx
+|   |       |       PublicCertificateVerificationPage.jsx
+|   |       |       PublicTimelinePage.jsx
+|   |       |       VerificationDashboardPage.jsx
+|   |       |       
+|   |       +---services
+|   |       |       verificationService.js
+|   |       |       
+|   |       +---styles
+|   |       |       certificateVerification.css
+|   |       |       publicTimeline.css
+|   |       |       publicTimelinePeriodSelector.css
+|   |       |       verification.css
+|   |       |       
+|   |       \---utils
+|   |               publicTimelineUtils.js
+|   |               verificationUtils.js
+|   |               
 |   +---auth
 |   |   +---api
 |   |   |       authApi.js
 |   |   |       
 |   |   +---components
 |   |   |       ActivateAccountForm.jsx
+|   |   |       DemoAccounts.jsx
 |   |   |       LoginForm.jsx
 |   |   |       
 |   |   +---hooks
-|   |   \---pages
-|   |           ActivateAccountPage.jsx
-|   |           LoginPage.jsx
-|   |           SelectInstitutionPage.jsx
+|   |   +---layouts
+|   |   |       AuthLayout.jsx
+|   |   |       
+|   |   +---pages
+|   |   |       ActivateAccountPage.jsx
+|   |   |       LoginPage.jsx
+|   |   |       SelectInstitutionPage.jsx
+|   |   |       
+|   |   \---styles
+|   |           auth.css
 |   |           
 |   +---institution
 |   |   +---api
@@ -84,15 +375,20 @@ C:\WORKSPACE_INTELLIJ IDEA\CERVALID PLATAFORMA WEB\FRONTEND\SRC
 |   |   |       InstitutionRequestTable.jsx
 |   |   |       RejectInstitutionModal.jsx
 |   |   |       
-|   |   \---pages
-|   |           InstitutionRequestAdminPage.jsx
-|   |           InstitutionRequestPage.jsx
+|   |   +---pages
+|   |   |       InstitutionRequestAdminPage.jsx
+|   |   |       InstitutionRequestPage.jsx
+|   |   |       
+|   |   \---styles
+|   |           institutionRequest.css
 |   |           
 |   +---invitations
 |   |   +---api
 |   |   |       invitationsApi.js
 |   |   |       
 |   |   +---components
+|   |   |       InvitationFilters.jsx
+|   |   |       InvitationsPagination.jsx
 |   |   |       InvitationsTable.jsx
 |   |   |       InviteUserForm.jsx
 |   |   |       
@@ -102,62 +398,77 @@ C:\WORKSPACE_INTELLIJ IDEA\CERVALID PLATAFORMA WEB\FRONTEND\SRC
 |   |           
 |   +---public
 |   |   +---components
-|   |   |       PublicCertificateHeader.jsx
-|   |   |       PublicTraceability.jsx
-|   |   |       PublicValidationBadge.jsx
-|   |   |       PublicVerifyButton.jsx
+|   |   |   |   BlockchainBenefits.jsx
+|   |   |   |   HowItWorksStep.jsx
+|   |   |   |   PublicCtaSection.jsx
+|   |   |   |   PublicFooter.jsx
+|   |   |   |   PublicNavbar.jsx
+|   |   |   |   PublicPageHero.jsx
+|   |   |   |   
+|   |   |   +---companies
+|   |   |   |       CompaniesCtaSection.jsx
+|   |   |   |       CompaniesHeroSection.jsx
+|   |   |   |       CompanyBenefitsSection.jsx
+|   |   |   |       CompanyPlansSection.jsx
+|   |   |   |       FraudProblemSection.jsx
+|   |   |   |       VerificationProcessSection.jsx
+|   |   |   |       
+|   |   |   +---contact
+|   |   |   |       ContactForm.jsx
+|   |   |   |       ContactInfo.jsx
+|   |   |   |       ContactInstitutionCta.jsx
+|   |   |   |       
+|   |   |   +---home
+|   |   |   |       CallToActionSection.jsx
+|   |   |   |       HeroSection.jsx
+|   |   |   |       HowItWorksSection.jsx
+|   |   |   |       PlatformStats.jsx
+|   |   |   |       SolutionsSection.jsx
+|   |   |   |       WhatIsCervalidSection.jsx
+|   |   |   |       
+|   |   |   +---institutions
+|   |   |   |       InstitutionBenefitsSection.jsx
+|   |   |   |       InstitutionCtaSection.jsx
+|   |   |   |       InstitutionProcessSection.jsx
+|   |   |   |       InstitutionsHeroSection.jsx
+|   |   |   |       
+|   |   |   +---sitemap
+|   |   |   |       SitemapLink.jsx
+|   |   |   |       SitemapSection.jsx
+|   |   |   |       
+|   |   |   \---students
+|   |   |           StudentBenefitsSection.jsx
+|   |   |           StudentCtaSection.jsx
+|   |   |           StudentsHeroSection.jsx
+|   |   |           StudentUseCasesSection.jsx
+|   |   |           
+|   |   +---layouts
+|   |   |       PublicLayout.jsx
 |   |   |       
-|   |   \---pages
-|   |           PublicCertificatePage.jsx
+|   |   +---pages
+|   |   |       CompaniesPage.jsx
+|   |   |       ContactPage.jsx
+|   |   |       HomePage.jsx
+|   |   |       HowItWorksPage.jsx
+|   |   |       InstitutionsLandingPage.jsx
+|   |   |       SitemapPage.jsx
+|   |   |       StudentsPage.jsx
+|   |   |       
+|   |   +---styles
+|   |   |       companies.css
+|   |   |       contact.css
+|   |   |       home.css
+|   |   |       howItWorks.css
+|   |   |       institutions.css
+|   |   |       public.css
+|   |   |       sitemap.css
+|   |   |       students.css
+|   |   |       
+|   |   \---utils
+|   |           howItWorksContent.js
 |   |           
 |   +---recruiter
 |   |   \---pages
-|   |           RecruiterVerifyPage.jsx
-|   |           
-|   +---student
-|   |   +---api
-|   |   |       studentApi.js
-|   |   |       
-|   |   +---components
-|   |   |   +---certificates
-|   |   |   |       CertificateActions.jsx
-|   |   |   |       CertificateCard.jsx
-|   |   |   |       CertificateHeader.jsx
-|   |   |   |       CertificatesList.jsx
-|   |   |   |       CertificateTimeline.jsx
-|   |   |   |       CertificateValidation.jsx
-|   |   |   |       
-|   |   |   +---dashboard
-|   |   |   |       QuickActions.jsx
-|   |   |   |       QuickVerify.jsx
-|   |   |   |       RecentCertificates.jsx
-|   |   |   |       SummaryCards.jsx
-|   |   |   |       TraceabilityPreview.jsx
-|   |   |   |       
-|   |   |   +---traceability
-|   |   |   |       Timeline.jsx
-|   |   |   |       Timeline.module.css
-|   |   |   |       TimelineItem.jsx
-|   |   |   |       
-|   |   |   \---verify
-|   |   |           VerifyForm.jsx
-|   |   |           VerifyResult.jsx
-|   |   |           
-|   |   +---hooks
-|   |   |       useStudentCertificates.js
-|   |   |       useVerifyDocument.js
-|   |   |       
-|   |   +---mock
-|   |   |       certificates.mock.js
-|   |   |       
-|   |   \---pages
-|   |           StudentCertificateDetailPage.jsx
-|   |           StudentCertificatesPage.jsx
-|   |           StudentDashboardPage.jsx
-|   |           StudentHistoryPage.jsx
-|   |           StudentProfilePage.jsx
-|   |           StudentVerifyPage.jsx
-|   |           
 |   +---superadmin
 |   |   +---api
 |   |   |       superAdminApi.js
@@ -188,6 +499,8 @@ C:\WORKSPACE_INTELLIJ IDEA\CERVALID PLATAFORMA WEB\FRONTEND\SRC
 |       |       
 |       +---components
 |       |       UserRoleSelect.jsx
+|       |       UsersFilters.jsx
+|       |       UsersPagination.jsx
 |       |       UsersTable.jsx
 |       |       UserStatusToggle.jsx
 |       |       
@@ -196,16 +509,33 @@ C:\WORKSPACE_INTELLIJ IDEA\CERVALID PLATAFORMA WEB\FRONTEND\SRC
 |               
 +---pages
 |       AboutPage.jsx
-|       HomePage.jsx
 |       TestApiPage.jsx
 |       UnauthorizedPage.jsx
 |       
 +---services
-\---shared
-    +---components
-    |       Navbar.jsx
-    |       ProtectedLayout.jsx
-    |       Sidebar.jsx
-    |       
-    +---layouts
-    \---utils
++---shared
+|   +---components
+|   |       Navbar.css
+|   |       Navbar.jsx
+|   |       Sidebar.css
+|   |       Sidebar.jsx
+|   |       
+|   +---config
+|   |   \---navigation
+|   |           navigationTitles.js
+|   |           navigationUtils.js
+|   |           
+|   +---layouts
+|   |       ProtectedLayout.css
+|   |       ProtectedLayout.jsx
+|   |       
+|   \---utils
+|           dateUtils.js
+|           enumUtils.js
+|           roleUtils.js
+|           
+\---styles
+        index.css
+        utilities.css
+        variables.css
+        

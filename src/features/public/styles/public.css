@@ -1,0 +1,556 @@
+/* =========================================================
+   PUBLIC SITE
+   ========================================================= */
+
+.public-site {
+    min-height: 100vh;
+    background: var(--color-background, #ffffff);
+    color: var(--color-text, #172033);
+}
+
+.public-site a {
+    text-decoration: none;
+}
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.public-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    border-bottom: 1px solid rgba(20, 40, 80, 0.08);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* =========================================================
+   NAVBAR INNER
+========================================================= */
+
+.public-navbar-inner {
+    min-height: 76px;
+
+    display: flex;
+    align-items: center;
+
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.public-navbar-brand,
+.public-footer-brand {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+
+    color: #14213d;
+
+    font-size: 1.35rem;
+    font-weight: 800;
+
+    letter-spacing: -0.03em;
+}
+
+.public-navbar-brand:hover {
+    color: #14213d;
+}
+
+.public-brand-mark {
+    width: 38px;
+    height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #173f8a;
+    color: #ffffff;
+
+    font-size: 1.1rem;
+}
+
+
+/* =========================================================
+   COLLAPSE
+========================================================= */
+
+.public-navbar-collapse {
+    display: flex;
+    align-items: center;
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.public-navbar-nav {
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+
+    margin: 0 auto;
+}
+
+.public-navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+
+/* =========================================================
+   NAV LINKS
+========================================================= */
+
+.public-nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 9px 12px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #536078;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.public-nav-link:hover {
+    color: #173f8a;
+    background: #f5f8fc;
+}
+
+.public-nav-link.active {
+    color: #173f8a;
+}
+
+
+/* =========================================================
+   DROPDOWN TRIGGER
+========================================================= */
+
+.public-nav-dropdown {
+    gap: 7px;
+
+    cursor: pointer;
+}
+
+.public-nav-dropdown i {
+    font-size: 0.68rem;
+
+    transition: transform 0.2s ease;
+}
+
+.public-nav-dropdown.show i {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.public-dropdown-menu {
+    width: 360px;
+    padding: 8px;
+    margin-top: 8px !important;
+
+    border: 1px solid rgba(20, 40, 80, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 18px 50px rgba(21, 39, 74, 0.12);
+}
+
+.public-dropdown-menu .dropdown-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    color: #27344d;
+    white-space: normal;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.public-dropdown-menu .dropdown-item:hover,
+.public-dropdown-menu .dropdown-item:focus,
+.public-dropdown-menu .dropdown-item:active {
+    background-color: #f5f8fc;
+    color: #173f8a;
+}
+
+.public-dropdown-menu .dropdown-item > i {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #173f8a;
+}
+
+.public-dropdown-menu .dropdown-item span {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.public-dropdown-menu .dropdown-item strong {
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.public-dropdown-menu .dropdown-item small {
+    display: block;
+    color: #77839a;
+    line-height: 1.4;
+    white-space: normal;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.public-navbar-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.public-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 9px;
+    background: #173f8a;
+    border: 1px solid #173f8a;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.public-btn-primary:hover {
+    background: #123570;
+    border-color: #123570;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(23, 63, 138, 0.2);
+}
+
+.public-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 9px;
+    background: #ffffff;
+    border: 1px solid #d7deea;
+    color: #173f8a;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.public-btn-outline:hover {
+    background: #f5f8fc;
+    border-color: #b8c5d9;
+    color: #123570;
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   COMMON SECTIONS
+   ========================================================= */
+
+.section-heading {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.section-eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #3b67a7;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.section-heading h2 {
+    margin-bottom: 18px;
+    color: #14213d;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+}
+
+.section-heading h2 span {
+    color: #3b67a7;
+}
+
+.section-heading p {
+    margin: 0;
+    color: #66738a;
+    font-size: 1.05rem;
+    line-height: 1.75;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.public-footer {
+    padding: 72px 0 0;
+    background: #101a2c;
+    color: #ffffff;
+}
+
+.public-footer-brand {
+    color: #ffffff;
+}
+
+.public-footer-description {
+    max-width: 360px;
+    margin: 20px 0 0;
+    color: #aeb9cb;
+    font-size: 0.92rem;
+    line-height: 1.75;
+}
+
+.public-footer h3 {
+    margin-bottom: 18px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.public-footer ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.public-footer li {
+    margin-bottom: 11px;
+}
+
+.public-footer li a {
+    color: #aeb9cb;
+    font-size: 0.86rem;
+    transition: color 0.2s ease;
+}
+
+.public-footer li a:hover {
+    color: #ffffff;
+}
+
+.public-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 60px;
+    padding: 22px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    color: #8996aa;
+    font-size: 0.78rem;
+}
+
+.public-footer-legal {
+    display: flex;
+    gap: 20px;
+}
+
+.public-footer-legal a {
+    color: #8996aa;
+}
+
+.public-footer-legal a:hover {
+    color: #ffffff;
+}
+
+/* =========================================================
+   RESPONSIVE NAVBAR
+========================================================= */
+
+@media (max-width: 1199.98px) {
+
+    .public-navbar-brand {
+        font-size: 1.25rem;
+    }
+
+    .public-navbar-nav {
+        gap: 1px;
+    }
+
+    .public-nav-link {
+        padding-left: 9px;
+        padding-right: 9px;
+
+        font-size: 0.86rem;
+    }
+
+    .public-navbar-actions {
+        gap: 7px;
+    }
+
+    .public-btn-outline,
+    .public-btn-primary {
+        padding-left: 13px;
+        padding-right: 13px;
+
+        font-size: 0.84rem;
+    }
+}
+
+
+@media (max-width: 991.98px) {
+
+    .public-navbar-inner {
+        min-height: 68px;
+    }
+
+    .public-navbar-collapse {
+        display: block;
+
+        padding-bottom: 16px;
+    }
+
+    .public-navbar-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        width: 100%;
+
+        gap: 3px;
+
+        margin: 12px 0 0;
+    }
+
+    .public-navbar-nav .nav-item {
+        width: 100%;
+    }
+
+    .public-nav-link {
+        width: 100%;
+
+        justify-content: flex-start;
+
+        padding: 11px 12px;
+    }
+
+    .public-nav-dropdown {
+        justify-content: space-between;
+    }
+
+    .public-dropdown-menu {
+        width: 100%;
+
+        margin-top: 3px !important;
+
+        border: 0;
+
+        background: #f7f9fc;
+
+        box-shadow: none;
+    }
+
+    .public-navbar-actions {
+        flex-direction: column;
+        align-items: stretch;
+
+        width: 100%;
+
+        margin-top: 14px;
+        padding-top: 14px;
+
+        border-top: 1px solid #eef0f3;
+    }
+
+    .public-navbar-actions .btn {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+
+    .public-navbar-brand {
+        font-size: 1.15rem;
+    }
+
+    .public-brand-mark {
+        width: 34px;
+        height: 34px;
+
+        font-size: 1rem;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE FOOTER
+========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .public-footer {
+        padding-top: 55px;
+    }
+
+    .public-footer-bottom {
+        margin-top: 40px;
+    }
+}

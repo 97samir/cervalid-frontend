@@ -1,10 +1,13 @@
 import { Link, useParams } from "react-router-dom";
+
 import { useStudentCompetencies } from "../hooks/useStudentCompetencies";
+
 import CompetencyStatusBadge from "../components/CompetencyStatusBadge";
 import CompetencyLevelBadge from "../components/CompetencyLevelBadge";
+import CompetencySourceBadge from "../components/CompetencySourceBadge";
+import { formatCompetencyDate } from "../utils/competencyDateUtils";
 
 export default function CompetencyListPage() {
-    
     const { studentPublicId } = useParams();
 
     const {
@@ -43,6 +46,7 @@ export default function CompetencyListPage() {
 
                 <p className="text-muted mb-0">
                 {competencies.length} competencia
+                {competencies.length !== 1 && "s"} registrada
                 {competencies.length !== 1 && "s"}
                 </p>
             </div>
@@ -89,32 +93,38 @@ export default function CompetencyListPage() {
                     <th>Nivel</th>
                     <th>Estado</th>
                     <th>Origen</th>
+                    <th>Periodo</th>
                     <th>Adquirida</th>
                     <th style={{ width: 140 }} />
                     </tr>
                 </thead>
 
                 <tbody>
-                    {competencies.map((c) => (
-                    <tr key={c.publicId}>
-                        <td className="fw-semibold">{c.name}</td>
+                    {competencies.map((competency) => (
+                    <tr key={competency.publicId}>
+                        <td className="fw-semibold">{competency.name}</td>
 
                         <td>
-                        <CompetencyLevelBadge level={c.level} />
+                        <CompetencyLevelBadge level={competency.level} />
                         </td>
 
                         <td>
-                        <CompetencyStatusBadge status={c.status} />
+                        <CompetencyStatusBadge status={competency.status} />
                         </td>
 
-                        <td>{c.source}</td>
+                        <td>
+                        <CompetencySourceBadge source={competency.source} />
+                        </td>
 
-                        <td>{c.acquiredDate ?? "-"}</td>
+                        <td>{competency.academicPeriod || "General"}</td>
+
+                        {/* <td>{competency.acquiredDate ?? "-"}</td> */}
+                        <td>{formatCompetencyDate(competency.acquiredDate)}</td>
 
                         <td className="text-end">
                         <Link
                             className="btn btn-outline-primary btn-sm"
-                            to={`/institution/competencies/${c.publicId}`}
+                            to={`/institution/competencies/${competency.publicId}`}
                         >
                             Detalle
                         </Link>

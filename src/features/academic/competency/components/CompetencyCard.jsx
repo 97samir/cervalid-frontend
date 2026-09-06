@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useStudentCompetencies } from "../hooks/useStudentCompetencies";
 import CompetencyStatusBadge from "./CompetencyStatusBadge";
 import CompetencyLevelBadge from "./CompetencyLevelBadge";
-import CompetencySourceBadge from "./CompetencySourceBadge";
+//import CompetencySourceBadge from "./CompetencySourceBadge";
 
 export default function CompetencyCard({ studentPublicId }) {
     
@@ -93,7 +93,8 @@ export default function CompetencyCard({ studentPublicId }) {
                     <tr>
                     <th>Competencia</th>
                     <th>Nivel</th>
-                    <th>Origen</th>
+                    {/* <th>Origen</th> */}
+                    <th>Periodo</th>
                     <th>Estado</th>
                     <th style={{ width: 120 }}></th>
                     </tr>
@@ -108,8 +109,12 @@ export default function CompetencyCard({ studentPublicId }) {
                         <CompetencyLevelBadge level={competency.level} />
                         </td>
 
-                        <td>
+                        {/* <td>
                         <CompetencySourceBadge source={competency.source} />
+                        </td> */}
+
+                        <td>
+                            {competency.academicPeriod || "General"}
                         </td>
 
                         <td>

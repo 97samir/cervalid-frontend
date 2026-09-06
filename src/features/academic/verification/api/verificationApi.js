@@ -32,15 +32,19 @@ export const searchInstitutionVerificationHistory = async (
   return data;
 };
 
-export const getCertificateVerificationHistory = async (
-    certificatePublicId,
+export const searchVerificationHistory = async (
+    page = 0,
+    size = 10,
+    filters = {},
 ) => {
-    const { data } = await apiClient.get(
-        `/verification/history/certificate/${certificatePublicId}`,
+    const { data } = await apiClient.post(
+        `/verification/history/search?page=${page}&size=${size}`,
+        filters,
     );
 
     return data;
 };
+
 
 // dashboard
 export const getVerificationDashboard = async () => {
@@ -63,4 +67,16 @@ export const searchVerificationSummary = async (
   );
 
   return data;
+};
+
+// obtener timeline publico
+export const getPublicCertificateTimeline = async (
+    certificatePublicId
+) => {
+
+    const response = await apiClient.get(
+        `/verification/certificates/public/${certificatePublicId}/timeline`
+    );
+
+    return response.data;
 };

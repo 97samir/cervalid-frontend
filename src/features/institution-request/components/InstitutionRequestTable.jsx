@@ -1,82 +1,165 @@
-const InstitutionRequestTable = ({ requests, onApprove, onReject }) => {
+import { institutionRequestStatusLabels } from "@/shared/utils/enumUtils";
 
-    const getBadge = (status) => {
+const InstitutionRequestTable = ({ 
+    requests, 
+    onApprove, 
+    onReject 
+}) => {
+    const getBadgeClass = (status) => {
         switch (status) {
-            case "PENDING":
-                return "warning";
-            case "APPROVED":
-                return "success";
-            case "REJECTED":
-                return "danger";
-            default:
-                return "secondary";
+        case "PENDING":
+            return "bg-warning-subtle text-warning-emphasis";
+
+        case "APPROVED":
+            return "bg-success-subtle text-success-emphasis";
+
+        case "REJECTED":
+            return "bg-danger-subtle text-danger-emphasis";
+
+        default:
+            return "bg-secondary-subtle text-secondary-emphasis";
         }
     };
 
+    if (!requests || requests.length === 0) {
+        return (
+        <div className="text-center py-5">
+            <div
+            className="d-flex align-items-center justify-content-center rounded-circle bg-light mx-auto mb-3"
+            style={{
+                width: "64px",
+                height: "64px",
+            }}
+            >
+            <i className="bi bi-inbox fs-3 text-muted"></i>
+            </div>
+
+            <h6 className="fw-semibold mb-1">No hay solicitudes</h6>
+
+            <p className="text-muted small mb-0">
+            No existen solicitudes que coincidan con el filtro seleccionado.
+            </p>
+        </div>
+        );
+    }
+
     return (
         <div className="table-responsive">
+        <table className="table table-hover align-middle mb-0">
+            <thead className="table-light">
+            <tr>
+                <th className="px-3 py-3">Institución</th>
 
-            <table className="table table-bordered table-hover">
+                <th className="px-3 py-3">RUC</th>
 
-                <thead className="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Institución</th>
-                        <th>RUC</th>
-                        <th>Solicitante</th>
-                        <th>Email</th>
-                        <th>DNI / CE</th>
-                        <th>Doc. Acreditación</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
+                <th className="px-3 py-3">Solicitante</th>
 
-                <tbody>
-                    {requests.map((req) => (
-                        <tr key={req.id}>
-                            <td>{req.id}</td>
-                            <td>{req.institutionName}</td>
-                            <td>{req.ruc}</td>
-                            <td>{req.name} {req.lastName}</td>
-                            <td>{req.contactEmail}</td>
-                            <td>{req.document}</td>
-                            <td>{req.documentAcreditationUrl}</td>
+                <th className="px-3 py-3">Contacto</th>
 
-                            <td>
-                                <span className={`badge bg-${getBadge(req.status)}`}>
-                                    {req.status}
-                                </span>
-                            </td>
+                <th className="px-3 py-3">Documento</th>
 
-                            <td>
-                                {req.status === "PENDING" && (
-                                    <div className="d-flex gap-2">
+                <th className="px-3 py-3 text-center">Estado</th>
 
-                                        <button
-                                            className="btn btn-success btn-sm"
-                                            onClick={() => onApprove(req.id)}
-                                        >
-                                            Aprobar
-                                        </button>
+                <th className="px-3 py-3 text-end">Acciones</th>
+            </tr>
+            </thead>
 
-                                        <button
-                                            className="btn btn-danger btn-sm"
-                                            onClick={() => onReject(req.id)}
-                                        >
-                                            Rechazar
-                                        </button>
+            <tbody>
+            {requests.map((req) => (
+                <tr key={req.id}>
+                {/* INSTITUCIÓN */}
 
-                                    </div>
-                                )}
-                            </td>
+                <td className="px-3 py-3">
+                    <div className="fw-semibold">{req.institutionName}</div>
 
-                        </tr>
-                    ))}
-                </tbody>
+                    <small className="text-muted">Solicitud #{req.id}</small>
+                </td>
 
-            </table>
+                {/* RUC */}
 
+                <td className="px-3 py-3">
+                    <span className="text-nowrap">{req.ruc || "-"}</span>
+                </td>
+
+                {/* SOLICITANTE */}
+
+                <td className="px-3 py-3">
+                    <div className="fw-semibold">
+                    {req.name} {req.lastName}
+                    </div>
+
+                    <small className="text-muted">{req.document || "-"}</small>
+                </td>
+
+                {/* CONTACTO */}
+
+                <td className="px-3 py-3">
+                    <div className="text-break">{req.contactEmail}</div>
+
+                    {req.phone && <small className="text-muted">{req.phone}</small>}
+                </td>
+
+                {/* DOCUMENTO */}
+
+                <td className="px-3 py-3">
+                    {req.documentAcreditationUrl ? (
+                    <a
+                        href={req.documentAcreditationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-sm btn-outline-primary"
+                    >
+                        <i className="bi bi-file-earmark-text me-1"></i>
+                        Ver documento
+                    </a>
+                    ) : (
+                    <span className="text-muted small">No disponible</span>
+                    )}
+                </td>
+
+                {/* ESTADO */}
+
+                <td className="px-3 py-3 text-center">
+                    <span
+                    className={`badge rounded-pill px-3 py-2 ${getBadgeClass(
+                        req.status,
+                    )}`}
+                    >
+                    {institutionRequestStatusLabels?.[req.status] || req.status}
+                    </span>
+                </td>
+
+                {/* ACCIONES */}
+
+                <td className="px-3 py-3 text-end">
+                    {req.status === "PENDING" ? (
+                    <div className="d-flex justify-content-end gap-2">
+                        <button
+                        type="button"
+                        className="btn btn-sm btn-success"
+                        onClick={() => onApprove(req.id)}
+                        >
+                        <i className="bi bi-check-lg me-1"></i>
+                        Aprobar
+                        </button>
+
+                        <button
+                        type="button"
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={() => onReject(req.id)}
+                        >
+                        <i className="bi bi-x-lg me-1"></i>
+                        Rechazar
+                        </button>
+                    </div>
+                    ) : (
+                    <span className="text-muted small">Sin acciones</span>
+                    )}
+                </td>
+                </tr>
+            ))}
+            </tbody>
+        </table>
         </div>
     );
 };

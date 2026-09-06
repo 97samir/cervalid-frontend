@@ -1,5 +1,12 @@
 import { useState } from "react";
 
+import {
+    academicProgramLabels,
+    academicFacultyLabels,
+    academicProgramFaculty,
+    modalityLabels,
+} from "@/shared/utils/enumUtils";
+
 export default function AcademicProfileForm({
     initialValues,
     loading = false,
@@ -17,8 +24,17 @@ export default function AcademicProfileForm({
         active: initialValues?.active ?? true,
     });
 
-    const handleChange = (e) => {
+    const handleProgramChange = (e) => {
+        const program = e.target.value;
 
+        setForm((prev) => ({
+            ...prev,
+            program,
+            faculty: academicProgramFaculty[program] || "",
+        }));
+    };
+
+    const handleChange = (e) => {
         const {
             name,
             value,
@@ -55,41 +71,65 @@ export default function AcademicProfileForm({
             <div className="row g-4">
 
                 {/* Programa */}
-
                 <div className="col-md-6">
                     <label className="form-label">
                         Programa académico
                     </label>
 
-                    <input
-                        type="text"
+                    <select
                         name="program"
-                        className="form-control"
+                        className="form-select"
                         value={form.program}
-                        onChange={handleChange}
+                        onChange={handleProgramChange}
                         required
-                    />
+                    >
+                        <option value="">
+                            Seleccione un programa...
+                        </option>
+
+                        {Object.entries(academicProgramLabels).map(
+                            ([value, label]) => (
+                                <option
+                                    key={value}
+                                    value={value}
+                                >
+                                    {label}
+                                </option>
+                            )
+                        )}
+                    </select>
                 </div>
 
                 {/* Facultad */}
-
                 <div className="col-md-6">
                     <label className="form-label">
                         Facultad
                     </label>
 
-                    <input
-                        type="text"
+                    <select
                         name="faculty"
-                        className="form-control"
+                        className="form-select"
                         value={form.faculty}
-                        onChange={handleChange}
-                        required
-                    />
+                        disabled
+                    >
+                        <option value="">
+                            Seleccione primero un programa...
+                        </option>
+
+                        {Object.entries(academicFacultyLabels).map(
+                            ([value, label]) => (
+                                <option
+                                    key={value}
+                                    value={value}
+                                >
+                                    {label}
+                                </option>
+                            )
+                        )}
+                    </select>
                 </div>
 
                 {/* Modalidad */}
-
                 <div className="col-md-6">
                     <label className="form-label">
                         Modalidad
@@ -102,26 +142,26 @@ export default function AcademicProfileForm({
                         onChange={handleChange}
                         required
                     >
+
                         <option value="">
-                            Seleccione...
+                            Seleccione una modalidad...
                         </option>
 
-                        <option value="PRESENCIAL">
-                            Presencial
-                        </option>
+                        {Object.entries(modalityLabels).map(
+                            ([value, label]) => (
+                                <option
+                                    key={value}
+                                    value={value}
+                                >
+                                    {label}
+                                </option>
+                            )
+                        )}
 
-                        <option value="SEMIPRESENCIAL">
-                            Semipresencial
-                        </option>
-
-                        <option value="VIRTUAL">
-                            Virtual
-                        </option>
                     </select>
                 </div>
 
                 {/* Ciclo */}
-
                 <div className="col-md-3">
                     <label className="form-label">
                         Ciclo actual
@@ -130,6 +170,7 @@ export default function AcademicProfileForm({
                     <input
                         type="number"
                         min="1"
+                        max="10"
                         name="currentCycle"
                         className="form-control"
                         value={form.currentCycle}

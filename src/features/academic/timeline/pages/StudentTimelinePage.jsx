@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { useDebounce } from "../hooks/useDebounce";
 import { useStudentTimeline } from "../hooks/useStudentTimeline";
+import { useStudentTimelineSummary } from "../hooks/useStudentTimelineSummary";
 
 import TimelineEventHeaders from "../components/TimelineEventHeaders";
 import TimelineEventFilters from "../components/TimelineEventFilters";
@@ -17,37 +18,49 @@ const createDefaultFilters = () => ({
     type: "",
     source: "",
     referenceType: "",
+    fromDate: "",
+    toDate: "",
 });
 
-const PAGE_SIZE = 20;
+
 
 export default function StudentTimelinePage() {
     const { publicId: studentPublicId } = useParams();
-
     const [page, setPage] = useState(0);
     const [filters, setFilters] = useState(createDefaultFilters);
     const [selectedEventId, setSelectedEventId] = useState(null);
 
-    const { data, isLoading, isFetching, error } = useStudentTimeline(
-        studentPublicId,
-        page,
-        PAGE_SIZE,
-        filters,
-    );
+    const debouncedKeyword = useDebounce(filters.keyword, 500);
 
-    const events = data?.content ?? [];
+    const queryFilters = useMemo(
+        () => ({
+        ...filters,
+        keyword: debouncedKeyword,
+        }),
+        [filters, debouncedKeyword],
+    );
 
     const hasFilters = useMemo(
         () => Object.values(filters).some((value) => value !== ""),
         [filters],
     );
 
-    /*
-        |--------------------------------------------------------------------------
-        | EVENTOS AGRUPADOS POR AÑO
-        |--------------------------------------------------------------------------
-        */
+    const PAGE_SIZE = 5;
 
+    const { data, isLoading, isFetching, error } = useStudentTimeline(
+        studentPublicId,
+        page,
+        PAGE_SIZE,
+        queryFilters,
+    );
+
+    const { data: summary } = useStudentTimelineSummary(studentPublicId);
+
+    const events = data?.content ?? [];
+
+    console.log("TIMELINE DATA:", data);
+
+    /* EVENTOS AGRUPADOS POR AÑO */
     const eventsByYear = useMemo(() => {
         return events.reduce((groups, event) => {
         if (!event.eventDate) {
@@ -90,12 +103,7 @@ export default function StudentTimelinePage() {
         });
     }, [eventsByYear]);
 
-    /*
-        |--------------------------------------------------------------------------
-        | HANDLERS
-        |--------------------------------------------------------------------------
-        */
-
+    /* HANDLERS*/
     const handleFilterChange = (nextFilters) => {
         setFilters(nextFilters);
         setPage(0);
@@ -119,10 +127,10 @@ export default function StudentTimelinePage() {
     };
 
     /*
-        |--------------------------------------------------------------------------
-        | LOADING INICIAL
-        |--------------------------------------------------------------------------
-        */
+            |--------------------------------------------------------------------------
+            | LOADING INICIAL
+            |--------------------------------------------------------------------------
+            */
 
     if (isLoading) {
         return (
@@ -141,14 +149,14 @@ export default function StudentTimelinePage() {
     }
 
     /*
-        |--------------------------------------------------------------------------
-        | ERROR
-        |--------------------------------------------------------------------------
-        */
+            |--------------------------------------------------------------------------
+            | ERROR
+            |--------------------------------------------------------------------------
+            */
 
     if (error) {
         return (
-        <div className="container-fluid py-4 timeline-page">
+        <div className="container-fluid py-0 timeline-page">
             <div className="timeline-error">
             <div className="timeline-error-icon">
                 <i className="bi bi-exclamation-triangle"></i>
@@ -168,10 +176,10 @@ export default function StudentTimelinePage() {
     }
 
     return (
-        <div className="container-fluid py-4 timeline-page">
+        <div className="container-fluid py-0 timeline-page">
         {/* =========================================================
-                    HEADER
-                ========================================================= */}
+                        HEADER
+                    ========================================================= */}
 
         <TimelineEventHeaders
             studentPublicId={studentPublicId}
@@ -179,8 +187,8 @@ export default function StudentTimelinePage() {
         />
 
         {/* =========================================================
-                    FILTROS
-                ========================================================= */}
+                        FILTROS
+                    ========================================================= */}
 
         <TimelineEventFilters
             filters={filters}
@@ -189,13 +197,13 @@ export default function StudentTimelinePage() {
         />
 
         {/* =========================================================
-                    CONTENIDO PRINCIPAL
-                ========================================================= */}
+                        CONTENIDO PRINCIPAL
+                    ========================================================= */}
 
         <div className="row g-4 align-items-start">
             {/* =====================================================
-                        TIMELINE
-                    ===================================================== */}
+                            TIMELINE
+                        ===================================================== */}
 
             <div className="col-12 col-xl-8">
             <div className="timeline-main-card">
@@ -283,8 +291,8 @@ export default function StudentTimelinePage() {
             </div>
 
             {/* =================================================
-                            PAGINACIÓN
-                        ================================================= */}
+                                PAGINACIÓN
+                            ================================================= */}
 
             <TimelineEventPagination
                 data={data}
@@ -295,21 +303,17 @@ export default function StudentTimelinePage() {
             </div>
 
             {/* =====================================================
-                        SIDEBAR
-                    ===================================================== */}
+                            SIDEBAR
+                        ===================================================== */}
 
             <div className="col-12 col-xl-4">
-            <TimelineSummary
-                data={data}
-                events={events}
-                hasFilters={hasFilters}
-            />
+            <TimelineSummary summary={summary} hasFilters={hasFilters} />
             </div>
         </div>
 
         {/* =========================================================
-                    MODAL
-                ========================================================= */}
+                        MODAL
+                    ========================================================= */}
 
         {selectedEventId && (
             <TimelineEventDetailModal

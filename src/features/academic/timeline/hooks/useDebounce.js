@@ -1,0 +1,17 @@
+// Esperamos 500 ms después de que deje de escribir y 
+// recién consultamos
+import { useEffect, useState } from "react";
+
+export const useDebounce = (value, delay = 500) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => clearTimeout(timeoutId);
+    }, [value, delay]);
+
+    return debouncedValue;
+};

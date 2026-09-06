@@ -7,10 +7,12 @@ export const useDeleteStudent = () => {
 
     return useMutation({
         mutationFn: (publicId) =>
-        studentApi.deleteStudent(publicId),
+            studentApi.deleteStudent(publicId),
 
         onSuccess: () => {
-        queryClient.invalidateQueries(["students"]);
-        }
+            queryClient.invalidateQueries({
+                queryKey: ["students"],
+            });
+        },
     });
 };

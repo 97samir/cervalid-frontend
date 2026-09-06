@@ -1,0 +1,501 @@
+/* =========================================================
+                    PÁGINA
+========================================================= */
+
+.public-timeline-page {
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+                    VOLVER
+========================================================= */
+
+.public-timeline-back {
+    display: inline-flex;
+    align-items: center;
+
+    text-decoration: none;
+    font-weight: 500;
+
+    color: var(--bs-secondary-color);
+
+    transition: color 0.2s ease;
+}
+
+.public-timeline-back:hover {
+    color: var(--bs-primary);
+}
+
+
+/* =========================================================
+                    HEADER
+========================================================= */
+
+.public-timeline-header {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 1rem;
+}
+
+.public-timeline-header-icon {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 1rem;
+
+    background: rgba(13, 110, 253, 0.08);
+
+    color: var(--bs-primary);
+
+    font-size: 1.5rem;
+}
+
+.public-timeline-title {
+    margin-bottom: 0.5rem;
+
+    font-weight: 700;
+}
+
+.public-timeline-description {
+    max-width: 720px;
+
+    margin-bottom: 0;
+
+    color: var(--bs-secondary-color);
+}
+
+
+/* =========================================================
+                    RESUMEN
+========================================================= */
+
+.public-timeline-summary {
+    overflow: hidden;
+}
+
+.public-timeline-stat {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.35rem;
+}
+
+.public-timeline-stat span {
+    font-size: 0.75rem;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    color: var(--bs-secondary-color);
+}
+
+.public-timeline-stat strong {
+    display: flex;
+    align-items: center;
+
+    font-size: 1.05rem;
+}
+
+
+/* =========================================================
+                    PERÍODO ACTIVO
+========================================================= */
+
+.public-timeline-period-content {
+    max-width: 950px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.public-timeline-period-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-bottom: 1.25rem;
+}
+
+.public-timeline-period-title {
+    margin: 0;
+
+    font-size: 1.35rem;
+    font-weight: 700;
+
+    color: var(--bs-body-color);
+}
+
+.public-timeline-period-description {
+    margin: 0.25rem 0 0;
+
+    font-size: 0.8rem;
+
+    color: var(--bs-secondary-color);
+}
+
+.public-timeline-period-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 0.75rem;
+
+    background: rgba(13, 110, 253, 0.08);
+
+    color: var(--bs-primary);
+
+    font-size: 1.1rem;
+}
+
+
+/* =========================================================
+                    TIMELINE
+========================================================= */
+
+.public-timeline-container {
+    position: relative;
+
+    padding-bottom: 0.5rem;
+}
+
+
+/* =========================================================
+                    LÍNEA
+========================================================= */
+
+.public-timeline-container::before {
+    content: "";
+
+    position: absolute;
+
+    left: 21px;
+
+    top: 0;
+    bottom: 0;
+
+    width: 2px;
+
+    background: var(--bs-border-color);
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+                    ITEM
+========================================================= */
+
+.public-timeline-item {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns: 44px 1fr;
+
+    gap: 1rem;
+
+    margin-bottom: 0.7rem;
+}
+
+.public-timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+                    MARCADOR
+========================================================= */
+
+.public-timeline-marker {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    z-index: 2;
+}
+
+.public-timeline-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--bs-body-bg);
+
+    border: 2px solid var(--bs-primary);
+
+    color: var(--bs-primary);
+
+    font-size: 0.95rem;
+}
+
+
+/* =========================================================
+                    CONTENIDO
+========================================================= */
+
+.public-timeline-content {
+    min-width: 0;
+}
+
+
+/* =========================================================
+                    FECHA
+========================================================= */
+
+.public-timeline-date {
+    display: block;
+
+    margin-bottom: 0.35rem;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    color: var(--bs-secondary-color);
+}
+
+
+/* =========================================================
+                    EVENTO
+========================================================= */
+
+.public-timeline-event {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    min-height: 58px;
+
+    padding: 0.7rem 0.9rem;
+
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.7rem;
+
+    background: var(--bs-body-bg);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.public-timeline-event:hover {
+    border-color: rgba(13, 110, 253, 0.3);
+
+    box-shadow: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================================================
+                    INFORMACIÓN DEL EVENTO
+========================================================= */
+
+.public-timeline-event-main {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.public-timeline-category {
+    display: block;
+
+    margin-bottom: 0.1rem;
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    color: var(--bs-primary);
+}
+
+.public-timeline-event-title {
+    margin: 0;
+
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    line-height: 1.35;
+
+    color: var(--bs-body-color);
+}
+
+
+/* =========================================================
+                    DETALLE DEL EVENTO
+========================================================= */
+
+.public-timeline-description {
+    margin: 0.35rem 0 0;
+
+    font-size: 0.8rem;
+
+    color: var(--bs-secondary-color);
+}
+
+.public-timeline-detail {
+    display: flex;
+    align-items: baseline;
+
+    gap: 0.35rem;
+
+    margin-top: 0.2rem;
+
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.public-timeline-detail-label {
+    font-weight: 600;
+
+    color: var(--bs-body-color);
+}
+
+.public-timeline-detail-value {
+    color: var(--bs-secondary-color);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+                    ESTADO
+========================================================= */
+
+.public-timeline-check {
+    flex-shrink: 0;
+
+    color: var(--bs-success);
+
+    font-size: 0.95rem;
+}
+
+
+/* =========================================================
+                    EMPTY STATE
+========================================================= */
+
+.public-timeline-empty {
+    max-width: 950px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* =========================================================
+                    RESPONSIVE
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .public-timeline-period-content {
+        width: 100%;
+    }
+
+    .public-timeline-container::before {
+        left: 19px;
+    }
+
+    .public-timeline-item {
+        grid-template-columns: 40px 1fr;
+
+        gap: 0.75rem;
+    }
+
+    .public-timeline-icon {
+        width: 40px;
+        height: 40px;
+
+        font-size: 0.85rem;
+    }
+
+    .public-timeline-event {
+        align-items: flex-start;
+
+        padding: 0.7rem;
+
+        min-height: 0;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+
+    .public-timeline-header {
+        gap: 0.75rem;
+    }
+
+    .public-timeline-header-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+
+        font-size: 1.25rem;
+
+        border-radius: 0.85rem;
+    }
+
+    .public-timeline-title {
+        font-size: 1.65rem;
+    }
+
+    .public-timeline-description {
+        font-size: 0.9rem;
+    }
+
+    .public-timeline-summary .card-body {
+        padding: 1.25rem;
+    }
+
+    .public-timeline-stat strong {
+        font-size: 0.95rem;
+    }
+
+    .public-timeline-period-header {
+        align-items: flex-start;
+    }
+
+    .public-timeline-period-title {
+        font-size: 1.2rem;
+    }
+
+    .public-timeline-period-icon {
+        width: 40px;
+        height: 40px;
+
+        font-size: 1rem;
+    }
+
+    .public-timeline-event {
+        display: block;
+    }
+
+    .public-timeline-check {
+        display: none;
+    }
+}

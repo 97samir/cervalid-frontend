@@ -9,7 +9,9 @@ export const useCreateStudent = () => {
         mutationFn: (data) => studentApi.createStudent(data),
 
         onSuccess: () => {
-        queryClient.invalidateQueries(["students"]);
-        }
+            queryClient.invalidateQueries({
+                queryKey: ["students"],
+            });
+        },
     });
 };

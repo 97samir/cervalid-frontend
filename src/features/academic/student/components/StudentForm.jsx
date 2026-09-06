@@ -1,5 +1,13 @@
 import { useState } from "react";
 import useAuthStore from "@/app/store/auth/useAuthStore";
+
+import {
+    academicProgramLabels,
+    academicFacultyLabels,
+    academicProgramFaculty,
+    modalityLabels,
+} from "@/shared/utils/enumUtils";
+
 import { validateStudent } from "../utils/studentValidation";
 
 export default function StudentForm({
@@ -7,8 +15,9 @@ export default function StudentForm({
     onSubmit,
     loading = false,
     mode = "register",
-    }) {
+}) {
     const { user } = useAuthStore();
+
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
 
@@ -26,6 +35,24 @@ export default function StudentForm({
     });
 
     const validationPreview = validateStudent(form, mode);
+
+    const handleProgramChange = (e) => {
+        const program = e.target.value;
+
+        const faculty = academicProgramFaculty[program] || "";
+
+        setForm((prev) => ({
+        ...prev,
+        program,
+        faculty,
+        }));
+
+        setErrors((prev) => ({
+        ...prev,
+        program: undefined,
+        faculty: undefined,
+        }));
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,6 +75,7 @@ export default function StudentForm({
 
         if (Object.keys(validationErrors).length > 0) {
         setErrors(validationErrors);
+
         return;
         }
 
@@ -57,7 +85,6 @@ export default function StudentForm({
         });
     };
 
-    // para validacion tiempo real
     const handleBlur = (e) => {
         setTouched((prev) => ({
         ...prev,
@@ -66,224 +93,226 @@ export default function StudentForm({
     };
 
     return (
-
         <form onSubmit={handleSubmit}>
-        {/* Datos de Usuario y Identidad Académica*/}
+        {/*  DATOS DE USUARIO E IDENTIDAD ACADÉMICA */}
+
+        <div className="row">
+            {/* Correo */}
+            <div className="col-md-6 mb-3">
+            <h5 className="mb-3">Datos de Usuario</h5>
+
+            <label className="form-label">Correo Electrónico</label>
+
+            <input
+                type="email"
+                name="email"
+                className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                placeholder="ej: ejemplo@institución.edu.pe"
+                value={form.email}
+                onChange={handleChange}
+                required
+            />
+
+            {errors.email && (
+                <div className="invalid-feedback">{errors.email}</div>
+            )}
+            </div>
+
+            {/* Código */}
+            <div className="col-md-6 mb-3">
+            <h5 className="mb-3">Identidad Académica</h5>
+
+            <label className="form-label">Código de Estudiante</label>
+
+            <input
+                type="text"
+                name="studentCode"
+                className={`form-control ${
+                touched.studentCode && validationPreview.studentCode
+                    ? "is-invalid"
+                    : touched.studentCode && !validationPreview.studentCode
+                    ? "is-valid"
+                    : ""
+                }`}
+                placeholder="ej: STU-2026-0001"
+                value={form.studentCode}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+            />
+            </div>
+        </div>
+
+        <hr />
+
+        {/*  PERFIL ACADÉMICO  */}
+
+        {mode === "register" && (
+            <>
+            <h5 className="mb-3">Perfil Académico</h5>
 
             <div className="row">
+                {/* Programa */}
                 <div className="col-md-6 mb-3">
-                <h5 className="mb-3">Datos de Usuario</h5>
-                <label className="form-label">Correo Electrónico</label>
+                <label className="form-label">Programa académico</label>
 
-                <input
-                    type="email"
-                    name="email"
-                    className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                    placeholder="ej: ejemplo@institución.edu.pe"
-                    value={form.email}
-                    onChange={handleChange}
+                <select
+                    name="program"
+                    className={`form-select ${errors.program ? "is-invalid" : ""}`}
+                    value={form.program}
+                    onChange={handleProgramChange}
                     required
-                />
+                >
+                    <option value="">Seleccione un programa...</option>
 
-                {errors.email && (
-                    <div className="invalid-feedback">{errors.email}</div>
+                    {Object.entries(academicProgramLabels).map(([value, label]) => (
+                    <option key={value} value={value}>
+                        {label}
+                    </option>
+                    ))}
+                </select>
+
+                {errors.program && (
+                    <div className="invalid-feedback">{errors.program}</div>
                 )}
                 </div>
 
+                {/* Facultad */}
                 <div className="col-md-6 mb-3">
-                <h5 className="mb-3">Identidad Académica</h5>
-                <label className="form-label">Código de Estudiante</label>
+                <label className="form-label">Facultad</label>
+
+                <select
+                    name="faculty"
+                    className={`form-select ${errors.faculty ? "is-invalid" : ""}`}
+                    value={form.faculty}
+                    disabled
+                >
+                    <option value="">Seleccione primero un programa...</option>
+
+                    {Object.entries(academicFacultyLabels).map(([value, label]) => (
+                    <option key={value} value={value}>
+                        {label}
+                    </option>
+                    ))}
+                </select>
+
+                {errors.faculty && (
+                    <div className="invalid-feedback">{errors.faculty}</div>
+                )}
+                </div>
+            </div>
+
+            <div className="row">
+                {/* Modalidad */}
+                <div className="col-md-6 mb-3">
+                <label className="form-label">Modalidad</label>
+
+                <select
+                    name="modality"
+                    className={`form-select ${errors.modality ? "is-invalid" : ""}`}
+                    value={form.modality}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="">Seleccione una modalidad...</option>
+
+                    {Object.entries(modalityLabels).map(([value, label]) => (
+                    <option key={value} value={value}>
+                        {label}
+                    </option>
+                    ))}
+                </select>
+
+                {errors.modality && (
+                    <div className="invalid-feedback">{errors.modality}</div>
+                )}
+                </div>
+
+                {/* Ciclo */}
+                <div className="col-md-6 mb-3">
+                <label className="form-label">Ciclo Actual</label>
 
                 <input
-                    type="text"
-                    name="studentCode"
+                    type="number"
+                    name="currentCycle"
+                    min="1"
+                    max="10"
                     className={`form-control ${
-                    touched.studentCode && validationPreview.studentCode
-                        ? "is-invalid"
-                        : touched.studentCode && !validationPreview.studentCode
-                        ? "is-valid"
-                        : ""
+                    errors.currentCycle ? "is-invalid" : ""
                     }`}
-                    placeholder="ej: STU-2026-0001"
-                    value={form.studentCode}
+                    placeholder="ej: 5"
+                    value={form.currentCycle}
                     onChange={handleChange}
-                    onBlur={handleBlur}
                     required
                 />
 
+                {errors.currentCycle && (
+                    <div className="invalid-feedback">{errors.currentCycle}</div>
+                )}
                 </div>
             </div>
 
             <hr />
+            </>
+        )}
 
-            {/* Perfil Académico */}
-            {mode === "register" && (
-                <>
-                    <h5 className="mb-3">Perfil Académico</h5>
+        {/*  FECHAS ACADÉMICAS */}
 
-                    <div className="row">
-                        <div className="col-md-6 mb-3">
-                        <label className="form-label">Programa</label>
+        <h5 className="mb-3">Fechas Académicas</h5>
 
-                        <select
-                            name="program"
-                            className={`form-select ${errors.program ? "is-invalid" : ""}`}
-                            value={form.program}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="">Seleccione...</option>
-                            <option value="Ingeniería de Software">
-                            Ingeniería de Software
-                            </option>
-                            <option value="Administración de empresas">
-                            Administración de empresas
-                            </option>
-                            <option value="Ingeniería en Ciencia de Datos">
-                            Ingeniería en Ciencia de Datos
-                            </option>
-                            <option value="Ingeniería Ambiental">
-                            Ingeniería Ambiental
-                            </option>
-                        </select>
+        <div className="row">
+            {/* Fecha de ingreso */}
+            <div className="col-md-6 mb-3">
+            <label className="form-label">Fecha de Ingreso</label>
 
-                        {errors.program && (
-                            <div className="invalid-feedback">{errors.program}</div>
-                        )}
-                        </div>
+            <input
+                type="date"
+                name="admissionDate"
+                className={`form-control ${
+                errors.admissionDate ? "is-invalid" : ""
+                }`}
+                value={form.admissionDate}
+                onChange={handleChange}
+                required
+            />
 
-                        <div className="col-md-6 mb-3">
-                        <label className="form-label">Facultad</label>
-
-                        <select
-                            name="faculty"
-                            className={`form-select ${errors.faculty ? "is-invalid" : ""}`}
-                            value={form.faculty}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="">Seleccione...</option>
-                            <option value="Facultad de ingeniería">
-                            Facultad de ingeniería
-                            </option>
-                            <option value="Facultad de Ciencias Económicas y Empresariales">
-                            Facultad de Ciencias Económicas y Empresariales
-                            </option>
-                            <option value="Facultad de Educación">
-                            Facultad de Educación
-                            </option>
-                            <option value="Facultad de Ciencias Humanas y Sociales">
-                            Facultad de Ciencias Humanas y Sociales
-                            </option>
-                        </select>
-
-                        {errors.faculty && (
-                            <div className="invalid-feedback">{errors.faculty}</div>
-                        )}
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-6 mb-3">
-                        <label className="form-label">Modalidad</label>
-
-                        <select
-                            name="modality"
-                            className={`form-select ${errors.modality ? "is-invalid" : ""}`}
-                            value={form.modality}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="">Seleccione...</option>
-                            <option value="PRESENTIAL">Presencial</option>
-                            <option value="VIRTUAL">Virtual</option>
-                            <option value="SEMIPRESENCIAL">Semipresencial</option>
-                        </select>
-
-                        {errors.modality && (
-                            <div className="invalid-feedback">{errors.modality}</div>
-                        )}
-                        </div>
-
-                        <div className="col-md-6 mb-3">
-                        <label className="form-label">Ciclo Actual</label>
-
-                        <input
-                            type="number"
-                            name="currentCycle"
-                            className={`form-select ${
-                            errors.currentCycle ? "is-invalid" : ""
-                            }`}
-                            placeholder="ej: 5"
-                            value={form.currentCycle}
-                            onChange={handleChange}
-                            required
-                        />
-
-                        {errors.currentCycle && (
-                            <div className="invalid-feedback">{errors.currentCycle}</div>
-                        )}
-                        </div>
-                    </div>
-                <hr />
-                </>
+            {errors.admissionDate && (
+                <div className="invalid-feedback">{errors.admissionDate}</div>
             )}
-
-            {/* Fechas */}
-
-            <h5 className="mb-3">Fechas Académicas</h5>
-
-            <div className="row">
-                <div className="col-md-6 mb-3">
-                <label className="form-label">Fecha de Ingreso</label>
-
-                <input
-                    type="date"
-                    name="admissionDate"
-                    className={`form-select ${
-                    errors.admissionDate ? "is-invalid" : ""
-                    }`}
-                    value={form.admissionDate}
-                    onChange={handleChange}
-                    required
-                />
-
-                {errors.admissionDate && (
-                    <div className="invalid-feedback">{errors.admissionDate}</div>
-                )}
-                </div>
-
-                <div className="col-md-6 mb-3">
-                <label className="form-label">Fecha de Graduación</label>
-
-                <input
-                    type="date"
-                    name="graduationDate"
-                    className={`form-select ${
-                    errors.graduationDate ? "is-invalid" : ""
-                    }`}
-                    value={form.graduationDate}
-                    onChange={handleChange}
-                    required
-                />
-
-                {errors.graduationDate && (
-                    <div className="invalid-feedback">{errors.graduationDate}</div>
-                )}
-                </div>
             </div>
 
-            {/* Acciones */}
+            {/* Fecha de graduación */}
+            <div className="col-md-6 mb-3">
+            <label className="form-label">Fecha de Graduación</label>
 
-            <div className="d-flex justify-content-end mt-4">
-                <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading
-                    ? "Guardando..."
-                    : mode === "register"
-                    ? "Registrar Estudiante"
-                    : "Crear Estudiante"}
-                </button>
+            <input
+                type="date"
+                name="graduationDate"
+                className={`form-control ${
+                errors.graduationDate ? "is-invalid" : ""
+                }`}
+                value={form.graduationDate}
+                onChange={handleChange}
+                required
+            />
+
+            {errors.graduationDate && (
+                <div className="invalid-feedback">{errors.graduationDate}</div>
+            )}
             </div>
+        </div>
+
+        {/*  ACCIONES */}
+
+        <div className="d-flex justify-content-end mt-4">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading
+                ? "Guardando..."
+                : mode === "register"
+                ? "Registrar Estudiante"
+                : "Crear Estudiante"}
+            </button>
+        </div>
         </form>
     );
 }

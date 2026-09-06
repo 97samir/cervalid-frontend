@@ -1,7 +1,6 @@
 import "./Sidebar.css";
 
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAuthStore from "../../app/store/auth/useAuthStore";
 
 export default function Sidebar({ role }) {

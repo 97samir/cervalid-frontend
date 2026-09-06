@@ -1,6 +1,4 @@
-/* ================================================================
-   PAGE
-================================================================ */
+/* PAGE */
 
 .timeline-page {
   max-width: 1800px;
@@ -149,8 +147,63 @@
 }
 
 /* ================================================================
-   MAIN TIMELINE CARD
+   ACTIVE FILTERS
 ================================================================ */
+
+.timeline-active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+
+  border-top: 1px solid var(--bs-border-color);
+}
+
+.timeline-active-filters-label {
+  color: var(--bs-secondary-color);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.timeline-filter-chip {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.3rem 0.65rem;
+
+  border-radius: 999px;
+
+  background-color: var(--bs-primary-bg-subtle);
+  color: var(--bs-primary);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* FILTER DATE ERROR */
+.timeline-filter-date-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.65rem 0.8rem;
+
+  background-color: var(--bs-danger-bg-subtle);
+
+  border: 1px solid var(--bs-danger-border-subtle);
+  border-radius: 0.6rem;
+
+  color: var(--bs-danger);
+
+  font-size: 0.8rem;
+}
+
+/* MAIN TIMELINE CARD */
 
 .timeline-main-card {
   overflow: hidden;

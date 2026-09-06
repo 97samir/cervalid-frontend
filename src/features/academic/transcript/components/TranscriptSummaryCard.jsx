@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
+
 import TranscriptStatusBadge from "./TranscriptStatusBadge";
 import TranscriptStatistics from "./TranscriptStatistics";
 import TranscriptBlockchainCard from "./TranscriptBlockchainCard";
+
 import { formatTranscriptDate } from "../utils/transcriptDateUtils";
+
+import { transcriptAcademicPeriodTypeLabels } from "@/shared/utils/enumUtils";
 
 export default function TranscriptSummaryCard({
     transcript,
@@ -10,97 +14,117 @@ export default function TranscriptSummaryCard({
     onIssue,
     finalizing = false,
     issuing = false,
-    }) {
+}) {
+
     if (!transcript) return null;
+
+    const academicPeriodType =
+        transcriptAcademicPeriodTypeLabels[
+            transcript.academicPeriodType
+        ] ??
+        transcript.academicPeriodType ?? "-";
 
     return (
         <div className="card shadow-sm border-0 mb-4">
-        {/* HEADER */}
+        {/* =================================================
+                    HEADER
+                ================================================== */}
 
         <div className="card-header bg-white">
-            <div className="d-flex justify-content-between align-items-center">
-                <div>
-                    <h5 className="fw-bold mb-1">
-                    <i className="bi bi-journal-bookmark me-2 text-primary"></i>
-                    Historial Académico
-                    </h5>
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+                <h5 className="fw-bold mb-1">
+                <i className="bi bi-journal-bookmark me-2 text-primary"></i>
+                Historial Académico
+                </h5>
 
-                    <div className="text-muted small mb-2">
-                    Período académico: <strong>{transcript.academicPeriod}</strong>
-                    </div>
-
-                    <TranscriptStatusBadge status={transcript.status} />
-                    {/* INFORMATIVO */}
-                    {transcript.certificatePublicId && (
-                        <div className="text-success small mt-2">
-                            <i className="bi bi-check-circle-fill me-1"></i>
-                            Certificado emitido
-                        </div>
-                    )}
-
+                <div className="text-muted small mb-2">
+                    Período académico:{" "}
+                    <strong>
+                        {academicPeriodType} - {transcript.academicPeriod}
+                    </strong>
                 </div>
 
-                <div>
-                    {transcript.status === "DRAFT" && (
+                <TranscriptStatusBadge status={transcript.status} />
+
+                {transcript.certificatePublicId && (
+                <div className="text-success small mt-2">
+                    <i className="bi bi-check-circle-fill me-1"></i>
+                    Certificado emitido
+                </div>
+                )}
+            </div>
+
+            {/* =================================================
+                            ACCIONES
+                        ================================================== */}
+
+            <div className="d-flex flex-wrap gap-2">
+                {transcript.status === "DRAFT" && (
+                <button
+                    type="button"
+                    className="btn btn-outline-success"
+                    onClick={onFinalize}
+                    disabled={finalizing}
+                >
+                    {finalizing ? (
+                    <>
+                        <span className="spinner-border spinner-border-sm me-2" />
+                        Finalizando...
+                    </>
+                    ) : (
+                    <>
+                        <i className="bi bi-check-circle me-2"></i>
+                        Finalizar
+                    </>
+                    )}
+                </button>
+                )}
+
+                {transcript.status === "FINALIZED" &&
+                !transcript.certificatePublicId && (
                     <button
-                        className="btn btn-outline-success"
-                        onClick={onFinalize}
-                        disabled={finalizing}
+                    type="button"
+                    className="btn btn-success"
+                    onClick={onIssue}
+                    disabled={issuing}
                     >
-                        {finalizing ? (
+                    {issuing ? (
                         <>
-                            <span className="spinner-border spinner-border-sm me-2" />
-                            Finalizando...
+                        <span className="spinner-border spinner-border-sm me-2" />
+                        Emitiendo certificado...
                         </>
-                        ) : (
+                    ) : (
                         <>
-                            <i className="bi bi-check-circle me-2"></i>
-                            Finalizar
+                        <i className="bi bi-patch-check me-2"></i>
+                        Emitir certificado
                         </>
-                        )}
-                    </button>
                     )}
+                    </button>
+                )}
 
-                    {transcript.status === "FINALIZED" &&
-                        !transcript.certificatePublicId && (
-                            <button
-                                className="btn btn-success"
-                                onClick={onIssue}
-                                disabled={issuing}
-                            >
-                                {issuing ? (
-                                    <>
-                                        <span className="spinner-border spinner-border-sm me-2" />
-                                        Emitiendo certificado...
-                                    </>
-                                ) : (
-                                    <>
-                                        <i className="bi bi-patch-check me-2"></i>
-                                        Emitir certificado
-                                    </>
-                                )}
-                            </button>
-                        )}
-                </div>
+                {transcript.certificatePublicId && (
+                <Link
+                    to={`/institution/certificates/${transcript.certificatePublicId}`}
+                    className="btn btn-outline-success"
+                >
+                    <i className="bi bi-patch-check-fill me-2"></i>
+                    Ver certificado
+                </Link>
+                )}
+            </div>
             </div>
         </div>
 
-        {/* ESTADO DE TRANSCRIPT PARA CERTIFICADO */}
-        {transcript.certificatePublicId && (
-            <Link
-                to={`/institution/certificates/${transcript.certificatePublicId}`}
-                className="btn btn-outline-success"
-            >
-                <i className="bi bi-patch-check-fill me-2"></i>
-                Ver certificado
-            </Link>
-        )}
-
-        {/* BODY */}
+        {/* =================================================
+                    BODY
+                ================================================== */}
 
         <div className="card-body">
             <div className="row g-4">
-            {/* INFORMACIÓN ACADÉMICA */}
+            {/* =================================================
+                            INFORMACIÓN ACADÉMICA
+                        ================================================== */}
 
             <div className="col-lg-8">
                 <div className="mb-4">
@@ -126,7 +150,9 @@ export default function TranscriptSummaryCard({
                 </div>
             </div>
 
-            {/* BLOCKCHAIN */}
+            {/* =================================================
+                            BLOCKCHAIN
+                        ================================================== */}
 
             <div className="col-lg-4">
                 <h6 className="fw-bold mb-3">

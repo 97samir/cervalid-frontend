@@ -1,0 +1,24 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { certificateService } from "../services/certificateService";
+
+export const useUpdateCertificateDocument = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: certificateService.updateCertificateDocument,
+
+        onSuccess: (_, variables) => {
+        const certificatePublicId = variables.certificatePublicId;
+
+        // Actualiza el detalle del certificado
+        queryClient.invalidateQueries({
+            queryKey: ["certificate", certificatePublicId],
+        });
+
+        // Por si el certificado aparece en alguna lista
+        queryClient.invalidateQueries({
+            queryKey: ["student-certificates"],
+        });
+        },
+    });
+};

@@ -13,7 +13,9 @@ export const useCreateCompetency = () => {
 
             queryClient.invalidateQueries({
 
-                queryKey: ["student-competencies", variables.studentPublicId],
+                queryKey: ["student-competencies", 
+                    variables.studentPublicId
+                ],
             });
         },
     });

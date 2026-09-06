@@ -1,11 +1,16 @@
-import { Navigate } from "react-router-dom";
-import useAuthStore from "../store/auth/useAuthStore";
+import { Navigate, Outlet } from "react-router-dom";
+import useAuthStore from "@/app/store/auth/useAuthStore";
 
-export default function InstitutionGuard({ children }) {
+export default function InstitutionGuard() {
+
     const { user, loading } = useAuthStore();
 
     if (loading) {
-        return <div>Cargando contexto...</div>;
+        return (
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                Cargando...
+            </div>
+        );
     }
 
     if (!user) {
@@ -17,5 +22,5 @@ export default function InstitutionGuard({ children }) {
         return <Navigate to="/unauthorized" replace />;
     }
 
-    return children;
+    return <Outlet />;
 }

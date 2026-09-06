@@ -1,16 +1,32 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+
 import { useVerificationHistory } from "../hooks/useVerificationHistory";
+
+import VerificationHistoryFilters from "../components/VerificationHistoryFilters";
 import VerificationHistoryTable from "../components/VerificationHistoryTable";
+import VerificationHistoryPagination from "../components/VerificationHistoryPagination";
 
 export default function CertificateVerificationHistoryPage() {
 
     const { certificatePublicId } = useParams();
+    const [page, setPage] = useState(0);
+    const size = 10;
 
-    const {
-        data = [],
-        isLoading,
-        error,
-    } = useVerificationHistory(certificatePublicId);
+    const [filters, setFilters] = useState({
+        search: "",
+        status: "",
+        type: "",
+        fromDate: "",
+        toDate: "",
+    });
+
+    const { data, isLoading, isFetching, error } = useVerificationHistory(
+        certificatePublicId,
+        page,
+        size,
+        filters,
+    );
 
     if (isLoading) {
         return (
@@ -32,8 +48,25 @@ export default function CertificateVerificationHistoryPage() {
         );
     }
 
+    const handleFilter = (nextFilters) => {
+        setPage(0);
+        setFilters(nextFilters);
+    };
+
+    const handlePrevious = () => {
+        setPage((currentPage) => Math.max(0, currentPage - 1));
+    };
+
+    const handleNext = () => {
+        if (!data?.last) {
+        setPage((currentPage) => currentPage + 1);
+        }
+    };
+
     return (
         <div className="container-fluid">
+        {/* HEADER */}
+
         <div className="d-flex justify-content-between align-items-center mb-4">
             <div>
             <h2 className="fw-bold mb-1">Historial del certificado</h2>
@@ -46,15 +79,32 @@ export default function CertificateVerificationHistoryPage() {
 
             <Link
             className="btn btn-outline-secondary"
-            to="/institution/verification/history"
+            to="/institution/verification"
             >
             <i className="bi bi-arrow-left me-2" />
             Volver
             </Link>
         </div>
 
-        <VerificationHistoryTable records={data} />
-        
+        {/* FILTROS */}
+
+        <VerificationHistoryFilters filters={filters} onFilter={handleFilter} />
+
+        {/* TABLA */}
+
+        <VerificationHistoryTable
+            records={data?.content ?? []}
+            loading={isFetching}
+        />
+
+        {/* PAGINACIÓN */}
+
+        <VerificationHistoryPagination
+            data={data}
+            isFetching={isFetching}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+        />
         </div>
     );
 }

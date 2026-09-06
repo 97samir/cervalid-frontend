@@ -3,10 +3,10 @@
 
 import { useState, useEffect } from "react";
 import AuthContext from "./AuthContext";
-import { getCurrentUser } from "../../../features/auth/api/authApi";
-import tokenManager from "../../../core/security/tokenManager";
-import apiClient from "../../../core/api/apiClient";
-import { exitInstitution } from "../../../features/auth/api/authApi";
+import { getCurrentUser } from "@/features/auth/api/authApi";
+import tokenManager from "@/core/security/tokenManager";
+import apiClient from "@/core/api/apiClient";
+import { exitInstitution } from "@/features/auth/api/authApi";
 
 export default function AuthStoreProvider({ children }) {
   const [user, setUser] = useState(null);

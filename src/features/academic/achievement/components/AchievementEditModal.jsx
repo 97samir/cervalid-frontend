@@ -7,6 +7,7 @@ export default function AchievementEditModal({
     show,
     onClose,
     onSubmit,
+    academicPeriods = [],
     
 }) {
 
@@ -31,6 +32,7 @@ export default function AchievementEditModal({
             <div className="modal-body">
                 <AchievementForm
                 initialValues={achievement}
+                academicPeriods={academicPeriods}
                 embedded
                 submitLabel="Actualizar"
                 loading={loading}

@@ -9,8 +9,13 @@ export const useIssueCertificate = () => {
 
         mutationFn: certificateService.issueCertificate,
 
-        onSuccess: (_, transcriptPublicId) => {
-            
+        onSuccess: (_, variables) => {
+
+            const transcriptPublicId =
+                typeof variables === "string"
+                    ? variables
+                    : variables.transcriptPublicId;
+
             // Actualiza el detalle del transcript
             queryClient.invalidateQueries({
                 queryKey: ["transcript", transcriptPublicId],

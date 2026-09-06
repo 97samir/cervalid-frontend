@@ -1,7 +1,7 @@
 @import "./variables.css";
 @import "./utilities.css";
 
-/* * {
+/* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -17,6 +17,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body,
 #root {
@@ -28,7 +32,7 @@ body {
 
   margin: 0;
   min-width: 320px;
-  font-family: Inter, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-family-base);
   background: var(--color-background);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
@@ -50,6 +54,13 @@ img {
 }
 
 /* BOTONES */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
 
 button {
   transition: var(--transition);

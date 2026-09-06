@@ -1,0 +1,461 @@
+/* =========================================================
+   STUDENTS PAGE
+========================================================= */
+
+.students-page {
+    overflow: hidden;
+}
+
+.section-padding {
+    padding: 5rem 0;
+}
+
+.section-heading {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.section-eyebrow {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+}
+
+.section-heading h2,
+.students-use-cases h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.section-heading p,
+.students-use-cases p {
+    color: var(--color-muted);
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.students-hero {
+    position: relative;
+    padding: 6rem 0;
+    background: var(--color-surface);
+}
+
+.students-hero::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    top: -180px;
+    right: -100px;
+    border-radius: 50%;
+    background: rgba(13, 110, 253, 0.06);
+    pointer-events: none;
+}
+
+.students-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.85rem;
+    margin-bottom: 1.25rem;
+    border-radius: 999px;
+    background: rgba(13, 110, 253, 0.08);
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.students-hero-title {
+    max-width: 760px;
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.students-hero-title span {
+    color: var(--color-primary);
+}
+
+.students-hero-description {
+    max-width: 650px;
+    margin-bottom: 2rem;
+    color: var(--color-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.students-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.students-hero-visual {
+    position: relative;
+    min-height: 390px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.students-certificate-card {
+    position: relative;
+    width: min(100%, 360px);
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transform: rotate(2deg);
+}
+
+.certificate-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.certificate-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: rgba(13, 110, 253, 0.1);
+    color: var(--color-primary);
+    font-size: 1.2rem;
+}
+
+.certificate-body {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.certificate-body small {
+    color: var(--color-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.certificate-body h3 {
+    margin: 0.75rem 0 0.5rem;
+    font-size: 1.4rem;
+}
+
+.certificate-body p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+}
+
+.certificate-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-success);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.students-floating-badge {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.students-floating-badge i {
+    color: var(--color-success);
+}
+
+.students-floating-badge-top {
+    top: 35px;
+    right: 0;
+}
+
+.students-floating-badge-bottom {
+    bottom: 35px;
+    left: 0;
+}
+
+.students-floating-badge-bottom i {
+    color: var(--color-primary);
+}
+
+
+/* =========================================================
+   BENEFITS
+========================================================= */
+
+.students-benefits {
+    background: var(--color-background);
+}
+
+.student-benefit-card {
+    padding: 1.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: transform var(--transition),
+                box-shadow var(--transition);
+}
+
+.student-benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.student-benefit-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    border-radius: var(--radius-sm);
+    background: rgba(13, 110, 253, 0.08);
+    color: var(--color-primary);
+    font-size: 1.2rem;
+}
+
+.student-benefit-card h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.student-benefit-card p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   USE CASES
+========================================================= */
+
+.students-use-cases {
+    background: var(--color-surface);
+}
+
+.student-use-case {
+    height: 100%;
+    padding: 1.5rem;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: transform var(--transition),
+                box-shadow var(--transition);
+}
+
+.student-use-case:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-sm);
+}
+
+.student-use-case-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.student-use-case-number {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.student-use-case-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-primary);
+}
+
+.student-use-case h3 {
+    margin-bottom: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.student-use-case p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.students-cta {
+    padding: 2rem 0 5rem;
+    background: var(--color-surface);
+}
+
+.students-cta-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    overflow: hidden;
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    background: var(--color-primary);
+    color: white;
+}
+
+.students-cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+}
+
+.students-cta .section-eyebrow {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.students-cta h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 750;
+    line-height: 1.15;
+}
+
+.students-cta p {
+    max-width: 620px;
+    margin-bottom: 1.75rem;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.7;
+}
+
+.students-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.students-cta-icon {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    font-size: 7rem;
+    opacity: 0.18;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .students-hero {
+        padding: 4.5rem 0;
+    }
+
+    .students-hero-visual {
+        min-height: 350px;
+    }
+
+    .students-cta-card {
+        padding: 2.5rem;
+    }
+
+}
+
+@media (max-width: 767.98px) {
+
+    .section-padding {
+        padding: 4rem 0;
+    }
+
+    .students-hero {
+        padding: 3.5rem 0;
+    }
+
+    .students-hero-title {
+        font-size: 2.5rem;
+    }
+
+    .students-hero-actions {
+        flex-direction: column;
+    }
+
+    .students-hero-actions .btn {
+        width: 100%;
+    }
+
+    .students-hero-visual {
+        min-height: 320px;
+    }
+
+    .students-floating-badge {
+        font-size: 0.7rem;
+    }
+
+    .students-floating-badge-top {
+        right: -5px;
+    }
+
+    .students-floating-badge-bottom {
+        left: -5px;
+    }
+
+    .students-cta-card {
+        padding: 2rem;
+    }
+
+    .students-cta-icon {
+        display: none;
+    }
+
+    .students-cta-actions {
+        flex-direction: column;
+    }
+
+    .students-cta-actions .btn {
+        width: 100%;
+    }
+
+}

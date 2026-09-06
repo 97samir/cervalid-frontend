@@ -1,6 +1,7 @@
 import CompetencyStatusBadge from "./CompetencyStatusBadge";
 import CompetencyLevelBadge from "./CompetencyLevelBadge";
 import CompetencySourceBadge from "./CompetencySourceBadge";
+
 import { formatCompetencyDate } from "../utils/competencyDateUtils";
 
 export default function CompetencySummaryCard({
@@ -9,12 +10,11 @@ export default function CompetencySummaryCard({
     onDeactivate,
     deactivating,
 }) {
-    
     if (!competency) return null;
 
     return (
         <div className="card shadow-sm border-0 mb-4">
-        {/* HEADER */}
+        {/* HEADER*/}
 
         <div className="card-header bg-white">
             <div className="d-flex justify-content-between align-items-center">
@@ -30,24 +30,26 @@ export default function CompetencySummaryCard({
             </div>
 
             <div className="d-flex gap-2">
-                <button 
-                    className="btn btn-outline-warning" 
-                    onClick={onEdit}
-                    //disabled={competency.status === "INACTIVE"}
+                <button
+                type="button"
+                className="btn btn-outline-warning"
+                onClick={onEdit}
+                disabled={competency.status === "INACTIVE"}
                 >
-                    <i className="bi bi-pencil me-2"></i>
-                    Editar
+                <i className="bi bi-pencil me-2"></i>
+                Editar
                 </button>
 
                 <button
+                type="button"
                 className="btn btn-outline-danger"
                 onClick={onDeactivate}
-                disabled={deactivating }
+                disabled={deactivating || competency.status === "INACTIVE"}
                 >
-                {deactivating  ? (
+                {deactivating ? (
                     <>
                     <span className="spinner-border spinner-border-sm me-2" />
-                    Eliminando...
+                    Desactivando...
                     </>
                 ) : (
                     <>
@@ -73,13 +75,13 @@ export default function CompetencySummaryCard({
 
                 <div className="row g-3">
                     <div className="col-md-6">
-                    <small className="text-muted d-block">Nivel</small>
+                    <small className="text-muted d-block mb-1">Nivel</small>
 
                     <CompetencyLevelBadge level={competency.level} />
                     </div>
 
                     <div className="col-md-6">
-                    <small className="text-muted d-block">Origen</small>
+                    <small className="text-muted d-block mb-1">Origen</small>
 
                     <CompetencySourceBadge source={competency.source} />
                     </div>
@@ -93,12 +95,23 @@ export default function CompetencySummaryCard({
                     </div>
 
                     <div className="col-md-6">
+                        <small className="text-muted d-block mb-1">
+                            Fecha de adquisición
+                        </small>
+
+                        <span className="fw-semibold">
+                            {formatCompetencyDate(competency.acquiredDate)}
+                        </span>
+                    </div>
+
+                    <div className="col-md-6">
                     <small className="text-muted d-block mb-1">
-                        Fecha de adquisición
+                        Periodo académico
                     </small>
 
                     <span className="fw-semibold">
-                        {formatCompetencyDate(competency.acquiredDate)}
+                        {competency.academicPeriod ||
+                        "General / Sin periodo específico"}
                     </span>
                     </div>
                 </div>
@@ -116,7 +129,7 @@ export default function CompetencySummaryCard({
                 </div>
             </div>
 
-            {/* PANEL DERECHO */}
+            {/* PANEL DERECHO  */}
 
             <div className="col-lg-4">
                 <div className="card border-0 bg-light">
@@ -138,10 +151,18 @@ export default function CompetencySummaryCard({
                     <CompetencyLevelBadge level={competency.level} />
                     </div>
 
-                    <div>
+                    <div className="mb-3">
                     <small className="text-muted d-block">Fuente</small>
 
                     <CompetencySourceBadge source={competency.source} />
+                    </div>
+
+                    <div>
+                    <small className="text-muted d-block">Periodo</small>
+
+                    <span className="fw-semibold">
+                        {competency.academicPeriod || "General"}
+                    </span>
                     </div>
                 </div>
                 </div>

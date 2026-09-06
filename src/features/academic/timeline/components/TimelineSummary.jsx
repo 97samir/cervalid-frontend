@@ -1,33 +1,14 @@
-import { timelineReferenceLabels } from "../utils/timelineEventUtils";
-
-export default function TimelineSummary({
-    data,
-    events = [],
-    hasFilters = false,
+export default function TimelineSummary({ 
+    summary, 
+    hasFilters = false 
 }) {
-    const totalEvents = data?.totalElements ?? 0;
-
-    const categoryCounts = events.reduce((acc, event) => {
-        const category = event.referenceType;
-
-        if (!category) {
-        return acc;
-        }
-
-        acc[category] = (acc[category] ?? 0) + 1;
-
-        return acc;
-    }, {});
-
-    const categories = Object.entries(categoryCounts)
-        .sort(([, countA], [, countB]) => countB - countA)
-        .slice(0, 5);
+    const totalEvents = summary?.totalEvents ?? 0;
 
     return (
         <div className="timeline-summary">
         {/* =====================================================
-                    ESTADO
-                ===================================================== */}
+                            ESTADO
+                        ===================================================== */}
 
         <div className="timeline-summary-card">
             <div className="timeline-summary-card-header">
@@ -48,12 +29,12 @@ export default function TimelineSummary({
         </div>
 
         {/* =====================================================
-                    ESTADÍSTICAS
-                ===================================================== */}
+                            ESTADÍSTICAS
+                        ===================================================== */}
 
         <div className="timeline-summary-card">
             <div className="timeline-summary-card-header">
-            <span>Resumen</span>
+            <span>Resumen del estudiante</span>
 
             <i className="bi bi-bar-chart-line text-primary"></i>
             </div>
@@ -72,65 +53,83 @@ export default function TimelineSummary({
 
             <div className="timeline-stat-item">
                 <div className="timeline-stat-icon bg-info-subtle text-info">
-                <i className="bi bi-file-earmark-text"></i>
+                <i className="bi bi-person-plus"></i>
                 </div>
 
                 <div>
-                <small>Eventos mostrados</small>
-                <strong>{events.length}</strong>
+                <small>Registro del estudiante</small>
+                <strong>{summary?.studentCreated ?? 0}</strong>
                 </div>
             </div>
 
             <div className="timeline-stat-item">
                 <div className="timeline-stat-icon bg-secondary-subtle text-secondary">
-                <i className="bi bi-funnel"></i>
+                <i className="bi bi-person-vcard"></i>
                 </div>
 
                 <div>
-                <small>Filtros</small>
-                <strong>{hasFilters ? "Aplicados" : "Ninguno"}</strong>
+                <small>Perfil académico</small>
+                <strong>{summary?.profileCreated ?? 0}</strong>
+                </div>
+            </div>
+
+            <div className="timeline-stat-item">
+                <div className="timeline-stat-icon bg-warning-subtle text-warning">
+                <i className="bi bi-journal-text"></i>
+                </div>
+
+                <div>
+                <small>Historiales académicos</small>
+                <strong>{summary?.transcriptCreated ?? 0}</strong>
+                </div>
+            </div>
+
+            <div className="timeline-stat-item">
+                <div className="timeline-stat-icon bg-success-subtle text-success">
+                <i className="bi bi-patch-check"></i>
+                </div>
+
+                <div>
+                <small>Certificados emitidos</small>
+                <strong>{summary?.certificateIssued ?? 0}</strong>
+                </div>
+            </div>
+
+            <div className="timeline-stat-item">
+                <div className="timeline-stat-icon bg-dark-subtle text-dark">
+                <i className="bi bi-pencil-square"></i>
+                </div>
+
+                <div>
+                <small>Eventos manuales</small>
+                <strong>{summary?.manualEvents ?? 0}</strong>
                 </div>
             </div>
             </div>
         </div>
 
         {/* =====================================================
-                    CATEGORÍAS
-                ===================================================== */}
+                            FILTROS
+                        ===================================================== */}
 
-        <div className="timeline-summary-card">
+        {hasFilters && (
+            <div className="timeline-summary-card">
             <div className="timeline-summary-card-header">
-            <span>Actividad por categoría</span>
+                <span>Vista filtrada</span>
 
-            <i className="bi bi-diagram-3 text-primary"></i>
+                <i className="bi bi-funnel text-primary"></i>
             </div>
 
-            {categories.length === 0 ? (
             <div className="timeline-summary-empty">
-                No hay categorías disponibles.
+                Los filtros están aplicados al historial mostrado. El resumen
+                corresponde al estudiante completo.
             </div>
-            ) : (
-            <div className="timeline-category-list">
-                {categories.map(([type, count]) => (
-                <div key={type} className="timeline-category-item">
-                    <span>{timelineReferenceLabels[type] ?? type}</span>
-
-                    <span className="timeline-category-count">{count}</span>
-                </div>
-                ))}
             </div>
-            )}
-
-            {events.length > 0 && totalEvents > events.length && (
-            <small className="text-muted d-block mt-3">
-                Las categorías corresponden a los eventos de la página actual.
-            </small>
-            )}
-        </div>
+        )}
 
         {/* =====================================================
-                    INTEGRIDAD
-                ===================================================== */}
+                            INTEGRIDAD
+                        ===================================================== */}
 
         <div className="timeline-summary-card timeline-integrity-card">
             <div className="timeline-summary-card-header">
@@ -142,20 +141,23 @@ export default function TimelineSummary({
             <div className="timeline-integrity-list">
             <div>
                 <i className="bi bi-check-circle-fill"></i>
+
                 <span>Eventos registrados institucionalmente</span>
             </div>
 
             <div>
                 <i className="bi bi-check-circle-fill"></i>
+
                 <span>Historial cronológico disponible</span>
             </div>
 
             <div>
                 <i className="bi bi-check-circle-fill"></i>
+
                 <span>Eventos consultables individualmente</span>
             </div>
             </div>
         </div>
         </div>
     );
-    }
+}

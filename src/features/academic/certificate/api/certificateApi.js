@@ -36,13 +36,19 @@ export const getCertificateDetail = async (certificatePublicId) => {
     return data;
 };
 
-// Emite certificado desde transcript
-export const issueCertificate = async (transcriptPublicId) => {
+export const issueCertificate = async ({
+    transcriptPublicId,
+    type,
+    title,
+    awardedAt,
+    documentHash = null,
+    documentUrl = null,
+}) => {
 
     const { data } = await apiClient.post(
-        `/academic/certificates/transcripts/${transcriptPublicId}`
+        `/academic/certificates/transcripts/${transcriptPublicId}`,
+        { type, title, awardedAt, documentHash, documentUrl,}
     );
-
     return data;
 };
 
@@ -52,4 +58,49 @@ export const revokeCertificate = async (certificatePublicId) => {
     await apiClient.patch(
         `/academic/certificates/${certificatePublicId}/revoke`
     );
+};
+
+// Actualiza los datos principales de la credencial
+export const updateCertificateCredential = async ({
+    certificatePublicId,
+    title,
+    awardedAt,
+}) => {
+
+    const { data } = await apiClient.put(
+        `/academic/certificates/${certificatePublicId}/credential`,
+        {title, awardedAt }
+    );
+
+    return data;
+};
+
+// DOCUMENTO OFICIAL
+export const updateCertificateDocument = async ({
+    certificatePublicId,
+    file,
+    documentHash,
+    documentUrl,
+}) => {
+
+    const formData = new FormData();
+
+    if (file) {
+        formData.append("file", file);
+    }
+
+    if (documentHash) {
+        formData.append("documentHash", documentHash);
+    }
+
+    if (documentUrl) {
+        formData.append("documentUrl", documentUrl);
+    }
+
+    const { data } = await apiClient.put(
+        `/academic/certificates/${certificatePublicId}/document`,
+        formData
+    );
+
+    return data;
 };

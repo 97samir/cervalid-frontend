@@ -1,5 +1,30 @@
 // controla el acceso a rutas dependiendo del rol
+import { Navigate, Outlet } from "react-router-dom";
+import useAuthStore from "@/app/store/auth/useAuthStore";
 
+export default function RoleGuard({ allowedRoles }) {
+  const { user, loading } = useAuthStore();
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        Cargando...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!allowedRoles.includes(user.role)) {
+    return <Navigate to="/unauthorized" replace />;
+  }
+
+  return <Outlet />;
+}
+
+/*
 import { Navigate } from "react-router-dom";
 import useAuthStore from "../store/auth/useAuthStore";
 
@@ -34,3 +59,4 @@ export default function RoleGuard({ allowedRoles, children }) {
 
   return children;
 }
+*/

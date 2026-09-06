@@ -1,11 +1,15 @@
-// pantalla completa de login
-
 import LoginForm from "../components/LoginForm";
 
 export default function LoginPage() {
   return (
-    <div className="container vh-100 d-flex align-items-center justify-content-center">
-      <div style={{ width: "400px" }}>
+    <div className="auth-page">
+      <div className="auth-card-wrapper">
+        <div className="auth-page-heading">
+          <h1>Iniciar sesión</h1>
+
+          <p>Accede a tu cuenta de Cervalid</p>
+        </div>
+
         <LoginForm />
       </div>
     </div>
