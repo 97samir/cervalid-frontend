@@ -1,18 +1,30 @@
-/* SIDEBAR */
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
 .sidebar {
     position: sticky;
     top: 0;
+
     width: 280px;
     height: 100vh;
+
     display: flex;
     flex-direction: column;
+
     background: #111827;
     color: #ffffff;
+
     border-right: 1px solid #1f2937;
+
     overflow-y: auto;
 }
 
-/* Scroll */
+
+/* =====================================================
+   SCROLL
+===================================================== */
+
 .sidebar::-webkit-scrollbar {
     width: 8px;
 }
@@ -22,9 +34,14 @@
     border-radius: 999px;
 }
 
-/* HEADER*/
+
+/* =====================================================
+   HEADER
+===================================================== */
+
 .sidebar-header {
     padding: 1.75rem 1.5rem;
+
     border-bottom: 1px solid #1f2937;
 }
 
@@ -32,72 +49,307 @@
     font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: .5px;
-    color: white;
+
+    color: #ffffff;
 }
 
-/* BODY */
+
+/* =====================================================
+   BODY
+===================================================== */
 
 .sidebar-body {
     flex: 1;
     padding: 1rem;
 }
 
-/* NAV */
+
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
+
 .sidebar-nav {
     display: flex;
     flex-direction: column;
     gap: .25rem;
 }
 
-/* Links */
+
+/* =====================================================
+   LINKS
+===================================================== */
+
 .sidebar-link {
     display: flex;
     align-items: center;
     gap: .75rem;
+
     padding: .75rem 1rem;
+
     border-radius: .75rem;
+
     text-decoration: none;
+
     color: #d1d5db;
-    transition: .20s;
+
     font-weight: 500;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
 }
 
 .sidebar-link:hover {
     background: #1f2937;
-    color: white;
+    color: #ffffff;
 }
 
 .sidebar-link.active {
     background: #2563eb;
-    color: white;
+    color: #ffffff;
 }
 
-/* CONTEXTO */
+
+/* =====================================================
+   CONTEXTO INSTITUCIONAL
+===================================================== */
+
 .sidebar-context {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     padding: 1rem;
-    background: rgba(255,255,255,.05);
+
+    background: #1f2937;
+
+    border: 1px solid #374151;
     border-radius: .75rem;
 }
 
-.sidebar-context small {
+
+/* Label */
+
+.sidebar-context-label {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    margin-bottom: .85rem;
+
     color: #9ca3af;
+
+    font-size: .72rem;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: .06em;
 }
 
-.sidebar-context strong {
+.sidebar-context-label i {
+    font-size: .9rem;
+}
+
+
+/* =====================================================
+   INSTITUCIÓN
+===================================================== */
+
+.sidebar-context-institution {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+
+/* Icono */
+
+.sidebar-context-icon {
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(37, 99, 235, .15);
+
+    border: 1px solid rgba(37, 99, 235, .25);
+    border-radius: .65rem;
+
+    color: #60a5fa;
+}
+
+.sidebar-context-icon i {
+    font-size: 1rem;
+}
+
+
+/* Información */
+
+.sidebar-context-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+}
+
+.sidebar-context-info strong {
     display: block;
-    margin-top: .35rem;
+
+    overflow: hidden;
+
+    color: #ffffff;
+
+    font-size: .9rem;
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* FOOTER */
+.sidebar-context-info span {
+    color: #9ca3af;
+
+    font-size: .72rem;
+}
+
+
+/* =====================================================
+   BOTÓN SALIR DEL CONTEXTO
+===================================================== */
+
+.sidebar-context-exit {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+
+    margin-top: .9rem;
+    padding: .55rem .75rem;
+
+    background: transparent;
+
+    border: 1px solid #4b5563;
+    border-radius: .55rem;
+
+    color: #d1d5db;
+
+    font-size: .8rem;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+}
+
+.sidebar-context-exit:hover {
+    background: #374151;
+
+    border-color: #6b7280;
+
+    color: #ffffff;
+}
+
+.sidebar-context-exit i {
+    font-size: .9rem;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
 .sidebar-footer {
     padding: 1rem;
+
     border-top: 1px solid #1f2937;
 }
 
-/* BOTONES*/
-.sidebar-footer .btn,
 
-.sidebar-context .btn{
+/* =====================================================
+   ACCIONES DEL FOOTER
+===================================================== */
+
+.sidebar-footer-action {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+
+    padding: .7rem 1rem;
+
     border-radius: .65rem;
+
+    text-decoration: none;
+
+    font-size: .85rem;
+    font-weight: 600;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+}
+
+
+/* =====================================================
+   REGISTRAR INSTITUCIÓN
+===================================================== */
+
+.sidebar-register {
+    margin-bottom: .65rem;
+
+    background: #2563eb;
+
+    border: 1px solid #2563eb;
+
+    color: #ffffff;
+}
+
+.sidebar-register:hover {
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+
+.sidebar-logout {
+    background: transparent;
+
+    border: 1px solid #374151;
+
+    color: #d1d5db;
+
+    cursor: pointer;
+}
+
+.sidebar-logout:hover {
+    background: #1f2937;
+
+    border-color: #4b5563;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   ICONOS DEL FOOTER
+===================================================== */
+
+.sidebar-footer-action i {
+    font-size: .95rem;
 }

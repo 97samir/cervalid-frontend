@@ -1,14 +1,17 @@
 // motor del sistema de autenticación del frontend
 // Aquí se guarda el usuario autenticado
-
-import { useState, useEffect } from "react";
 import AuthContext from "./AuthContext";
-import { getCurrentUser } from "@/features/auth/api/authApi";
 import tokenManager from "@/core/security/tokenManager";
 import apiClient from "@/core/api/apiClient";
+
+import { useState, useEffect } from "react";
+import { getCurrentUser } from "@/features/auth/api/authApi";
 import { exitInstitution } from "@/features/auth/api/authApi";
 
-export default function AuthStoreProvider({ children }) {
+export default function AuthStoreProvider({ 
+  children 
+}) {
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -108,8 +111,8 @@ export default function AuthStoreProvider({ children }) {
 
       await exitInstitution();
       const updateUser = await loadUser();
-      setUser(updateUser);
-      window.location.href = "/superadmin";
+      //setUser(updateUser);
+      //window.location.href = "/superadmin";
       return updateUser;
 
     } catch (error) {

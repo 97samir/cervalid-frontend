@@ -1,54 +1,80 @@
 import "./Sidebar.css";
 
-import { Link, NavLink } from "react-router-dom";
-import useAuthStore from "../../app/store/auth/useAuthStore";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import useAuthStore from "@/app/store/auth/useAuthStore";
 
-export default function Sidebar({ role }) {
+export default function Sidebar({ 
+  role 
+}) {
 
+  const navigate = useNavigate();
   const { user, exitInstitutionContext, logoutUser } = useAuthStore();
 
+  // CONTEXTO INSTITUCIONAL
   const isInInstitutionContext =
-    user?.role === "SUPER_ADMIN" && user?.institutionId;
+    user?.role === "SUPER_ADMIN" && 
+    user?.institutionId != null;
 
+  // SALIR DEL CONTEXTO
   const handleExitInstitution = async () => {
     const updatedUser = await exitInstitutionContext();
 
-    if (!updatedUser) return;
+    if (!updatedUser) {
+      return;
+    }
 
+    navigate("/superadmin", { replace: true });
   };
+
   console.log("USER:", user);
 
   return (
-    
-    <aside className="sidebar" >
-      
+    <aside className="sidebar">
+      {/* HEADER */}
+
       <div className="sidebar-header">
-          <div className="sidebar-logo">
-              Cervalid
-          </div>
+        <div className="sidebar-logo">Cervalid</div>
       </div>
 
-      {/* ================= CONTEXTO ================= */}
-      {isInInstitutionContext && (
-        <div className="mb-3 border-bottom pb-2">
-          <small>Modo institución:</small>
-          <div className="fw-bold">
-            {user?.institutionName || "Cargando..."}
-          </div>
-
-          <button
-            className="btn btn-warning btn-sm mt-2 w-100"
-            onClick={handleExitInstitution}
-          >
-            Salir
-          </button>
-        </div>
-      )}
+      {/* BODY */}
 
       <div className="sidebar-body">
-        <nav className="sidebar-nav">
+        {/* CONTEXTO INSTITUCIONAL */}
 
-          {/* ================= SUPER ADMIN ================= */}
+        {isInInstitutionContext && (
+          <div className="sidebar-context">
+            <div className="sidebar-context-label">
+              <i className="bi bi-building"></i>
+              <span>Contexto actual</span>
+            </div>
+
+            <div className="sidebar-context-institution">
+              <div className="sidebar-context-icon">
+                <i className="bi bi-bank"></i>
+              </div>
+
+              <div className="sidebar-context-info">
+                <strong>{user?.institutionName || "Cargando..."}</strong>
+
+                <span>Administrando institución</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="sidebar-context-exit"
+              onClick={handleExitInstitution}
+            >
+              <i className="bi bi-box-arrow-left"></i>
+              <span>Salir del contexto</span>
+            </button>
+          </div>
+        )}
+
+        {/* NAVEGACIÓN */}
+
+        <nav className="sidebar-nav">
+          {/* SUPER ADMIN */}
 
           {role === "SUPER_ADMIN" && !isInInstitutionContext && (
             <>
@@ -56,138 +82,150 @@ export default function Sidebar({ role }) {
                 end
                 to="/superadmin"
                 className={({ isActive }) =>
-                    isActive
-                        ? "sidebar-link active"
-                        : "sidebar-link"
+                  isActive ? "sidebar-link active" : "sidebar-link"
                 }
               >
-                Dashboard Global
+                <i className="bi bi-grid"></i>
+                <span>Dashboard Global</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/superadmin/institutions">
-                Instituciones
+                <i className="bi bi-building"></i>
+                <span>Instituciones</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/superadmin/users">
-                Usuarios
+                <i className="bi bi-people"></i>
+                <span>Usuarios</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/#">
-                Auditoría Global
+                <i className="bi bi-shield-check"></i>
+                <span>Auditoría Global</span>
               </NavLink>
 
-              <NavLink to="/superadmin/institution-requests" className="sidebar-link">
-                Ver solicitudes institucionales
+              <NavLink
+                to="/superadmin/institution-requests"
+                className="sidebar-link"
+              >
+                <i className="bi bi-file-earmark-text"></i>
+                <span>Solicitudes institucionales</span>
               </NavLink>
             </>
           )}
 
-          {/* ================= CONTEXTO INSTITUCIÓN ================= */}
+          {/* CONTEXTO INSTITUCIÓN */}
 
           {(role === "INSTITUTION_ADMIN" ||
             role === "INSTITUTION_SUBADMIN" ||
             isInInstitutionContext) && (
             <>
-              <NavLink 
+              <NavLink
                 end
                 to="/institution"
-                className= {({ isActive }) => 
-                  isActive
-                    ? "sidebar-link active" 
-                    : "sidebar-link"} 
+                className={({ isActive }) =>
+                  isActive ? "sidebar-link active" : "sidebar-link"
+                }
               >
-                Dashboard Institución
+                <i className="bi bi-grid"></i>
+                <span>Dashboard Institución</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/institution/students">
-                Estudiantes
+                <i className="bi bi-mortarboard"></i>
+                <span>Estudiantes</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/institution/users">
-                Usuarios
+                <i className="bi bi-people"></i>
+                <span>Usuarios</span>
               </NavLink>
 
               <NavLink to="/institution/profile" className="sidebar-link">
-                Perfil de institución
+                <i className="bi bi-building"></i>
+                <span>Perfil de institución</span>
               </NavLink>
 
               <NavLink to="/institution/verification" className="sidebar-link">
-                Verificaciones
+                <i className="bi bi-patch-check"></i>
+                <span>Verificaciones</span>
               </NavLink>
 
               <NavLink to="/institution/invitations" className="sidebar-link">
-                Invitaciones
+                <i className="bi bi-envelope"></i>
+                <span>Invitaciones</span>
               </NavLink>
-              
             </>
           )}
 
-          {/* ================= STUDENT ================= */}
+          {/* STUDENT */}
 
           {role === "STUDENT" && (
             <>
-
               <NavLink
                 end
                 to="/student"
                 className={({ isActive }) =>
-                    isActive
-                        ? "sidebar-link active"
-                        : "sidebar-link"
+                  isActive ? "sidebar-link active" : "sidebar-link"
                 }
               >
-                Dashboard
+                <i className="bi bi-grid"></i>
+                <span>Dashboard</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/student/certificates">
-                Mis Certificados
+                <i className="bi bi-award"></i>
+                <span>Mis Certificados</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/student/verify">
-                Verificar Certificado
+                <i className="bi bi-patch-check"></i>
+                <span>Verificar Certificado</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/student/history">
-                Historial
+                <i className="bi bi-clock-history"></i>
+                <span>Historial</span>
               </NavLink>
 
               <NavLink className="sidebar-link" to="/student/profile">
-                Mi Perfil
+                <i className="bi bi-person"></i>
+                <span>Mi Perfil</span>
               </NavLink>
-              
             </>
           )}
 
-          {/* ================= RECRUITER ================= */}
+          {/* RECRUITER */}
 
           {role === "RECRUITER" && (
             <NavLink className="sidebar-link" to="/recruiter">
-              Verificar Certificado
+              <i className="bi bi-patch-check"></i>
+              <span>Verificar Certificado</span>
             </NavLink>
           )}
-
         </nav>
       </div>
-      
+
+      {/* FOOTER */}
 
       <div className="sidebar-footer">
-          <Link
-              to="/institution-requests"
-              className="btn btn-primary w-100 mb-3"
-          >
-              Registrar institución
-          </Link>
+        <Link
+          to="/institution-requests"
+          className="sidebar-footer-action sidebar-register"
+        >
+          <i className="bi bi-plus-circle"></i>
+          <span>Registrar institución</span>
+        </Link>
 
-          <button
-              //className="btn btn-outline-light w-100"
-              className="btn btn-danger w-100"
-              onClick={logoutUser}
-          >
-              Cerrar sesión
-          </button>
-
+        <button
+          type="button"
+          className="sidebar-footer-action sidebar-logout"
+          onClick={logoutUser}
+        >
+          <i className="bi bi-box-arrow-right"></i>
+          <span>Cerrar sesión</span>
+        </button>
       </div>
-
     </aside>
   );
 }

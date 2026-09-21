@@ -349,7 +349,7 @@
     align-items: center;
     justify-content: center;
 
-    gap: 8px;
+    gap: 10px;
 
     padding: 0 22px;
 
@@ -366,6 +366,10 @@
         background 0.2s ease,
         transform 0.2s ease,
         box-shadow 0.2s ease;
+}
+
+.institution-request-submit i {
+    margin-right: 10px !important;
 }
 
 .institution-request-submit:hover:not(:disabled) {

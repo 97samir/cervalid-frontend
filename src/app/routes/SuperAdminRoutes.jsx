@@ -1,6 +1,7 @@
 import { Route } from "react-router-dom";
 
-import RoleGuard from "./RoleGuard";
+//import RoleGuard from "./RoleGuard";
+import GlobalSuperAdminGuard from "./GlobalSuperAdminGuard";
 
 import SuperAdminDashboardPage from "@/features/superadmin/pages/SuperAdminDashboardPage";
 import InstitutionsPage from "@/features/superadmin/institutions/pages/InstitutionsPage";
@@ -8,9 +9,10 @@ import InstitutionRequestAdminPage from "@/features/institution-request/pages/In
 import InstitutionUsersPage from "@/features/users/pages/InstitutionUsersPage";
 
 export const superAdminRoutes = (
-
-    <Route element={<RoleGuard allowedRoles={["SUPER_ADMIN"]} />}>
-
+    
+    //<Route element={<RoleGuard allowedRoles={["SUPER_ADMIN"]} />}>
+    <Route element={<GlobalSuperAdminGuard/>}>
+    
         <Route path="/superadmin" 
             element={<SuperAdminDashboardPage />} />
 

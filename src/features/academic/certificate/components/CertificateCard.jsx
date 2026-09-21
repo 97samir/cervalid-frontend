@@ -36,9 +36,7 @@ export default function CertificateCard({ studentPublicId }) {
     return (
         <div className="card border-0 shadow-sm rounded-4">
         <div className="card-body">
-            {/* =================================================
-                        HEADER
-                    ================================================== */}
+            {/* HEADER */}
 
             <div className="d-flex justify-content-between align-items-start mb-4">
             <div>
@@ -70,9 +68,7 @@ export default function CertificateCard({ studentPublicId }) {
             )}
             </div>
 
-            {/* =================================================
-                        EMPTY
-                    ================================================== */}
+            {/* EMPTY */}
 
             {certificates.length === 0 && (
             <div className="text-center py-5">
@@ -102,16 +98,11 @@ export default function CertificateCard({ studentPublicId }) {
                 <table className="table align-middle mb-0">
                 <thead className="table-light">
                     <tr>
-                    <th>Número</th>
-
-                    <th>Tipo</th>
-
-                    <th>Credencial</th>
-
-                    <th>Estado</th>
-
-                    <th>Emitido</th>
-
+                        <th>Número</th>
+                        <th>Tipo</th>
+                        <th>Credencial</th>
+                        <th>Estado</th>
+                        <th>Emitido</th>
                     <th
                         style={{
                         width: 120,

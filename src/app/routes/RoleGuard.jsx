@@ -5,6 +5,7 @@ import useAuthStore from "@/app/store/auth/useAuthStore";
 export default function RoleGuard({ allowedRoles }) {
   const { user, loading } = useAuthStore();
 
+  // cargando usuario
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">
@@ -13,50 +14,36 @@ export default function RoleGuard({ allowedRoles }) {
     );
   }
 
+  // usuario no autenticado
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/unauthorized" replace />;
+  console.log("=== ROLE GUARD ===");
+  console.log("User:", user);
+  console.log("User role:", user.role);
+  console.log("Institution ID:", user.institutionId);
+  console.log("Allowed roles:", allowedRoles);
+
+  // acceso directo por rol
+  if (allowedRoles.includes(user.role)) { 
+    return <Outlet />; 
   }
 
-  return <Outlet />;
-}
-
-/*
-import { Navigate } from "react-router-dom";
-import useAuthStore from "../store/auth/useAuthStore";
-
-export default function RoleGuard({ allowedRoles, children }) {
-
-  const { user, loading } = useAuthStore();
-
-  console.log("RoleGuard user:", user?.role);
-  console.log("RoleGuard loading:", loading);
-  console.log("RoleGuard allowedRoles:", allowedRoles);
-  
-  // espera aque termine la carga
-  if (loading) {
-    return <div>Cargando permisos...</div>;
-  }
-
-  // Si no hay usuario logueado -> redirige a login
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  const isAllowed =
-  allowedRoles.includes(user.role) || (
+  const isSuperAdminInInstitution =
     user.role === "SUPER_ADMIN" && 
-    user.institutionId !== null &&
-    allowedRoles.includes("INSTITUTION_ADMIN")
-  );
+    user.institutionId != null;
 
-  if (!isAllowed) {
-    return <Navigate to="/unauthorized" replace />;
+  if (isSuperAdminInInstitution && 
+    allowedRoles.includes("INSTITUTION_ADMIN")) {
+    return <Outlet />;
   }
 
-  return children;
+  console.warn("RoleGuard: acceso no autorizado", {
+    role: user.role,
+    institutionId: user.institutionId,
+    allowedRoles,
+  });
+
+  return <Navigate to="/unauthorized" replace />;
 }
-*/

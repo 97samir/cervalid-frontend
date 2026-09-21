@@ -37,18 +37,12 @@ export default function CertificateTable({ certificates = [] }) {
             <table className="table table-hover align-middle mb-0">
             <thead className="table-light">
                 <tr>
-                <th>Número</th>
-
-                <th>Tipo</th>
-
-                <th>Credencial</th>
-
-                <th>Otorgado</th>
-
-                <th>Emitido</th>
-
-                <th>Estado</th>
-
+                    <th>Número</th>
+                    <th>Tipo</th>
+                    <th>Credencial</th>
+                    <th>Otorgado</th>
+                    <th>Emitido</th>
+                    <th>Estado</th>
                 <th
                     className="text-end"
                     style={{
