@@ -1,6 +1,6 @@
 export const verificationModalityLabels = {
 
-    PRESENTIAL: "Presencial",
+    PRESENCIAL: "Presencial",
     VIRTUAL: "Virtual",
     SEMIPRESENCIAL: "Semipresencial",
 };
@@ -40,44 +40,101 @@ export const verificationSourceLabels = {
     INTERNAL_SYSTEM: "Sistema interno",
 };
 
+export const verificationTypeLabels = {
+    CERTIFICATE: "Certificado",
+    CREDENTIAL: "Credencial",
+};
+
 export const certificateTypeLabels = {
 
     DEGREE: "Título académico",
     CERTIFICATION: "Certificación",
+    ACADEMIC: "Grado académico",
+    COURSE_COMPLETION: "Constancia de finalización",
+    CUSTOM: "Otro",
+    DIPLOMA: "Diploma",
+    TRANSCRIPT: "Certificado de estudios"
 };
 
-export const getVerificationStatusLabel = (status) =>
-    verificationStatusLabels[status] ?? status;
+export const credentialTypeLabels = {
+    BACHELOR_DEGREE: "Bachiller",
+    PROFESSIONAL_TITLE: "Título profesional",
+    MASTER_DEGREE: "Maestría",
+    DOCTORATE: "Doctorado",
+};
 
-export const getVerificationStatusColor = (status) =>
-    verificationStatusColors[status] ?? "secondary";
+export const getVerificationStatusLabel = (status) => {
+    return (
+        verificationStatusLabels[status] ||
+        status ||
+        "Desconocido"
+    );
+};
 
-export const getVerificationLevelLabel = (level) =>
-    verificationLevelLabels[level] ?? level;
+export const getVerificationStatusColor = (status) => {
+    return verificationStatusColors[status] || "secondary";
+};
 
-export const getVerificationSourceLabel = (source) =>
-    verificationSourceLabels[source] ?? source;
+export const getVerificationLevelLabel = (level) => {
+    return (
+        verificationLevelLabels[level] ||
+        level ||
+        "Verificación local"
+    );
+};
 
-export const getCertificateTypeLabel = (type) =>
-    certificateTypeLabels[type] ?? type;
+export const getVerificationSourceLabel = (source) => {
+    return (
+        verificationSourceLabels[source] ||
+        source ||
+        "Desconocido"
+    );
+};
 
-export const getVerificationModalityLabel = (modality) =>
-    verificationModalityLabels[modality] ?? modality;
-/*
-|--------------------------------------------------------------------------
-| Formateadores
-*/
+export const getVerificationTypeLabel = (type) => {
+    return (
+        verificationTypeLabels[type] ||
+        type ||
+        "Desconocido"
+    );
+};
+
+export const getCertificateTypeLabel = (type) => {
+    return (
+        certificateTypeLabels[type] ||
+        type ||
+        "Desconocido"
+    );
+};
+
+export const getCredentialTypeLabel = (type) => {
+    return (
+        credentialTypeLabels[type] ||
+        type ||
+        "Desconocido"
+    );
+};
+
+export const getResourceTypeLabel = (
+    verificationType,
+    resourceType,
+) => {
+    if (verificationType === "CREDENTIAL") {
+        return getCredentialTypeLabel(resourceType);
+    }
+
+    return getCertificateTypeLabel(resourceType);
+};
 
 export const formatVerificationDate = (value) => {
-
     if (!value) {
-        return "-";
+        return "—";
     }
 
     const date = new Date(value);
 
     if (Number.isNaN(date.getTime())) {
-        return value;
+        return "—";
     }
 
     return new Intl.DateTimeFormat("es-PE", {
@@ -86,21 +143,46 @@ export const formatVerificationDate = (value) => {
     }).format(date);
 };
 
-
 export const formatVerificationDateOnly = (value) => {
-
     if (!value) {
-        return "-";
+        return "—";
     }
 
     const date = new Date(value);
 
-    return date.toLocaleDateString(
-        "es-PE",
-        {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-        }
-    );
+    if (Number.isNaN(date.getTime())) {
+        return "—";
+    }
+
+    return new Intl.DateTimeFormat("es-PE", {
+        dateStyle: "medium",
+    }).format(date);
+};
+
+export const isCredentialVerification = (record) => {
+    return record?.verificationType === "CREDENTIAL";
+};
+
+export const getVerificationResourcePath = (record) => {
+    if (!record?.resourcePublicId) {
+        return "#";
+    }
+
+    if (isCredentialVerification(record)) {
+        return `/institution/credentials/${record.resourcePublicId}`;
+    }
+
+    return `/institution/certificates/${record.resourcePublicId}`;
+};
+
+export const getVerificationHistoryPath = (record) => {
+    if (!record?.resourcePublicId) {
+        return "#";
+    }
+
+    if (record.verificationType === "CREDENTIAL") {
+        return `/institution/verification/history/credential/${record.resourcePublicId}`;
+    }
+
+    return `/institution/verification/history/certificate/${record.resourcePublicId}`;
 };

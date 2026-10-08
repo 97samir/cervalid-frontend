@@ -10,6 +10,10 @@
   background: #fff;
 }
 
+.verification-result-wrapper {
+  animation: verificationFade 0.45s ease;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Status Banner
@@ -42,7 +46,6 @@
 .verification-status-icon {
   width: 48px;
   height: 48px;
-
   min-width: 48px;
 
   display: flex;
@@ -50,7 +53,6 @@
   justify-content: center;
 
   border-radius: 14px;
-
   background: rgba(255, 255, 255, 0.65);
 }
 
@@ -58,39 +60,8 @@
   font-size: 1.5rem;
 }
 
-/*
-|--------------------------------------------------------------------------
-| Result Header
-|--------------------------------------------------------------------------
-*/
-
 .verification-result-title {
   font-weight: 700;
-}
-
-.verification-result-wrapper {
-  animation: verificationFade 0.45s ease;
-}
-
-.verification-eyebrow {
-  display: block;
-
-  color: #6c757d;
-
-  font-size: 0.78rem;
-  font-weight: 600;
-
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-
-  margin-bottom: 0.35rem;
-}
-
-.verification-main-title {
-  font-size: 1.65rem;
-  font-weight: 700;
-
-  margin-bottom: 0.35rem;
 }
 
 /*
@@ -101,24 +72,19 @@
 
 .verification-highlight-grid {
   display: grid;
-
   grid-template-columns: repeat(4, minmax(0, 1fr));
-
   gap: 1rem;
 }
 
 .verification-highlight {
   display: flex;
   align-items: center;
-
   gap: 0.85rem;
 
   min-width: 0;
-
   padding: 1.15rem;
 
   border: 1px solid #eef0f2;
-
   border-radius: 14px;
 
   background: #fff;
@@ -130,14 +96,12 @@
 
 .verification-highlight:hover {
   transform: translateY(-2px);
-
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
 .verification-highlight-icon {
   width: 42px;
   height: 42px;
-
   min-width: 42px;
 
   display: flex;
@@ -147,7 +111,6 @@
   border-radius: 12px;
 
   background: rgba(13, 110, 253, 0.08);
-
   color: #0d6efd;
 }
 
@@ -162,18 +125,16 @@
 .verification-highlight-content span {
   display: block;
 
-  color: #6c757d;
-
-  font-size: 0.75rem;
-
   margin-bottom: 0.2rem;
+
+  color: #6c757d;
+  font-size: 0.75rem;
 }
 
 .verification-highlight-content strong {
   display: block;
 
   color: #212529;
-
   font-size: 0.9rem;
   line-height: 1.35;
 
@@ -187,8 +148,9 @@
 */
 
 .verification-info-card {
-  border: 1px solid #eef0f2;
+  height: 100%;
 
+  border: 1px solid #eef0f2;
   border-radius: 16px;
 
   background: #fff;
@@ -202,27 +164,23 @@
 
 .verification-info-card:hover {
   transform: translateY(-2px);
-
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .verification-info-card .card-header {
   display: flex;
   align-items: center;
-
   gap: 0.85rem;
 
   padding: 1.15rem 1.35rem;
 
   background: #fff;
-
   border-bottom: 1px solid #eef0f2;
 }
 
 .verification-card-icon {
   width: 38px;
   height: 38px;
-
   min-width: 38px;
 
   display: flex;
@@ -232,20 +190,23 @@
   border-radius: 10px;
 
   background: rgba(13, 110, 253, 0.08);
-
   color: #0d6efd;
 }
 
+.verification-card-icon i {
+  font-size: 1rem;
+}
+
 .verification-card-title {
+  color: #212529;
   font-weight: 600;
 }
 
 .verification-card-subtitle {
-  color: #6c757d;
-
-  font-size: 0.75rem;
-
   margin-top: 0.1rem;
+
+  color: #6c757d;
+  font-size: 0.75rem;
 }
 
 .verification-info-card .card-body {
@@ -275,14 +236,12 @@
 }
 
 .verification-summary-item:last-child {
-  border-bottom: none;
-
   padding-bottom: 0.5rem;
+  border-bottom: none;
 }
 
 .verification-summary-label {
   color: #6c757d;
-
   font-size: 0.875rem;
 }
 
@@ -290,54 +249,11 @@
   color: #343a40;
 
   font-weight: 600;
+  line-height: 1.45;
 
   text-align: right;
 
   overflow-wrap: anywhere;
-
-  line-height: 1.45;
-}
-
-/*
-|--------------------------------------------------------------------------
-| Trust
-|--------------------------------------------------------------------------
-*/
-
-.verification-trust {
-  display: flex;
-  align-items: center;
-
-  gap: 1rem;
-
-  padding: 1.2rem 1.35rem;
-
-  background: #f8f9fa;
-
-  border: 1px solid #eef0f2;
-
-  border-radius: 14px;
-}
-
-.verification-trust-icon {
-  width: 44px;
-  height: 44px;
-
-  min-width: 44px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 12px;
-
-  background: rgba(13, 110, 253, 0.1);
-
-  color: #0d6efd;
-}
-
-.verification-trust-icon i {
-  font-size: 1.25rem;
 }
 
 /*
@@ -378,44 +294,353 @@
 
 /*
 |--------------------------------------------------------------------------
-| Verification Status Message
+| Trust
 |--------------------------------------------------------------------------
 */
 
-.verification-status-message {
+.verification-trust {
   display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 1rem;
 
-  margin-top: 1rem;
-  padding: 0.9rem 1rem;
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.35rem;
+
+  background: #f8f9fa;
+
+  border: 1px solid #eef0f2;
+  border-radius: 14px;
+}
+
+.verification-trust-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   border-radius: 12px;
 
-  font-size: 0.82rem;
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+}
+
+.verification-trust-icon i {
+  font-size: 1.25rem;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Integrity
+|--------------------------------------------------------------------------
+*/
+
+.verification-integrity-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  margin-bottom: 1rem;
+}
+
+.verification-integrity-field:last-child {
+  margin-bottom: 0;
+}
+
+.verification-integrity-label {
+  color: #6c757d;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.verification-hash-value {
+  display: block;
+
+  padding: 0.75rem;
+
+  border-radius: 0.75rem;
+
+  background: #f8f9fa;
+
+  color: #495057;
+
+  font-size: 0.75rem;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.verification-document-link {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+
+  border-top: 1px solid #f0f1f2;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Blockchain Reference
+|--------------------------------------------------------------------------
+*/
+
+.verification-blockchain-reference {
+  margin-top: 1.25rem;
+  padding: 1rem;
+
+  border: 1px solid #e8eaed;
+  border-radius: 12px;
+
+  background: #f8f9fa;
+}
+
+.verification-blockchain-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin-bottom: 1rem;
+}
+
+.verification-blockchain-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(13, 110, 253, 0.08);
+  color: #0d6efd;
+}
+
+.verification-blockchain-icon i {
+  font-size: 1.1rem;
+}
+
+.verification-blockchain-title {
+  color: #212529;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.verification-blockchain-subtitle {
+  margin-top: 0.1rem;
+
+  color: #6c757d;
+
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.verification-blockchain-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  padding: 0.55rem 0;
+
+  border-bottom: 1px solid #e9ecef;
+
+  font-size: 0.78rem;
+}
+
+.verification-blockchain-item:last-of-type {
+  border-bottom: none;
+}
+
+.verification-blockchain-item span {
+  color: #6c757d;
+}
+
+.verification-blockchain-item strong {
+  color: #343a40;
+
+  text-align: right;
+
+  overflow-wrap: anywhere;
+}
+
+.verification-blockchain-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  margin-top: 0.75rem;
+}
+
+.verification-blockchain-field > span {
+  color: #6c757d;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Timeline Link
+|--------------------------------------------------------------------------
+*/
+
+.verification-timeline-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1.5rem;
+
+  margin-top: 2rem;
+  padding: 1.25rem 1.35rem;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  background: #fff;
+}
+
+.verification-timeline-link-content {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 0.9rem;
+
+  min-width: 0;
+}
+
+.verification-timeline-link-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(13, 110, 253, 0.08);
+  color: #0d6efd;
+}
+
+.verification-timeline-link-icon i {
+  font-size: 1.1rem;
+}
+
+.verification-timeline-link h5 {
+  margin: 0 0 0.25rem;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.verification-timeline-link p {
+  margin: 0;
+
+  color: #6c757d;
+
+  font-size: 0.8rem;
   line-height: 1.5;
 }
 
-.verification-status-message i {
-  margin-top: 0.1rem;
-  font-size: 1rem;
+/*
+|--------------------------------------------------------------------------
+| Public Verification Link
+|--------------------------------------------------------------------------
+*/
+
+.verification-public-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin-top: 1.25rem;
+  padding: 1rem 1.15rem;
+
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+
+  background: #f8f9fa;
 }
 
-.verification-status-message strong {
+.verification-public-link-label {
   display: block;
-  margin-bottom: 0.15rem;
+
+  margin-bottom: 0.2rem;
+
+  color: #343a40;
+
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
-.verification-status-message-warning {
-  color: #664d03;
-  background: #fff8df;
-  border: 1px solid #ffe69c;
+.verification-public-link p {
+  margin: 0;
+
+  color: #6c757d;
+
+  font-size: 0.75rem;
+  line-height: 1.5;
 }
 
-.verification-status-message-danger {
-  color: #842029;
-  background: #f8d7da;
-  border: 1px solid #f1aeb5;
+/*
+|--------------------------------------------------------------------------
+| Empty Reference
+|--------------------------------------------------------------------------
+*/
+
+.verification-empty-reference {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 1rem;
+}
+
+.verification-empty-reference-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+}
+
+.verification-empty-reference-icon i {
+  font-size: 1.1rem;
+}
+
+.verification-empty-reference-title {
+  margin-bottom: 0.25rem;
+
+  color: #343a40;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.verification-empty-reference-description {
+  margin: 0;
+
+  color: #6c757d;
+
+  font-size: 0.78rem;
+  line-height: 1.5;
 }
 
 /*
@@ -451,12 +676,7 @@
 @media (max-width: 768px) {
   .verification-banner {
     align-items: flex-start;
-
     padding: 1.25rem;
-  }
-
-  .verification-main-title {
-    font-size: 1.4rem;
   }
 
   .verification-highlight-grid {
@@ -465,7 +685,6 @@
 
   .verification-summary-item {
     grid-template-columns: 1fr;
-
     gap: 0.3rem;
   }
 
@@ -475,5 +694,79 @@
 
   .verification-trust {
     align-items: flex-start;
+  }
+
+  .verification-timeline-link {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .verification-timeline-link .btn {
+    width: 100%;
+  }
+
+  .verification-public-link {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .verification-public-link .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .verification-result {
+    border-radius: 16px;
+  }
+
+  .verification-banner {
+    padding: 1rem;
+  }
+
+  .verification-status-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    border-radius: 12px;
+  }
+
+  .verification-status-icon i {
+    font-size: 1.25rem;
+  }
+
+  .verification-result-title {
+    font-size: 1.1rem;
+  }
+
+  .verification-highlight {
+    padding: 1rem;
+  }
+
+  .verification-info-card .card-header {
+    padding: 1rem;
+  }
+
+  .verification-info-card .card-body {
+    padding: 0.5rem 1rem 1rem;
+  }
+
+  .verification-summary-item {
+    padding: 0.85rem 0;
+  }
+
+  .verification-trust {
+    padding: 1rem;
+  }
+
+  .verification-blockchain-item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .verification-blockchain-item strong {
+    text-align: left;
   }
 }

@@ -53,9 +53,6 @@ export default function CredentialTable({
             <tbody>
                 {credentials.map((credential) => {
 
-                    console.log("CREDENTIAL:", credential);
-                    console.log("ISSUED AT:", credential.issuedAt);
-
                     return (
                         <tr key={credential.publicId}>
                             <td>

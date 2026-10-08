@@ -39,6 +39,7 @@ export default function CompetencyForm({
             name: form.name.trim(),
             description: form.description.trim(),
             issuer: form.issuer.trim(),
+            acquiredDate: form.acquiredDate.trim(),
             academicPeriod: form.academicPeriod.trim() || null,
         });
     };
@@ -178,7 +179,7 @@ export default function CompetencyForm({
 
                     <textarea
                         className="form-control"
-                        rows={6}
+                        rows={3}
                         name="description"
                         value={form.description}
                         onChange={handleChange}

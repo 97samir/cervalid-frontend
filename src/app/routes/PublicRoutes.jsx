@@ -10,8 +10,10 @@ import CompaniesPage from "@/features/public/pages/CompaniesPage";
 import ContactPage from "@/features/public/pages/ContactPage";
 import SitemapPage from "@/features/public/pages/SitemapPage";
 
-import CertificateVerificationPage from "@/features/academic/verification/pages/CertificateVerificationPage";
 import PublicCertificateVerificationPage from "@/features/academic/verification/pages/PublicCertificateVerificationPage";
+import VerificationPage from "@/features/academic/verification/pages/VerificationPage";
+import PublicCredentialVerificationPage from "@/features/academic/verification/pages/PublicCredentialVerificationPage";
+
 import PublicTimelinePage from "@/features/academic/verification/pages/PublicTimelinePage";
 
 import UnauthorizedPage from "@/pages/UnauthorizedPage";
@@ -30,15 +32,25 @@ export const publicRoutes = (
             
             {/* VERIFICACIÓN PÚBLICA */}
             <Route path="/verify" 
-                element={<CertificateVerificationPage />} 
+                element={<VerificationPage />} 
             />
 
+            {/* RESULTADO PÚBLICO */}
             <Route path="/verify/:certificatePublicId"
                 element={<PublicCertificateVerificationPage />}
             />
 
+            <Route path="/verify/credential/:credentialPublicId" 
+                element={<PublicCredentialVerificationPage />} 
+            />
+
+            {/* TIMELINE PÚBLICO */}
             <Route path="/verify/:certificatePublicId/timeline"
                 element={<PublicTimelinePage />}
+            />
+
+            <Route path="/verify/credential/:credentialPublicId/timeline" 
+                element={<PublicTimelinePage />} 
             />
 
         </Route>

@@ -1,96 +1,120 @@
-import { useParams, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
 import VerificationResultCard from "../components/VerificationResultCard";
-import { useVerifyPublicCertificate } from "../hooks/useVerifyPublicCertificate";
-import "../styles/verification.css";
+import { usePublicCertificateVerification } from "../hooks/usePublicCertificateVerification";
+import { normalizeVerificationResult } from "../mapper/verificationMapper";
 
 export default function PublicCertificateVerificationPage() {
-
     const { certificatePublicId } = useParams();
+
     const { data, error, isLoading } =
-        useVerifyPublicCertificate(certificatePublicId);
+        usePublicCertificateVerification(certificatePublicId);
+
+    const normalizedData = normalizeVerificationResult(data);
 
     if (isLoading) {
         return (
-        <div className="verification-page container py-5">
-            <div className="verification-loading">
-            <div
-                className="spinner-border text-primary mb-3"
-                role="status"
-                aria-hidden="true"
-            />
+            <div className="verification-page">
+                <div className="container">
+                    <div className="text-center py-5">
+                        <div
+                            className="spinner-border text-primary"
+                            role="status"
+                        >
+                            <span className="visually-hidden">
+                                Cargando...
+                            </span>
+                        </div>
 
-            <h5 className="fw-semibold mb-2">Verificando certificado</h5>
-
-            <p className="text-muted mb-0">
-                Estamos validando la información del certificado...
-            </p>
+                        <p className="text-muted mt-3 mb-0">
+                            Verificando certificado...
+                        </p>
+                    </div>
+                </div>
             </div>
-        </div>
         );
     }
 
     if (error) {
         return (
-        <div className="verification-page container py-5">
-            <div className="verification-error card border-0 shadow-sm">
-            <div className="card-body text-center p-5">
-                <div className="verification-error-icon mb-3">
-                <i className="bi bi-exclamation-circle-fill"></i>
+            <div className="verification-page">
+                <div className="container">
+                    <div className="verification-hero">
+                        <div className="verification-hero-icon text-danger">
+                            <i className="bi bi-exclamation-circle" />
+                        </div>
+
+                        <h1 className="verification-hero-title">
+                            No se pudo verificar el certificado
+                        </h1>
+
+                        <p className="verification-hero-description">
+                            Ocurrió un problema al consultar la información
+                            del certificado académico.
+                        </p>
+
+                        {error?.response?.data?.message && (
+                            <p className="text-muted">
+                                {error.response.data.message}
+                            </p>
+                        )}
+
+                        <Link
+                            to="/verify"
+                            className="btn btn-primary mt-3"
+                        >
+                            <i className="bi bi-arrow-left me-2" />
+                            Volver a verificar
+                        </Link>
+                    </div>
                 </div>
-
-                <h4 className="fw-bold mb-2">
-                No se pudo verificar el certificado
-                </h4>
-
-                <p className="text-muted mb-4">
-                Ocurrió un problema al consultar la información del certificado.
-                Verifica que el enlace sea correcto e inténtalo nuevamente.
-                </p>
-
-                <Link to="/" className="btn btn-outline-primary">
-                <i className="bi bi-house me-2"></i>
-                Volver al inicio
-                </Link>
             </div>
-            </div>
-        </div>
         );
     }
 
     if (!data) {
         return (
-        <div className="verification-page container py-5">
-            <div className="verification-empty card border-0 shadow-sm">
-            <div className="card-body">
-                <i className="bi bi-search"></i>
+            <div className="verification-page">
+                <div className="container">
+                    <div className="verification-hero">
+                        <div className="verification-hero-icon">
+                            <i className="bi bi-search" />
+                        </div>
 
-                <h4 className="fw-bold">Certificado no encontrado</h4>
+                        <h1 className="verification-hero-title">
+                            Certificado no encontrado
+                        </h1>
 
-                <p className="text-muted">
-                No encontramos información asociada al certificado solicitado.
-                </p>
+                        <p className="verification-hero-description">
+                            No se encontró información asociada al certificado
+                            solicitado.
+                        </p>
+
+                        <Link
+                            to="/verify"
+                            className="btn btn-primary mt-3"
+                        >
+                            <i className="bi bi-arrow-left me-2" />
+                            Nueva verificación
+                        </Link>
+                    </div>
+                </div>
             </div>
-            </div>
-        </div>
         );
     }
 
     return (
-        <main className="verification-page container py-0">
+        <div className="verification-page">
+            <div className="container">
+                <VerificationResultCard result={normalizedData} />
 
-            {/* RESULTADO */}
-
-            <div className="verification-result-wrapper">
-                <VerificationResultCard result={data} />
+                <footer className="text-center mt-4 pb-4">
+                    <p className="text-muted small mb-0">
+                        Verificación proporcionada por CERVALID.
+                    </p>
+                </footer>
             </div>
-
-            {/* FOOTER */}
-
-            <footer className="text-center mt-4 pb-4">
-                <p className="text-muted small mb-0">
-                Verificación proporcionada por Cervalid.
-                </p>
-            </footer>
-        </main>
+        </div>
     );
 }
+

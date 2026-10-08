@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 
-import usePublicCertificateTimeline from "../hooks/usePublicCertificateTimeline";
+import usePublicTimeline from "../hooks/usePublicTimeline";
 
 import PublicTimelineHeader from "../components/public-timeline/PublicTimelineHeader";
 import PublicTimelineSummary from "../components/public-timeline/PublicTimelineSummary";
@@ -12,41 +12,94 @@ import PublicTimelineTrustFooter from "../components/public-timeline/PublicTimel
 
 import { getTimelinePeriods } from "../utils/publicTimelineUtils";
 
-import "../styles/publicTimeline.css";
+import "../styles/publicTimelinePage.css";
 
 export default function PublicTimelinePage() {
-    const { certificatePublicId } = useParams();
 
-    const {
-        data: timeline = [],
-        isLoading,
-        isError,
-    } = usePublicCertificateTimeline(certificatePublicId);
+    const { certificatePublicId, credentialPublicId } = useParams();
+
+    const isCredential = Boolean(credentialPublicId);
+
+    const resourcePublicId = credentialPublicId || certificatePublicId;
+
+    const verificationType = isCredential ? "CREDENTIAL" : "CERTIFICATE";
+
+    const verificationPath = isCredential
+        ? `/verify/credential/${credentialPublicId}`
+        : `/verify/${certificatePublicId}`;
+
+    const { data, isLoading, isError } = usePublicTimeline(
+        verificationType,
+        resourcePublicId,
+    );
+
+    /**
+     * Normaliza las diferentes respuestas que podría
+     * devolver el endpoint.
+     *
+     * Puede recibir:
+     * - []
+     * - { timeline: [] }
+     * - { events: [] }
+     */
+    const timeline = useMemo(() => {
+        if (Array.isArray(data)) {
+        return data;
+        }
+
+        if (Array.isArray(data?.timeline)) {
+        return data.timeline;
+        }
+
+        if (Array.isArray(data?.events)) {
+        return data.events;
+        }
+
+        return [];
+    }, [data]);
 
     const periods = useMemo(() => getTimelinePeriods(timeline), [timeline]);
 
     const [selectedPeriod, setSelectedPeriod] = useState(null);
 
-    const activePeriod =
-        selectedPeriod && periods.some((period) => period.key === selectedPeriod)
-        ? selectedPeriod
-        : (periods[0]?.key ?? null);
+    /**
+     * Algunos periodos utilizan "key" y otros "id".
+     * Normalizamos ambos para evitar inconsistencias.
+     */
+    const getPeriodIdentifier = (period) => 
+        period?.key ?? 
+        period?.id ?? 
+        null;
 
-    /* PERIODO ACTIVO */
+    const activePeriod =
+        selectedPeriod &&
+        periods.some((period) => getPeriodIdentifier(period) === selectedPeriod)
+        ? selectedPeriod
+        : getPeriodIdentifier(periods[0]);
 
     const activePeriodData = periods.find(
-        (period) => period.key === activePeriod,
+        (period) => getPeriodIdentifier(period) === activePeriod,
     );
 
-    /* ESTADOS*/
+    /*
+    * =====================================================
+    * LOADING
+    * =====================================================
+    */
 
     if (isLoading) {
         return (
-        <div className="container py-5">
+        <div className="verification-page">
+            <div className="container">
             <div className="text-center py-5">
-            <div className="spinner-border text-primary mb-3" role="status" />
+                <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Cargando...</span>
+                </div>
 
-            <p className="text-muted mb-0">Cargando trayectoria académica...</p>
+                <p className="text-muted mt-3 mb-0">
+                Cargando trayectoria académica...
+                </p>
+            </div>
             </div>
         </div>
         );
@@ -54,85 +107,115 @@ export default function PublicTimelinePage() {
 
     if (isError) {
         return (
-        <div className="container py-5">
-            <div className="alert alert-danger">
-            <strong>No se pudo cargar la trayectoria.</strong>
+        <div className="verification-page">
+            <div className="container">
+            <div className="text-center py-5">
+                <div className="verification-hero-icon text-danger mx-auto">
+                <i className="bi bi-exclamation-circle" aria-hidden="true" />
+                </div>
 
-            <div className="small mt-1">
-                Verifica que el certificado exista y vuelve a intentarlo.
+                <h1 className="verification-hero-title">
+                No se pudo cargar la trayectoria
+                </h1>
+
+                <p className="verification-hero-description">
+                Ocurrió un problema al consultar la trayectoria académica del
+                documento.
+                </p>
+
+                <Link to={verificationPath} className="btn btn-primary mt-3">
+                <i className="bi bi-arrow-left me-2" aria-hidden="true" />
+                Volver a la verificación
+                </Link>
             </div>
             </div>
         </div>
         );
     }
 
-    return (
-        <div className="public-timeline-page">
-            <div className="container py-4 py-lg-5">
-                
-                {/* NAVEGACIÓN  */}
+    /*
+    * =====================================================
+    * EMPTY
+    * =====================================================
+    */
 
-                <div className="mb-4">
-                    <Link
-                        to={`/verify/${certificatePublicId}`}
-                        className="public-timeline-back"
-                    >
-                        <i className="bi bi-arrow-left me-2" />
-                        Volver a la verificación
-                    </Link>
-                </div>
+    if (!timeline.length) {
+        return (
+        <div className="verification-page">
+            <div className="container">
+            <PublicTimelineHeader
+                verificationType={verificationType}
+                resourcePublicId={resourcePublicId}
+            />
 
+            <PublicTimelineEmpty />
 
-                {/* INTRODUCCIÓN + RESUMEN */}
-
-                <div className="row g-4 align-items-stretch">
-
-                    <div className="col-12 col-lg-6">
-                        <PublicTimelineHeader />
-                    </div>
-
-                    <div className="col-12 col-lg-6">
-                        <PublicTimelineSummary
-                            eventCount={timeline.length}
-                            periodLabel={activePeriodData?.label ?? "-"}
-                        />
-                    </div>
-
-                </div>
-
-                {/* CONTENIDO*/}
-
-                {timeline.length === 0 ? (
-                <PublicTimelineEmpty />
-                ) : (
-                <>
-                    {/* SELECTOR */}
-
-                    <div className="mt-4">
-                    <PublicTimelinePeriodSelector
-                        periods={periods}
-                        selectedPeriod={activePeriod}
-                        onSelect={setSelectedPeriod}
-                    />
-                    </div>
-
-                    {/* PERIODO ACTIVO */}
-
-                    {activePeriodData && (
-                    <div className="mt-4">
-                        <PublicTimelinePeriod
-                        period={activePeriodData}
-                        events={activePeriodData.events}
-                        />
-                    </div>
-                    )}
-                </>
-                )}
-
-                {/* FOOTER */}
-
-                <PublicTimelineTrustFooter />
+            <div className="text-center mt-4">
+                <Link to={verificationPath} className="btn btn-outline-primary">
+                <i className="bi bi-arrow-left me-2" aria-hidden="true" />
+                Volver a la verificación
+                </Link>
             </div>
+
+            <PublicTimelineTrustFooter />
+            </div>
+        </div>
+        );
+    }
+
+    return (
+        <div className="verification-page">
+        <div className="container">
+            {/* HEADER */}
+            <PublicTimelineHeader
+            verificationType={verificationType}
+            resourcePublicId={resourcePublicId}
+            />
+
+            {/* SUMMARY */}
+
+            <PublicTimelineSummary
+            timeline={timeline}
+            verificationType={verificationType}
+            eventCount={timeline.length}
+            periodLabel={activePeriodData?.label ?? "-"}
+            />
+
+            {/* PERIOD SELECTOR */}
+
+            {periods.length > 0 && (
+            <PublicTimelinePeriodSelector
+                periods={periods}
+                selectedPeriod={activePeriod}
+                onSelect={setSelectedPeriod}
+            />
+            )}
+
+            {/* ACTIVE PERIOD */}
+
+            {activePeriodData ? (
+            <PublicTimelinePeriod
+                period={activePeriodData}
+                events={activePeriodData.events}
+                verificationType={verificationType}
+            />
+            ) : (
+            <PublicTimelineEmpty />
+            )}
+
+            {/* BACK */}
+
+            <div className="text-center mt-4">
+            <Link to={verificationPath} className="btn btn-outline-primary">
+                <i className="bi bi-arrow-left me-2" aria-hidden="true" />
+                Volver a la verificación
+            </Link>
+            </div>
+
+            {/* TRUST */}
+
+            <PublicTimelineTrustFooter />
+        </div>
         </div>
     );
 }

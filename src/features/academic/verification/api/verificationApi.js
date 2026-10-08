@@ -1,6 +1,6 @@
 import apiClient from "@/core/api/apiClient";
 
-// verificacion
+// certificate
 export const verifyCertificate = async (payload) => {
   const { data } = await apiClient.post(
     "/verification/certificates/verify",
@@ -10,7 +10,7 @@ export const verifyCertificate = async (payload) => {
   return data;
 };
 
-export const getPublicVerification = async (certificatePublicId) => {
+export const getPublicCertificateVerification  = async (certificatePublicId) => {
   const response = await apiClient.get(
     `/verification/certificates/${certificatePublicId}`,
   );
@@ -18,20 +18,48 @@ export const getPublicVerification = async (certificatePublicId) => {
   return response.data;
 };
 
-// historial
-export const searchInstitutionVerificationHistory = async (
-  page = 0,
-  size = 10,
-  filters = {},
+export const getPublicCertificateTimeline = async (
+    certificatePublicId
 ) => {
-  const { data } = await apiClient.post(
-    `/verification/history/search?page=${page}&size=${size}`,
-    filters,
-  );
 
-  return data;
+    const response = await apiClient.get(
+        `/verification/certificates/public/${certificatePublicId}/timeline`
+    );
+
+    return response.data;
 };
 
+// credential
+export const verifyCredential = async (payload) => {
+    const { data } = await apiClient.post(
+        "/verification/credentials/verify",
+        payload,
+    );
+
+    return data;
+};
+
+export const getPublicCredentialVerification = async (
+    credentialPublicId,
+) => {
+    const { data } = await apiClient.get(
+        `/verification/credentials/${credentialPublicId}`,
+    );
+
+    return data;
+};
+
+export const getPublicCredentialTimeline = async (
+    credentialPublicId,
+) => {
+    const { data } = await apiClient.get(
+        `/verification/credentials/${credentialPublicId}/timeline`,
+    );
+
+    return data;
+};
+
+// historial
 export const searchVerificationHistory = async (
     page = 0,
     size = 10,
@@ -44,7 +72,6 @@ export const searchVerificationHistory = async (
 
     return data;
 };
-
 
 // dashboard
 export const getVerificationDashboard = async () => {
@@ -67,16 +94,4 @@ export const searchVerificationSummary = async (
   );
 
   return data;
-};
-
-// obtener timeline publico
-export const getPublicCertificateTimeline = async (
-    certificatePublicId
-) => {
-
-    const response = await apiClient.get(
-        `/verification/certificates/public/${certificatePublicId}/timeline`
-    );
-
-    return response.data;
 };

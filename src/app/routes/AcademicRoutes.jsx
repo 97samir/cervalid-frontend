@@ -38,7 +38,7 @@ import StudentTimelinePage from "@/features/academic/timeline/pages/StudentTimel
 
 // Verification
 import VerificationDashboardPage from "@/features/academic/verification/pages/VerificationDashboardPage";
-import CertificateVerificationHistoryPage from "@/features/academic/verification/pages/CertificateVerificationHistoryPage";
+import VerificationHistoryPage from "@/features/academic/verification/pages/VerificationHistoryPage";
 
 export const academicRoutes = (
     <>
@@ -140,8 +140,13 @@ export const academicRoutes = (
         />
 
         <Route
-        path="/institution/verification/history/:certificatePublicId"
-        element={<CertificateVerificationHistoryPage />}
+        path="/institution/verification/history/certificate/:resourcePublicId"
+        element={<VerificationHistoryPage />}
+        />
+
+        <Route
+        path="/institution/verification/history/credential/:resourcePublicId"
+        element={<VerificationHistoryPage />}
         />
 
         {/* CREDENTIALS */}

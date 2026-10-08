@@ -1,12 +1,11 @@
 import { useState } from "react";
 
-import {
-    certificateTypeLabels,
-} from "@/shared/utils/enumUtils";
+import { certificateTypeLabels } from "@/shared/utils/enumUtils";
 
 const EMPTY_FORM = {
     type: "DEGREE",
     title: "",
+    description: "",
     awardedAt: "",
     documentHash: "",
     documentUrl: "",
@@ -15,7 +14,6 @@ const EMPTY_FORM = {
 const DOCUMENT_MODES = {
     PDF: "PDF",
     HASH: "HASH",
-    URL: "URL",
 };
 
 export default function IssueCertificateModal({
@@ -24,15 +22,11 @@ export default function IssueCertificateModal({
     onSubmit,
     loading = false,
 }) {
+    const [form, setForm] = useState(EMPTY_FORM);
 
-    const [form, setForm] =
-        useState(EMPTY_FORM);
+    const [mode, setMode] = useState(DOCUMENT_MODES.PDF);
 
-    const [mode, setMode] =
-        useState(DOCUMENT_MODES.PDF);
-
-    const [showDocumentOptions, setShowDocumentOptions] =
-        useState(false);
+    const [showDocumentOptions, setShowDocumentOptions] = useState(false);
 
     if (!show) {
         return null;
@@ -40,16 +34,12 @@ export default function IssueCertificateModal({
 
     /*
      * ============================================================
-     * CAMBIAR CAMPOS
+     * CAMBIAR FORMULARIO
      * ============================================================
      */
 
     const handleChange = (event) => {
-
-        const {
-            name,
-            value,
-        } = event.target;
+        const { name, value } = event.target;
 
         setForm((current) => ({
             ...current,
@@ -59,30 +49,29 @@ export default function IssueCertificateModal({
 
     /*
      * ============================================================
-     * CAMBIAR MODO DOCUMENTAL
+     * CAMBIAR MÉTODO DE REGISTRO DOCUMENTAL
      * ============================================================
+     *
+     * PDF e HASH son métodos alternativos para registrar
+     * el mismo documento.
+     *
+     * La URL es independiente y puede coexistir con ambos.
      */
 
     const handleDocumentModeChange = (newMode) => {
-
         setMode(newMode);
-
-        /*
-         * Evita enviar información documental
-         * correspondiente a otro modo.
-         */
 
         setForm((current) => ({
             ...current,
 
+            /*
+             * Si se cambia a HASH, conserva el hash actual.
+             * Si se cambia a PDF, se limpia porque el PDF
+             * generará nuevamente su identificador.
+             */
             documentHash:
                 newMode === DOCUMENT_MODES.HASH
                     ? current.documentHash
-                    : "",
-
-            documentUrl:
-                newMode === DOCUMENT_MODES.URL
-                    ? current.documentUrl
                     : "",
         }));
     };
@@ -94,22 +83,17 @@ export default function IssueCertificateModal({
      */
 
     const handleFileChange = async (event) => {
-
-        const file =
-            event.target.files?.[0];
+        const file = event.target.files?.[0];
 
         if (!file) {
             return;
         }
 
         if (
-            file.type !== "application/pdf"
-            && !file.name.toLowerCase().endsWith(".pdf")
+            file.type !== "application/pdf" &&
+            !file.name.toLowerCase().endsWith(".pdf")
         ) {
-
-            alert(
-                "Solo se permiten archivos PDF."
-            );
+            alert("Solo se permiten archivos PDF.");
 
             event.target.value = "";
 
@@ -117,46 +101,36 @@ export default function IssueCertificateModal({
         }
 
         try {
+            const arrayBuffer = await file.arrayBuffer();
 
-            const arrayBuffer =
-                await file.arrayBuffer();
+            const hashBuffer = await crypto.subtle.digest(
+                "SHA-256",
+                arrayBuffer,
+            );
 
-            const hashBuffer =
-                await crypto.subtle.digest(
-                    "SHA-256",
-                    arrayBuffer
-                );
-
-            const hashArray =
-                Array.from(
-                    new Uint8Array(hashBuffer)
-                );
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
 
             const hashHex =
                 "0x" +
                 hashArray
-                    .map((byte) =>
-                        byte
-                            .toString(16)
-                            .padStart(2, "0")
-                    )
+                    .map((byte) => byte.toString(16).padStart(2, "0"))
                     .join("");
 
             setForm((current) => ({
                 ...current,
                 documentHash: hashHex,
             }));
-
         } catch (error) {
-
             console.error(
                 "Error al calcular el hash del documento:",
-                error
+                error,
             );
 
             alert(
-                "No fue posible calcular el identificador de integridad del documento."
+                "No fue posible calcular el identificador de integridad del documento.",
             );
+
+            event.target.value = "";
         }
     };
 
@@ -167,72 +141,76 @@ export default function IssueCertificateModal({
      */
 
     const handleSubmit = (event) => {
-
         event.preventDefault();
 
-        const title =
-            form.title.trim();
+        const title = form.title.trim();
+        const description = form.description.trim();
 
-        const documentHash =
-            form.documentHash.trim();
-
-        const documentUrl =
-            form.documentUrl.trim();
+        const documentHash = form.documentHash.trim();
+        const documentUrl = form.documentUrl.trim();
 
         /*
+         * ========================================================
          * VALIDACIÓN PRINCIPAL
+         * ========================================================
          */
 
         if (!form.type) {
-
-            alert(
-                "Selecciona el tipo de certificado."
-            );
+            alert("Selecciona el tipo de certificado.");
 
             return;
         }
 
         if (!title) {
+            alert("Ingresa el título del certificado.");
 
-            alert(
-                "Ingresa el título de la credencial."
-            );
+            return;
+        }
+
+        if (!description) {
+            alert("Ingresa una descripción para el certificado.");
 
             return;
         }
 
         if (!form.awardedAt) {
-
-            alert(
-                "Selecciona la fecha de otorgamiento."
-            );
+            alert("Selecciona la fecha de otorgamiento.");
 
             return;
         }
 
         /*
+         * ========================================================
          * VALIDACIÓN DOCUMENTAL
+         * ========================================================
          *
          * La información documental es opcional.
-         * Si no se abrió la sección, ambos valores
-         * permanecerán en null.
+         *
+         * Si se utiliza PDF, su hash ya fue calculado en
+         * handleFileChange().
+         *
+         * Si se utiliza HASH, se envía directamente.
+         *
+         * La URL es independiente y puede enviarse junto
+         * con cualquiera de los dos métodos.
          */
 
-        onSubmit({
-
-            type:
-                form.type,
-
+        console.log("DATOS CERTIFICADO A ENVIAR:", {
+            type: form.type,
             title,
+            description,
+            awardedAt: form.awardedAt,
+            documentHash: documentHash || null,
+            documentUrl: documentUrl || null,
+        });
 
-            awardedAt:
-                form.awardedAt,
-
-            documentHash:
-                documentHash || null,
-
-            documentUrl:
-                documentUrl || null,
+        onSubmit({
+            type: form.type,
+            title,
+            description,
+            awardedAt: form.awardedAt,
+            documentHash: documentHash || null,
+            documentUrl: documentUrl || null,
         });
     };
 
@@ -243,22 +221,15 @@ export default function IssueCertificateModal({
      */
 
     const handleClose = () => {
-
         if (loading) {
             return;
         }
 
-        setForm(
-            EMPTY_FORM
-        );
+        setForm(EMPTY_FORM);
 
-        setMode(
-            DOCUMENT_MODES.PDF
-        );
+        setMode(DOCUMENT_MODES.PDF);
 
-        setShowDocumentOptions(
-            false
-        );
+        setShowDocumentOptions(false);
 
         onClose();
     };
@@ -276,41 +247,29 @@ export default function IssueCertificateModal({
             role="dialog"
             aria-modal="true"
             style={{
-                backgroundColor:
-                    "rgba(0,0,0,0.5)",
+                backgroundColor: "rgba(0,0,0,0.5)",
             }}
         >
-
             <div
                 className="modal-dialog modal-dialog-centered modal-lg"
                 role="document"
             >
-
                 <div className="modal-content">
-
                     {/* =================================================
                         HEADER
                     ================================================== */}
 
                     <div className="modal-header">
-
                         <div>
-
                             <h5 className="modal-title fw-bold mb-1">
-
                                 <i className="bi bi-patch-check me-2 text-success"></i>
-
                                 Emitir certificado
-
                             </h5>
 
                             <div className="small text-muted">
-
-                                Completa la información de la
-                                credencial antes de emitirla.
-
+                                Completa la información del certificado antes
+                                de emitirlo.
                             </div>
-
                         </div>
 
                         <button
@@ -320,7 +279,6 @@ export default function IssueCertificateModal({
                             disabled={loading}
                             aria-label="Cerrar"
                         />
-
                     </div>
 
                     {/* =================================================
@@ -328,17 +286,13 @@ export default function IssueCertificateModal({
                     ================================================== */}
 
                     <form onSubmit={handleSubmit}>
-
                         <div className="modal-body">
-
                             {/* =================================================
                                 BLOQUE 1
                             ================================================== */}
 
                             <div className="border rounded-3 p-3 mb-3">
-
                                 <div className="d-flex align-items-start gap-3 mb-3">
-
                                     <div
                                         className="
                                             rounded-circle
@@ -354,28 +308,19 @@ export default function IssueCertificateModal({
                                             height: "42px",
                                         }}
                                     >
-
                                         <i className="bi bi-award"></i>
-
                                     </div>
 
                                     <div>
-
                                         <div className="fw-semibold">
-
-                                            Información de la credencial
-
+                                            Información del certificado
                                         </div>
 
                                         <div className="small text-muted">
-
-                                            Datos oficiales que formarán
-                                            parte del certificado académico.
-
+                                            Datos oficiales que formarán parte
+                                            del certificado académico.
                                         </div>
-
                                     </div>
-
                                 </div>
 
                                 {/* =================================================
@@ -383,11 +328,9 @@ export default function IssueCertificateModal({
                                 ================================================== */}
 
                                 <div className="row g-3">
-
                                     {/* TIPO */}
 
                                     <div className="col-12 col-md-6">
-
                                         <label
                                             className="form-label fw-semibold"
                                             htmlFor="certificate-type"
@@ -403,33 +346,22 @@ export default function IssueCertificateModal({
                                             onChange={handleChange}
                                             disabled={loading}
                                         >
-
                                             {Object.entries(
-                                                certificateTypeLabels
-                                            ).map(
-                                                ([
-                                                    value,
-                                                    label,
-                                                ]) => (
-
-                                                    <option
-                                                        key={value}
-                                                        value={value}
-                                                    >
-                                                        {label}
-                                                    </option>
-
-                                                )
-                                            )}
-
+                                                certificateTypeLabels,
+                                            ).map(([value, label]) => (
+                                                <option
+                                                    key={value}
+                                                    value={value}
+                                                >
+                                                    {label}
+                                                </option>
+                                            ))}
                                         </select>
-
                                     </div>
 
                                     {/* FECHA */}
 
                                     <div className="col-12 col-md-6">
-
                                         <label
                                             className="form-label fw-semibold"
                                             htmlFor="certificate-awarded-at"
@@ -446,13 +378,11 @@ export default function IssueCertificateModal({
                                             onChange={handleChange}
                                             disabled={loading}
                                         />
-
                                     </div>
 
                                     {/* TÍTULO */}
 
-                                    <div className="col-12">
-
+                                    <div className="col-12 col-md-6">
                                         <label
                                             className="form-label fw-semibold"
                                             htmlFor="certificate-title"
@@ -473,16 +403,34 @@ export default function IssueCertificateModal({
                                         />
 
                                         <div className="form-text">
-
-                                            Nombre oficial de la
-                                            credencial académica.
-
+                                            Nombre oficial del certificado
+                                            académico.
                                         </div>
-
                                     </div>
 
-                                </div>
+                                    {/* DESCRIPCIÓN */}
 
+                                    <div className="col-12 col-md-6">
+                                        <label
+                                            className="form-label fw-semibold"
+                                            htmlFor="certificate-description"
+                                        >
+                                            Descripción
+                                        </label>
+
+                                        <textarea
+                                            id="certificate-description"
+                                            name="description"
+                                            className="form-control"
+                                            value={form.description}
+                                            onChange={handleChange}
+                                            placeholder="Información adicional del certificado..."
+                                            maxLength={255}
+                                            rows={1}
+                                            disabled={loading}
+                                        />
+                                    </div>
+                                </div>
                             </div>
 
                             {/* =================================================
@@ -490,28 +438,19 @@ export default function IssueCertificateModal({
                             ================================================== */}
 
                             <div className="border rounded-3 p-3">
-
                                 <div className="d-flex justify-content-between align-items-start gap-3">
-
                                     <div>
-
                                         <div className="fw-semibold">
-
                                             Información documental
-
                                             <span className="badge text-bg-light ms-2">
                                                 Opcional
                                             </span>
-
                                         </div>
 
                                         <div className="small text-muted mt-1">
-
-                                            Puedes asociar el documento
-                                            oficial ahora o posteriormente.
-
+                                            Puedes asociar el documento oficial
+                                            ahora o posteriormente.
                                         </div>
-
                                     </div>
 
                                     <i
@@ -522,7 +461,6 @@ export default function IssueCertificateModal({
                                             fs-5
                                         "
                                     ></i>
-
                                 </div>
 
                                 {/* =================================================
@@ -530,7 +468,6 @@ export default function IssueCertificateModal({
                                 ================================================== */}
 
                                 {!showDocumentOptions && (
-
                                     <button
                                         type="button"
                                         className="
@@ -544,104 +481,82 @@ export default function IssueCertificateModal({
                                         }
                                         disabled={loading}
                                     >
-
                                         <i className="bi bi-plus-circle me-2"></i>
-
                                         Agregar información documental
-
                                     </button>
-
                                 )}
 
                                 {/* =================================================
-                                    OPCIONES
+                                    OPCIONES DOCUMENTALES
                                 ================================================== */}
 
                                 {showDocumentOptions && (
-
                                     <div className="mt-3">
+                                        {/* =================================================
+                                            MÉTODO DE REGISTRO
+                                        ================================================== */}
 
-                                        {/* SELECTOR */}
+                                        <div className="mb-3">
+                                            <div className="fw-semibold mb-1">
+                                                Método de registro del documento
+                                            </div>
 
-                                        <div
-                                            className="
-                                                btn-group
-                                                w-100
-                                                mb-3
-                                            "
-                                            role="group"
-                                            aria-label="Tipo de información documental"
-                                        >
+                                            <div className="small text-muted mb-3">
+                                                Registra el documento mediante
+                                                el archivo PDF o proporciona
+                                                directamente su identificador
+                                                de integridad. Ambos
+                                                corresponden al mismo
+                                                documento.
+                                            </div>
 
-                                            {/* PDF */}
+                                            <div
+                                                className="btn-group w-100"
+                                                role="group"
+                                                aria-label="Método de registro del documento"
+                                            >
+                                                {/* PDF */}
 
-                                            <button
-                                                type="button"
-                                                className={`btn ${
-                                                    mode === DOCUMENT_MODES.PDF
-                                                        ? "btn-primary"
-                                                        : "btn-outline-primary"
-                                                }`}
-                                                onClick={() =>
-                                                    handleDocumentModeChange(
+                                                <button
+                                                    type="button"
+                                                    className={`btn ${
+                                                        mode ===
                                                         DOCUMENT_MODES.PDF
-                                                    )
-                                                }
-                                                disabled={loading}
-                                            >
+                                                            ? "btn-primary"
+                                                            : "btn-outline-primary"
+                                                    }`}
+                                                    onClick={() =>
+                                                        handleDocumentModeChange(
+                                                            DOCUMENT_MODES.PDF,
+                                                        )
+                                                    }
+                                                    disabled={loading}
+                                                >
+                                                    <i className="bi bi-file-earmark-pdf me-2"></i>
+                                                    Subir PDF
+                                                </button>
 
-                                                <i className="bi bi-file-earmark-pdf me-2"></i>
+                                                {/* HASH */}
 
-                                                PDF
-
-                                            </button>
-
-                                            {/* INTEGRIDAD */}
-
-                                            <button
-                                                type="button"
-                                                className={`btn ${
-                                                    mode === DOCUMENT_MODES.HASH
-                                                        ? "btn-primary"
-                                                        : "btn-outline-primary"
-                                                }`}
-                                                onClick={() =>
-                                                    handleDocumentModeChange(
+                                                <button
+                                                    type="button"
+                                                    className={`btn ${
+                                                        mode ===
                                                         DOCUMENT_MODES.HASH
-                                                    )
-                                                }
-                                                disabled={loading}
-                                            >
-
-                                                <i className="bi bi-fingerprint me-2"></i>
-
-                                                Integridad
-
-                                            </button>
-
-                                            {/* URL */}
-
-                                            <button
-                                                type="button"
-                                                className={`btn ${
-                                                    mode === DOCUMENT_MODES.URL
-                                                        ? "btn-primary"
-                                                        : "btn-outline-primary"
-                                                }`}
-                                                onClick={() =>
-                                                    handleDocumentModeChange(
-                                                        DOCUMENT_MODES.URL
-                                                    )
-                                                }
-                                                disabled={loading}
-                                            >
-
-                                                <i className="bi bi-link-45deg me-2"></i>
-
-                                                URL
-
-                                            </button>
-
+                                                            ? "btn-primary"
+                                                            : "btn-outline-primary"
+                                                    }`}
+                                                    onClick={() =>
+                                                        handleDocumentModeChange(
+                                                            DOCUMENT_MODES.HASH,
+                                                        )
+                                                    }
+                                                    disabled={loading}
+                                                >
+                                                    <i className="bi bi-fingerprint me-2"></i>
+                                                    Usar identificador
+                                                </button>
+                                            </div>
                                         </div>
 
                                         {/* =================================================
@@ -649,9 +564,7 @@ export default function IssueCertificateModal({
                                         ================================================== */}
 
                                         {mode === DOCUMENT_MODES.PDF && (
-
-                                            <div>
-
+                                            <div className="mb-3">
                                                 <label
                                                     className="form-label fw-semibold"
                                                     htmlFor="certificate-document-file"
@@ -669,21 +582,17 @@ export default function IssueCertificateModal({
                                                 />
 
                                                 <div className="form-text">
-
                                                     El archivo no se almacena.
-                                                    Solo se utiliza para calcular
-                                                    su identificador de integridad.
-
+                                                    Solo se utiliza para
+                                                    calcular su identificador
+                                                    de integridad.
                                                 </div>
 
                                                 {form.documentHash && (
-
                                                     <div className="mt-3">
-
                                                         <small className="text-muted d-block mb-2">
-
-                                                            Identificador de integridad
-
+                                                            Identificador de
+                                                            integridad generado
                                                         </small>
 
                                                         <div
@@ -699,15 +608,13 @@ export default function IssueCertificateModal({
                                                                     "break-all",
                                                             }}
                                                         >
-                                                            {form.documentHash}
+                                                            {
+                                                                form.documentHash
+                                                            }
                                                         </div>
-
                                                     </div>
-
                                                 )}
-
                                             </div>
-
                                         )}
 
                                         {/* =================================================
@@ -715,14 +622,13 @@ export default function IssueCertificateModal({
                                         ================================================== */}
 
                                         {mode === DOCUMENT_MODES.HASH && (
-
-                                            <div>
-
+                                            <div className="mb-3">
                                                 <label
                                                     className="form-label fw-semibold"
                                                     htmlFor="certificate-document-hash"
                                                 >
-                                                    Identificador de integridad del documento
+                                                    Identificador de integridad
+                                                    del documento
                                                 </label>
 
                                                 <input
@@ -740,57 +646,63 @@ export default function IssueCertificateModal({
                                                 />
 
                                                 <div className="form-text">
-
-                                                    SHA-256 proporcionado
-                                                    por la institución.
-
+                                                    Ingresa el SHA-256 generado
+                                                    previamente por la
+                                                    institución.
                                                 </div>
-
                                             </div>
-
                                         )}
 
                                         {/* =================================================
-                                            URL
+                                            URL COMPLEMENTARIA
                                         ================================================== */}
 
-                                        {mode === DOCUMENT_MODES.URL && (
+                                        <div className="border-top pt-3">
+                                            <label
+                                                className="form-label fw-semibold"
+                                                htmlFor="certificate-document-url"
+                                            >
+                                                Enlace al documento
+                                                <span className="badge text-bg-light ms-2">
+                                                    Opcional
+                                                </span>
+                                            </label>
 
-                                            <div>
+                                            <input
+                                                id="certificate-document-url"
+                                                type="url"
+                                                name="documentUrl"
+                                                className="form-control"
+                                                value={form.documentUrl}
+                                                onChange={handleChange}
+                                                placeholder="https://..."
+                                                disabled={loading}
+                                            />
 
-                                                <label
-                                                    className="form-label fw-semibold"
-                                                    htmlFor="certificate-document-url"
-                                                >
-                                                    URL del documento
-                                                </label>
-
-                                                <input
-                                                    id="certificate-document-url"
-                                                    type="url"
-                                                    name="documentUrl"
-                                                    className="form-control"
-                                                    value={form.documentUrl}
-                                                    onChange={handleChange}
-                                                    placeholder="https://..."
-                                                    disabled={loading}
-                                                />
-
-                                                <div className="form-text">
-
-                                                    Enlace al documento oficial
-                                                    almacenado por la institución.
-
-                                                </div>
-
+                                            <div className="form-text">
+                                                Puedes proporcionar un enlace
+                                                al documento oficial almacenado
+                                                por la institución.
                                             </div>
+                                        </div>
 
-                                        )}
+                                        {/* =================================================
+                                            BOTÓN OCULTAR
+                                        ================================================== */}
 
+                                        <button
+                                            type="button"
+                                            className="btn btn-link btn-sm text-muted px-0 mt-3"
+                                            onClick={() =>
+                                                setShowDocumentOptions(false)
+                                            }
+                                            disabled={loading}
+                                        >
+                                            <i className="bi bi-chevron-up me-1"></i>
+                                            Ocultar información documental
+                                        </button>
                                     </div>
-
                                 )}
-
                             </div>
 
                             {/* =================================================
@@ -798,7 +710,6 @@ export default function IssueCertificateModal({
                             ================================================== */}
 
                             <div className="d-flex align-items-start gap-2 mt-3">
-
                                 <i
                                     className="
                                         bi
@@ -809,15 +720,14 @@ export default function IssueCertificateModal({
                                 ></i>
 
                                 <div className="small text-muted">
-
                                     La información documental es opcional.
-                                    Si no la tienes ahora, podrás asociarla
-                                    posteriormente desde el registro del certificado.
-
+                                    Puedes registrar el documento mediante un
+                                    PDF o su identificador de integridad, y
+                                    agregar un enlace al documento si la
+                                    institución lo requiere. Esta información
+                                    también podrá asociarse posteriormente.
                                 </div>
-
                             </div>
-
                         </div>
 
                         {/* =================================================
@@ -825,7 +735,6 @@ export default function IssueCertificateModal({
                         ================================================== */}
 
                         <div className="modal-footer">
-
                             <button
                                 type="button"
                                 className="btn btn-outline-secondary"
@@ -840,9 +749,7 @@ export default function IssueCertificateModal({
                                 className="btn btn-success"
                                 disabled={loading}
                             >
-
                                 {loading ? (
-
                                     <>
                                         <span
                                             className="
@@ -854,27 +761,17 @@ export default function IssueCertificateModal({
 
                                         Emitiendo...
                                     </>
-
                                 ) : (
-
                                     <>
                                         <i className="bi bi-patch-check me-2"></i>
-
                                         Emitir certificado
                                     </>
-
                                 )}
-
                             </button>
-
                         </div>
-
                     </form>
-
                 </div>
-
             </div>
-
         </div>
     );
 }

@@ -7,22 +7,25 @@ import VerificationHistoryFilters from "../components/VerificationHistoryFilters
 import VerificationHistoryTable from "../components/VerificationHistoryTable";
 import VerificationHistoryPagination from "../components/VerificationHistoryPagination";
 
-export default function CertificateVerificationHistoryPage() {
+export default function VerificationHistoryPage() {
 
-    const { certificatePublicId } = useParams();
+    const { verificationType, resourcePublicId } = useParams();
+    const isCredential = verificationType === "credential";
+    const resourceLabel = isCredential ? "credencial" : "certificado";
+    const resourceLabelCapitalized = isCredential ? "Credencial" : "Certificado";
     const [page, setPage] = useState(0);
     const size = 10;
 
     const [filters, setFilters] = useState({
         search: "",
         status: "",
-        type: "",
+        verificationType: verificationType?.toUpperCase() ?? "",
+        resourcePublicId,
         fromDate: "",
         toDate: "",
     });
 
     const { data, isLoading, isFetching, error } = useVerificationHistory(
-        certificatePublicId,
         page,
         size,
         filters,
@@ -42,7 +45,7 @@ export default function CertificateVerificationHistoryPage() {
         return (
         <div className="container-fluid">
             <div className="alert alert-danger">
-            No se pudo cargar el historial del certificado.
+            No se pudo cargar el historial de la {resourceLabel}.
             </div>
         </div>
         );
@@ -50,7 +53,12 @@ export default function CertificateVerificationHistoryPage() {
 
     const handleFilter = (nextFilters) => {
         setPage(0);
-        setFilters(nextFilters);
+
+        setFilters({
+        ...nextFilters,
+        verificationType: verificationType?.toUpperCase() ?? "",
+        resourcePublicId,
+        });
     };
 
     const handlePrevious = () => {
@@ -63,26 +71,32 @@ export default function CertificateVerificationHistoryPage() {
         }
     };
 
+    const backPath = isCredential
+        ? `/institution/credentials/${resourcePublicId}`
+        : `/institution/certificates/${resourcePublicId}`;
+
     return (
         <div className="container-fluid">
         {/* HEADER */}
 
-        <div className="d-flex justify-content-between align-items-center mb-4">
+        <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
             <div>
-            <h2 className="fw-bold mb-1">Historial del certificado</h2>
+            <h2 className="fw-bold mb-1">Historial de verificaciones</h2>
 
             <p className="text-muted mb-0">
-                Registro completo de todas las verificaciones realizadas sobre este
-                certificado.
+                Registro completo de las verificaciones realizadas sobre esta{" "}
+                {resourceLabel}.
             </p>
             </div>
 
-            <Link
-            className="btn btn-outline-secondary"
-            to="/institution/verification"
-            >
-            <i className="bi bi-arrow-left me-2" />
-            Volver
+            {/* <Link className="btn btn-outline-secondary" to={backPath}>
+                <i className="bi bi-arrow-left me-2" />
+                Volver a {resourceLabelCapitalized.toLowerCase()}
+            </Link> */}
+
+            <Link to={-1} className="btn btn-outline-secondary">
+                <i className="bi bi-arrow-left me-2"></i>
+                Volver
             </Link>
         </div>
 

@@ -2,18 +2,20 @@
                     PÁGINA
 ========================================================= */
 
-.public-timeline-page {
+.public-timeline-page,
+.verification-page {
     min-height: 100vh;
 }
 
 
 /* =========================================================
-                    VOLVER
+                    NAVEGACIÓN
 ========================================================= */
 
 .public-timeline-back {
     display: inline-flex;
     align-items: center;
+    gap: 0.15rem;
 
     text-decoration: none;
     font-weight: 500;
@@ -37,6 +39,8 @@
     align-items: flex-start;
 
     gap: 1rem;
+
+    margin-bottom: 1.5rem;
 }
 
 .public-timeline-header-icon {
@@ -57,18 +61,25 @@
     font-size: 1.5rem;
 }
 
-.public-timeline-title {
-    margin-bottom: 0.5rem;
-
-    font-weight: 700;
+.public-timeline-header-content {
+    min-width: 0;
 }
 
-.public-timeline-description {
+.public-timeline-title {
+    margin: 0 0 0.5rem;
+
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.public-timeline-header-description {
     max-width: 720px;
 
-    margin-bottom: 0;
+    margin: 0;
 
     color: var(--bs-secondary-color);
+
+    line-height: 1.6;
 }
 
 
@@ -78,6 +89,8 @@
 
 .public-timeline-summary {
     overflow: hidden;
+
+    margin-bottom: 1.5rem;
 }
 
 .public-timeline-stat {
@@ -85,6 +98,8 @@
     flex-direction: column;
 
     gap: 0.35rem;
+
+    min-width: 0;
 }
 
 .public-timeline-stat span {
@@ -100,7 +115,19 @@
     display: flex;
     align-items: center;
 
+    min-width: 0;
+
     font-size: 1.05rem;
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+                    SELECTOR DE PERÍODO
+========================================================= */
+
+.public-timeline-period-selector {
+    margin-bottom: 1.5rem;
 }
 
 
@@ -109,6 +136,7 @@
 ========================================================= */
 
 .public-timeline-period-content {
+    width: 100%;
     max-width: 950px;
 
     margin-left: auto;
@@ -125,11 +153,16 @@
     margin-bottom: 1.25rem;
 }
 
+.public-timeline-period-header-content {
+    min-width: 0;
+}
+
 .public-timeline-period-title {
     margin: 0;
 
     font-size: 1.35rem;
     font-weight: 700;
+    line-height: 1.3;
 
     color: var(--bs-body-color);
 }
@@ -138,6 +171,7 @@
     margin: 0.25rem 0 0;
 
     font-size: 0.8rem;
+    line-height: 1.5;
 
     color: var(--bs-secondary-color);
 }
@@ -204,11 +238,11 @@
 
     display: grid;
 
-    grid-template-columns: 44px 1fr;
+    grid-template-columns: 44px minmax(0, 1fr);
 
     gap: 1rem;
 
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.85rem;
 }
 
 .public-timeline-item:last-child {
@@ -249,6 +283,8 @@
     color: var(--bs-primary);
 
     font-size: 0.95rem;
+
+    box-shadow: 0 0 0 4px var(--bs-body-bg);
 }
 
 
@@ -273,6 +309,8 @@
     font-size: 0.75rem;
     font-weight: 600;
 
+    line-height: 1.3;
+
     color: var(--bs-secondary-color);
 }
 
@@ -288,6 +326,7 @@
 
     gap: 1rem;
 
+    min-width: 0;
     min-height: 58px;
 
     padding: 0.7rem 0.9rem;
@@ -299,7 +338,8 @@
 
     transition:
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
 .public-timeline-event:hover {
@@ -322,7 +362,7 @@
 .public-timeline-category {
     display: block;
 
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.15rem;
 
     font-size: 0.65rem;
     font-weight: 700;
@@ -341,7 +381,23 @@
 
     line-height: 1.35;
 
+    overflow-wrap: anywhere;
+
     color: var(--bs-body-color);
+}
+
+
+/* =========================================================
+                    DESCRIPCIÓN DEL EVENTO
+========================================================= */
+
+.public-timeline-event-description {
+    margin: 0.35rem 0 0;
+
+    font-size: 0.8rem;
+    line-height: 1.5;
+
+    color: var(--bs-secondary-color);
 }
 
 
@@ -349,33 +405,29 @@
                     DETALLE DEL EVENTO
 ========================================================= */
 
-.public-timeline-description {
-    margin: 0.35rem 0 0;
-
-    font-size: 0.8rem;
-
-    color: var(--bs-secondary-color);
-}
-
 .public-timeline-detail {
     display: flex;
     align-items: baseline;
 
     gap: 0.35rem;
 
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
 
     font-size: 0.8rem;
     line-height: 1.5;
 }
 
 .public-timeline-detail-label {
+    flex-shrink: 0;
+
     font-weight: 600;
 
     color: var(--bs-body-color);
 }
 
 .public-timeline-detail-value {
+    min-width: 0;
+
     color: var(--bs-secondary-color);
 
     overflow-wrap: anywhere;
@@ -387,6 +439,10 @@
 ========================================================= */
 
 .public-timeline-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     flex-shrink: 0;
 
     color: var(--bs-success);
@@ -400,6 +456,7 @@
 ========================================================= */
 
 .public-timeline-empty {
+    width: 100%;
     max-width: 950px;
 
     margin-left: auto;
@@ -408,10 +465,25 @@
 
 
 /* =========================================================
+                    TRUST FOOTER
+========================================================= */
+
+.public-timeline-trust-footer {
+    margin-top: 3rem;
+}
+
+
+/* =========================================================
                     RESPONSIVE
 ========================================================= */
 
 @media (max-width: 767.98px) {
+
+    .public-timeline-header {
+        gap: 0.85rem;
+
+        margin-bottom: 1.25rem;
+    }
 
     .public-timeline-period-content {
         width: 100%;
@@ -422,7 +494,7 @@
     }
 
     .public-timeline-item {
-        grid-template-columns: 40px 1fr;
+        grid-template-columns: 40px minmax(0, 1fr);
 
         gap: 0.75rem;
     }
@@ -440,6 +512,21 @@
         padding: 0.7rem;
 
         min-height: 0;
+    }
+
+    .public-timeline-event-main {
+        width: 100%;
+    }
+
+    .public-timeline-detail {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 0.1rem;
+    }
+
+    .public-timeline-check {
+        align-self: flex-start;
     }
 }
 
@@ -464,7 +551,7 @@
         font-size: 1.65rem;
     }
 
-    .public-timeline-description {
+    .public-timeline-header-description {
         font-size: 0.9rem;
     }
 
@@ -497,5 +584,13 @@
 
     .public-timeline-check {
         display: none;
+    }
+
+    .public-timeline-detail {
+        margin-top: 0.4rem;
+    }
+
+    .public-timeline-trust-footer {
+        margin-top: 2rem;
     }
 }

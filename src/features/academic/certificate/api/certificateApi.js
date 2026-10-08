@@ -40,6 +40,7 @@ export const issueCertificate = async ({
     transcriptPublicId,
     type,
     title,
+    description,
     awardedAt,
     documentHash = null,
     documentUrl = null,
@@ -47,7 +48,7 @@ export const issueCertificate = async ({
 
     const { data } = await apiClient.post(
         `/academic/certificates/transcripts/${transcriptPublicId}`,
-        { type, title, awardedAt, documentHash, documentUrl,}
+        { type, title, description, awardedAt, documentHash, documentUrl,}
     );
     return data;
 };
@@ -64,12 +65,13 @@ export const revokeCertificate = async (certificatePublicId) => {
 export const updateCertificateCredential = async ({
     certificatePublicId,
     title,
+    description,
     awardedAt,
 }) => {
 
     const { data } = await apiClient.put(
         `/academic/certificates/${certificatePublicId}/credential`,
-        {title, awardedAt }
+        {title, description, awardedAt }
     );
 
     return data;

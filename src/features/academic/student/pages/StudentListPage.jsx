@@ -117,7 +117,11 @@ export default function StudentListPage() {
 
         {/* MODAL DE EDICIÓN */}
 
-        <StudentEditModal student={selectedStudent} onClose={handleCloseEdit} />
+            <StudentEditModal 
+                key={selectedStudent?.publicId ?? "student-edit-modal"}
+                student={selectedStudent} 
+                onClose={handleCloseEdit} 
+            />
         </div>
     );
 }

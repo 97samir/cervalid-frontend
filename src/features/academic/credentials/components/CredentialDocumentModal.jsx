@@ -7,27 +7,43 @@ export default function CredentialDocumentModal({
     submitting = false,
     credential,
 }) {
-    const [file, setFile] = useState(null);
+    
+    const document = credential?.document ?? {};
 
-    const [documentHash, setDocumentHash] = useState(
-        credential?.documentHash ?? "",
-    );
+    const existingDocumentHash =
+        credential?.documentHash ?? 
+        document.documentHash ?? "";
 
-    const [documentUrl, setDocumentUrl] = useState(credential?.documentUrl ?? "");
+    const existingDocumentUrl =
+        credential?.documentUrl ?? 
+        document.documentUrl ?? "";
+
+    const hasExistingDocument =
+        Boolean(existingDocumentHash) || 
+        Boolean(existingDocumentUrl);
+
+
+    const [mode, setMode] = 
+        useState(existingDocumentHash ? "HASH" : "FILE");
+
+    const [file, setFile] = 
+        useState(null);
+
+    const [documentHash, setDocumentHash] = 
+        useState(existingDocumentHash);
+
+    const [documentUrl, setDocumentUrl] = 
+        useState(existingDocumentUrl);
 
     if (!show) {
         return null;
     }
 
-    const hasDocumentHash = Boolean(credential?.documentHash);
-
-    const hasDocumentUrl = Boolean(credential?.documentUrl);
-
-    const hasExistingDocument = hasDocumentHash || hasDocumentUrl;
-
-    /* =====================================================
-            SELECCIONAR ARCHIVO
-        ===================================================== */
+    /*
+    * =====================================================
+    * SELECCIONAR ARCHIVO
+    * =====================================================
+    */
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files?.[0] ?? null;
@@ -49,15 +65,33 @@ export default function CredentialDocumentModal({
 
         return;
         }
-        // eliminamos el hash anterior del formulario
+
+        // al seleccionar archivo nuevo se elimina el hash del input
+        setMode("FILE");
         setDocumentHash("");
         setFile(selectedFile);
     };
 
-    /* =====================================================
-            SUBMIT
-        ===================================================== */
-    const SHA256_REGEX = /^[a-fA-F0-9]{64}$/;
+    // seleccionar método
+
+    const handleSelectFileMode = () => {
+        setMode("FILE");
+        setDocumentHash("");
+    };
+
+    const handleSelectHashMode = () => {
+        setMode("HASH");
+        setFile(null);
+
+        /*
+        * Si existe un hash anterior, lo mantenemos.
+        * Esto permite actualizar una URL sin perder el hash.
+        */
+        setDocumentHash(existingDocumentHash);
+    };
+
+    // submit
+    const SHA256_REGEX = /^(0x)?[a-fA-F0-9]{64}$/;
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -65,33 +99,31 @@ export default function CredentialDocumentModal({
         const normalizedHash = documentHash.trim();
         const normalizedUrl = documentUrl.trim();
 
-        // seleccion de nuevo archivo, nueva data de hash
-        if (!file && normalizedHash) {
-        if (!SHA256_REGEX.test(normalizedHash)) {
-            alert(
-            "El hash debe ser un SHA-256 válido de 64 caracteres hexadecimales.",
-            );
-
-            return;
-        }
+        if (mode === "FILE" && !file) {
+        alert("Seleccione un archivo PDF.");
+        return;
         }
 
-        // no enviar formulario vacio
-        if (!file && !normalizedHash && !normalizedUrl) {
+        if (mode === "HASH" && !normalizedHash) {
+        alert("Ingrese el hash del documento.");
+        return;
+        }
+
+        // validar
+        if (mode === "HASH" && !SHA256_REGEX.test(normalizedHash)) {
         alert(
-            "Ingrese el hash, seleccione un archivo PDF o proporcione una URL.",
+            "El hash debe ser un SHA-256 válido de 64 caracteres hexadecimales.",
         );
 
         return;
         }
 
+        // enviar
         onSubmit({
-        file: file || null,
+        file: mode === "FILE" ? file : null,
 
-        // sin selccion de archivo se conserva el hash anterior
-        documentHash: normalizedHash || null,
+        documentHash: mode === "HASH" ? normalizedHash : null,
 
-        // url indenpendiente
         documentUrl: normalizedUrl || null,
         });
     };
@@ -111,6 +143,7 @@ export default function CredentialDocumentModal({
             {/* =================================================
                             HEADER
                         ================================================== */}
+
             <div className="modal-header">
                 <div>
                 <h5 className="modal-title fw-bold">
@@ -136,92 +169,138 @@ export default function CredentialDocumentModal({
             {/* =================================================
                             FORM
                         ================================================== */}
+
             <form onSubmit={handleSubmit}>
                 <div className="modal-body">
                 {/* =================================================
+                                    MÉTODO
+                                ================================================== */}
+
+                <div className="mb-4">
+                    <label className="form-label fw-semibold">
+                    Método de registro
+                    </label>
+
+                    <div className="row g-2">
+                    {/* PDF */}
+
+                    <div className="col-12 col-sm-6">
+                        <button
+                        type="button"
+                        className={`btn w-100 ${
+                            mode === "FILE" ? "btn-primary" : "btn-outline-primary"
+                        }`}
+                        onClick={handleSelectFileMode}
+                        disabled={submitting}
+                        >
+                        <i className="bi bi-file-earmark-pdf me-2" />
+                        Subir PDF
+                        </button>
+                    </div>
+
+                    {/* HASH */}
+
+                    <div className="col-12 col-sm-6">
+                        <button
+                        type="button"
+                        className={`btn w-100 ${
+                            mode === "HASH" ? "btn-primary" : "btn-outline-primary"
+                        }`}
+                        onClick={handleSelectHashMode}
+                        disabled={submitting}
+                        >
+                        <i className="bi bi-fingerprint me-2" />
+                        Usar hash
+                        </button>
+                    </div>
+                    </div>
+
+                    <div className="form-text">
+                    Seleccione una de las dos opciones para registrar la huella
+                    digital del documento.
+                    </div>
+                </div>
+
+                {/* =================================================
                                     INFORMACIÓN
                                 ================================================== */}
+
                 <div className="alert alert-info small">
                     <i className="bi bi-info-circle me-2"></i>
-                    Puedes registrar el hash y la URL de forma independiente. Si uno
-                    ya está registrado, puedes completar posteriormente el otro.
-                    CERVALID no almacena permanentemente el archivo original.
+                    CERVALID no almacena permanentemente el archivo original. Se
+                    conserva su huella digital para comprobar posteriormente la
+                    integridad del documento.
                 </div>
+
+                {/* =================================================
+                                    PDF
+                                ================================================== */}
+
+                {mode === "FILE" && (
+                    <div className="mb-4">
+                    <label
+                        htmlFor="credential-document-file"
+                        className="form-label fw-semibold"
+                    >
+                        Archivo PDF
+                    </label>
+
+                    <input
+                        id="credential-document-file"
+                        type="file"
+                        className="form-control"
+                        accept="application/pdf,.pdf"
+                        onChange={handleFileChange}
+                        disabled={submitting}
+                    />
+
+                    <div className="form-text">
+                        CERVALID calculará automáticamente el hash SHA-256 del
+                        archivo seleccionado.
+                    </div>
+
+                    {file && (
+                        <div className="mt-2 small text-muted">
+                        <i className="bi bi-file-earmark-pdf me-1" />
+                        {file.name}
+                        </div>
+                    )}
+                    </div>
+                )}
 
                 {/* =================================================
                                     HASH
                                 ================================================== */}
-                <div className="mb-4">
+
+                {mode === "HASH" && (
+                    <div className="mb-4">
                     <label
-                    htmlFor="credential-document-hash"
-                    className="form-label fw-semibold"
+                        htmlFor="credential-document-hash"
+                        className="form-label fw-semibold"
                     >
-                    Hash del documento
+                        Hash del documento
                     </label>
 
                     <input
-                    id="credential-document-hash"
-                    type="text"
-                    className="form-control font-monospace"
-                    placeholder="Hash SHA-256"
-                    value={documentHash}
-                    onChange={(event) => setDocumentHash(event.target.value)}
-                    disabled={submitting}
+                        id="credential-document-hash"
+                        type="text"
+                        className="form-control font-monospace"
+                        placeholder="0x..."
+                        value={documentHash}
+                        onChange={(event) => setDocumentHash(event.target.value)}
+                        disabled={submitting}
                     />
 
                     <div className="form-text">
-                    Huella digital del documento utilizada para comprobar su
-                    integridad.
+                        Ingrese el hash SHA-256 proporcionado por la institución.
                     </div>
-                </div>
-
-                {/* =================================================
-                                    ARCHIVO
-                                ================================================== */}
-                <div className="mb-4">
-                    <label
-                    htmlFor="credential-document-file"
-                    className="form-label fw-semibold"
-                    >
-                    Generar hash desde un PDF
-                    <span className="text-muted fw-normal ms-1">opcional</span>
-                    </label>
-
-                    <input
-                    id="credential-document-file"
-                    type="file"
-                    className="form-control"
-                    accept="application/pdf,.pdf"
-                    onChange={handleFileChange}
-                    disabled={submitting}
-                    />
-
-                    <div className="form-text">
-                        {file ? (
-                            <>
-                                <i className="bi bi-arrow-repeat me-1"></i>
-                                Se generará automáticamente un nuevo hash
-                                SHA-256 a partir del PDF seleccionado.
-                            </>
-                        ) : (
-                            <>
-                                Huella digital del documento utilizada para
-                                comprobar su integridad.
-                            </>
-                        )}
                     </div>
-
-                    {file && (
-                    <div className="mt-2 small text-muted">
-                        <i className="bi bi-file-earmark-pdf me-1"></i>
-                        {file.name}
-                    </div>
-                    )}
-                </div>
+                )}
 
                 {/* =================================================
                                     URL
                                 ================================================== */}
+
                 <div className="mb-3">
                     <label
                     htmlFor="credential-document-url"
@@ -250,6 +329,7 @@ export default function CredentialDocumentModal({
                 {/* =================================================
                                 FOOTER
                             ================================================== */}
+
                 <div className="modal-footer">
                 <button
                     type="button"
@@ -272,7 +352,7 @@ export default function CredentialDocumentModal({
                     </>
                     ) : (
                     <>
-                        <i className="bi bi-check-lg me-2"></i>
+                        <i className="bi bi-check-lg me-2" />
 
                         {hasExistingDocument
                         ? "Actualizar documento"

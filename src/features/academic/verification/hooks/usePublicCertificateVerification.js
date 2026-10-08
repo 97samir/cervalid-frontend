@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { verificationService } from "../services/verificationService";
 
-export const useVerifyPublicCertificate = (certificatePublicId) => {
+export const usePublicCertificateVerification = (certificatePublicId) => {
     
     return useQuery({
-        queryKey: ["publicCertificateVerification", 
+        queryKey: ["public-certificate-verification", 
             certificatePublicId],
 
         queryFn: () =>
-        verificationService.verifyPublicCertificate(
+        verificationService.getPublicCertificateVerification(
             certificatePublicId),
 
         enabled: !!certificatePublicId,
+        staleTime: 60 * 1000,
     });
 };

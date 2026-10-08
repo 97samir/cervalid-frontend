@@ -147,6 +147,7 @@ export default function TranscriptDetailPage() {
             transcriptPublicId,
             type: formData.type,
             title: formData.title,
+            description: formData.description,
             awardedAt: formData.awardedAt,
             documentHash: formData.documentHash || null,
             documentUrl: formData.documentUrl || null,
@@ -177,7 +178,8 @@ export default function TranscriptDetailPage() {
                 type="button"
                 className="btn btn-outline-secondary"
                 onClick={() => navigate(-1)}
-            >
+            >   
+                <i className="bi bi-arrow-left me-2"></i>
                 Volver
             </button>
             </div>

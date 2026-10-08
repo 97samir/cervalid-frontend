@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { verificationService } from "../services/verificationService";
 
 export function useVerificationHistory(
-    certificatePublicId,
+    //resourcePublicId,
     page,
     size,
     filters,
@@ -10,13 +10,13 @@ export function useVerificationHistory(
 
     const searchFilters = {
         ...filters,
-        certificatePublicId,
+       // resourcePublicId,
     };
 
     return useQuery({
         queryKey: [
-            "certificate-verification-history",
-            certificatePublicId,
+            "verification-history",
+            //resourcePublicId,
             page,
             size,
             filters,
@@ -29,7 +29,9 @@ export function useVerificationHistory(
             searchFilters,
         ),
 
-        enabled: !!certificatePublicId,
+        //( desuso ) enabled: !!resourcePublicId,
+        //enabled: Boolean(resourcePublicId),
+        enabled: Boolean( filters?.resourcePublicId),
         placeholderData: (previous) => previous,
         staleTime: 0,
         refetchOnMount: "always",

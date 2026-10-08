@@ -78,12 +78,13 @@ export default function CertificateDetailPage() {
         <div className="container-fluid">
         <div className="mb-4">
             <div className="card-body d-flex justify-content-between align-items-center">
-            <div />
+                
+                <div></div>
 
-            <Link to={-1} className="btn btn-outline-secondary">
-                <i className="bi bi-arrow-left me-2"></i>
-                Volver
-            </Link>
+                <Link to={-1} className="btn btn-outline-secondary">
+                    <i className="bi bi-arrow-left me-2"></i>
+                    Volver
+                </Link>
             </div>
         </div>
 

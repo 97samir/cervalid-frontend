@@ -6,10 +6,14 @@ export const useInstitutionVerificationHistory = (
 
     return useQuery({
         
-        queryKey: ["institution-verification-history", page, size, filters],
+        queryKey: [
+            "verification-history",
+            "institution", 
+            page, size, filters
+        ],
 
         queryFn: () =>
-        verificationService.searchInstitutionVerificationHistory(
+        verificationService.searchVerificationHistory(
             page,
             size,
             filters,

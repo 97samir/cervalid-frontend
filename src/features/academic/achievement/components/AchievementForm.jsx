@@ -202,7 +202,7 @@ export default function AchievementForm({
 
                     <textarea
                         className="form-control"
-                        rows={6}
+                        rows={2}
                         name="description"
                         value={form.description}
                         onChange={handleChange}

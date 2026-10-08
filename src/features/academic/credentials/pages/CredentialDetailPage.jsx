@@ -160,13 +160,15 @@ export default function CredentialDetailPage() {
                     HEADER
                 ===================================================== */}
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
-            <div>
-            <h4 className="fw-bold mb-1">Detalle de credencial</h4>
+            {/* <div>
+                <h4 className="fw-bold mb-1">Detalle de credencial</h4>
 
-            <p className="text-muted mb-0">
-                Información completa de la credencial académica.
-            </p>
-            </div>
+                <p className="text-muted mb-0">
+                    Información completa de la credencial académica.
+                </p>
+            </div> */}
+
+            <div></div>
 
             <button
             type="button"
@@ -220,12 +222,22 @@ export default function CredentialDetailPage() {
                     DOCUMENT MODAL
                 ===================================================== */}
         <CredentialDocumentModal
+
+            /*key={`
+                ${credential?.publicId}-
+                ${credential?.documentHash ?? 
+                    credential?.document?.documentHash ?? ""}-
+                ${credential?.documentUrl ?? 
+                    credential?.document?.documentUrl ?? ""}`
+                }*/
             key={documentModalKey}
             show={showDocumentModal}
-            credential={credential}
-            submitting={documentMutation.isPending}
             onClose={() => setShowDocumentModal(false)}
             onSubmit={handleUpdateDocument}
+            submitting={documentMutation.isPending}
+            credential={credential}
+            
+            
         />
         </div>
     );

@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
+
 import VerificationStatusBadge from "./VerificationStatusBadge";
 
 import {
     formatVerificationDate,
-    getCertificateTypeLabel,
+    getResourceTypeLabel,
+    getVerificationResourcePath,
+    getVerificationHistoryPath,
+    getVerificationTypeLabel,
 } from "../utils/verificationUtils";
 
 export default function VerificationSummaryTable({
@@ -12,9 +16,9 @@ export default function VerificationSummaryTable({
 }) {
     if (loading) {
         return (
-        <div className="card border-0 shadow-sm">
+        <div className="card border-0 shadow-sm rounded-4">
             <div className="card-body text-center py-5">
-            <div className="spinner-border" />
+            <div className="spinner-border text-primary" />
             </div>
         </div>
         );
@@ -22,11 +26,11 @@ export default function VerificationSummaryTable({
 
     if (!records.length) {
         return (
-        <div className="card border-0 shadow-sm">
+        <div className="card border-0 shadow-sm rounded-4">
             <div className="card-body text-center py-5">
-            <i className="bi bi-search" style={{ fontSize: "2rem" }} />
+            <i className="bi bi-search text-muted" style={{ fontSize: "2rem" }} />
 
-            <h5 className="mt-3">No existen certificados verificados</h5>
+            <h5 className="mt-3">No existen recursos verificados</h5>
 
             <p className="text-muted mb-0">
                 No se encontraron resultados para los filtros seleccionados.
@@ -37,12 +41,12 @@ export default function VerificationSummaryTable({
     }
 
     return (
-        <div className="card border-0 shadow-sm">
+        <div className="card border-0 shadow-sm rounded-4">
         <div className="table-responsive">
             <table className="table table-hover align-middle mb-0">
-            <thead>
+            <thead className="table-light">
                 <tr>
-                <th style={{ width: "28%" }}>Certificado</th>
+                <th style={{ width: "28%" }}>Recurso</th>
 
                 <th>Propietario</th>
 
@@ -58,62 +62,63 @@ export default function VerificationSummaryTable({
 
             <tbody>
                 {records.map((record) => (
-                    
-                <tr key={record.certificatePublicId}>
-
-    
+                <tr key={record.resourcePublicId}>
                     <td>
-                    <div className="fw-semibold">{record.certificateNumber}</div>
+                    <div className="fw-semibold">
+                        {record.resourceNumber || "—"}
+                    </div>
 
                     <div className="small text-muted">
-                        {getCertificateTypeLabel(record.certificateType)}
+                        {getVerificationTypeLabel(record.verificationType)}
+                    </div>
+
+                    <div className="small text-muted">
+                        {getResourceTypeLabel(
+                        record.verificationType,
+                        record.resourceType,
+                        )}
                     </div>
                     </td>
 
                     <td>
-                    <div>{record.studentName}</div>
+                    <div>{record.studentName || "—"}</div>
 
                     <div className="small text-muted">
-                        {record.institutionName}
+                        {record.institutionName || "—"}
                     </div>
                     </td>
 
                     <td className="text-center">
                     <span className="badge rounded-pill text-bg-primary fs-6">
-                        {record.verificationCount}
+                        {record.verificationCount ?? 0}
                     </span>
                     </td>
 
                     <td>{formatVerificationDate(record.lastVerifiedAt)}</td>
 
                     <td>
-                        {
-                        record.lastStatus
-                        ?
-                        <VerificationStatusBadge 
-                            status={record.lastStatus}
-                        />
-                        :
+                    {record.lastStatus ? (
+                        <VerificationStatusBadge status={record.lastStatus} />
+                    ) : (
                         <span className="badge text-bg-secondary">
-                            Sin verificaciones
+                        Sin verificaciones
                         </span>
-                        }
-
+                    )}
                     </td>
 
                     <td className="text-end">
                     <div className="btn-group">
                         <Link
                         className="btn btn-sm btn-outline-primary"
-                        to={`/institution/certificates/${record.certificatePublicId}`}
+                        to={getVerificationResourcePath(record)}
                         >
-                        <i className="bi bi-file-earmark-text me-1" />
-                        Certificado
+                        <i className="bi bi-eye me-1" />
+                        Detalle
                         </Link>
 
                         <Link
                         className="btn btn-sm btn-outline-secondary"
-                        to={`/institution/verification/history/${record.certificatePublicId}`}
+                        to={getVerificationHistoryPath(record)}
                         >
                         <i className="bi bi-clock-history me-1" />
                         Historial

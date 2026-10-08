@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
+
 import CertificateStatusBadge from "./CertificateStatusBadge";
 import CertificateTypeBadge from "./CertificateTypeBadge";
-import { Link } from "react-router-dom";
 
 import {
     academicProgramLabels,
@@ -16,17 +17,12 @@ export default function CertificateSummaryCard({
     revoking = false,
     onDocumentAction,
 }) {
-    if (!certificate) return null;
+    if (!certificate) {
+        return null;
+    }
 
     const info = certificate?.certificate ?? {};
-
     const snapshot = info.snapshotJson ?? {};
-
-    console.log("CERTIFICATE:", certificate);
-    console.log("INFO:", info);
-    console.log("SNAPSHOT:", snapshot);
-    console.log("ACADEMIC:", snapshot.academic);
-    console.log("CURRENT CYCLE:", snapshot.academic?.currentCycle);
 
     const program =
         academicProgramLabels[snapshot.academic?.program] ??
@@ -47,11 +43,19 @@ export default function CertificateSummaryCard({
 
     const isRevoked = info.status === "REVOKED";
     const isIssued = info.status === "ISSUED";
-    const hasBlockchain = Boolean(info.blockchainTxHash);
+
+    // const hasBlockchain = Boolean(info.blockchainTxHash);
 
     const hasDocumentHash = Boolean(info.documentHash);
+
     const hasDocumentUrl = Boolean(info.documentUrl);
+
     const hasDocumentReference = hasDocumentHash || hasDocumentUrl;
+
+    const hasIntegrity =
+        Boolean(info.certificateHash) ||
+        Boolean(info.verificationHash) ||
+        Boolean(info.blockchainTxHash);
 
     return (
         <>
@@ -79,7 +83,7 @@ export default function CertificateSummaryCard({
                         className={`bi ${
                         isRevoked ? "bi-patch-exclamation" : "bi-patch-check-fill"
                         } fs-4`}
-                    ></i>
+                    />
                     </div>
 
                     <div>
@@ -101,7 +105,7 @@ export default function CertificateSummaryCard({
                     disabled={revoking}
                     onClick={onRevoke}
                 >
-                    <i className="bi bi-x-circle me-2"></i>
+                    <i className="bi bi-x-circle me-2" />
 
                     {revoking ? "Revocando..." : "Revocar certificado"}
                 </button>
@@ -116,7 +120,7 @@ export default function CertificateSummaryCard({
 
         {isIssued && (
             <div className="alert alert-success border-0 shadow-sm d-flex align-items-start mb-4">
-            <i className="bi bi-check-circle-fill fs-4 me-3"></i>
+            <i className="bi bi-check-circle-fill fs-4 me-3" />
 
             <div>
                 <strong>Certificado válido</strong>
@@ -130,7 +134,7 @@ export default function CertificateSummaryCard({
 
         {isRevoked && (
             <div className="alert alert-danger border-0 shadow-sm d-flex align-items-start mb-4">
-            <i className="bi bi-x-circle-fill fs-4 me-3"></i>
+            <i className="bi bi-x-circle-fill fs-4 me-3" />
 
             <div>
                 <strong>Certificado revocado</strong>
@@ -143,25 +147,27 @@ export default function CertificateSummaryCard({
         )}
 
         {/* =====================================================
-                                    GRID PRINCIPAL
+                                GRID PRINCIPAL
                 ====================================================== */}
 
         <div className="row g-4">
             {/* =================================================
-                                INFORMACIÓN DEL CERTIFICADO
+                            INFORMACIÓN DEL CERTIFICADO
                     ================================================== */}
 
             <div className="col-12 col-xl-6">
             <div className="card border-0 shadow-sm h-100">
                 <div className="card-header bg-white border-bottom py-3">
                 <h6 className="fw-bold mb-0">
-                    <i className="bi bi-file-earmark-text text-primary me-2"></i>
+                    <i className="bi bi-award text-primary me-2" />
                     Información del certificado
                 </h6>
                 </div>
 
                 <div className="card-body p-4">
                 <div className="row g-4">
+                    {/* NÚMERO */}
+
                     <div className="col-sm-6">
                     <small className="text-muted d-block mb-1">
                         Número de certificado
@@ -171,6 +177,44 @@ export default function CertificateSummaryCard({
                         {info.certificateNumber ?? "-"}
                     </span>
                     </div>
+
+                    {/* TIPO */}
+
+                    <div className="col-sm-6">
+                    <small className="text-muted d-block mb-1">Tipo</small>
+
+                    <CertificateTypeBadge type={info.type} />
+                    </div>
+
+                    {/* GRADO O TÍTULO */}
+
+                    <div className="col-12">
+                    <small className="text-muted d-block mb-1">
+                        Grado o título
+                    </small>
+
+                    <div className="fw-semibold">
+                        {info.title ?? snapshot.certificate?.title ?? "-"}
+                    </div>
+                    </div>
+
+                    {/* DESCRIPCIÓN */}
+
+                    <div className="col-12">
+                    <small className="text-muted d-block mb-1">Descripción</small>
+
+                    <div>
+                        {info.description ? (
+                        info.description
+                        ) : (
+                        <span className="text-muted">
+                            Sin descripción registrada.
+                        </span>
+                        )}
+                    </div>
+                    </div>
+
+                    {/* FECHA OTORGAMIENTO */}
 
                     <div className="col-sm-6">
                     <small className="text-muted d-block mb-1">
@@ -182,11 +226,7 @@ export default function CertificateSummaryCard({
                     </div>
                     </div>
 
-                    <div className="col-sm-6">
-                    <small className="text-muted d-block mb-1">Tipo</small>
-
-                    <CertificateTypeBadge type={info.type} />
-                    </div>
+                    {/* FECHA EMISIÓN */}
 
                     <div className="col-sm-6">
                     <small className="text-muted d-block mb-1">
@@ -208,7 +248,7 @@ export default function CertificateSummaryCard({
 
                         {isRevoked ? (
                         <div className="d-flex align-items-center">
-                            <i className="bi bi-calendar-x text-danger me-2"></i>
+                            <i className="bi bi-calendar-x text-danger me-2" />
 
                             <span className="fw-semibold text-danger">
                             Revocado el{" "}
@@ -219,7 +259,7 @@ export default function CertificateSummaryCard({
                         </div>
                         ) : (
                         <div className="d-flex align-items-center">
-                            <i className="bi bi-shield-check text-success me-2"></i>
+                            <i className="bi bi-shield-check text-success me-2" />
 
                             <span className="fw-semibold text-success">
                             No revocado
@@ -242,70 +282,98 @@ export default function CertificateSummaryCard({
                 </div>
             </div>
             </div>
+
             {/* =================================================
-                                    VERIFICACIÓN
+                                VERIFICACIÓN PÚBLICA
                     ================================================== */}
 
             <div className="col-12 col-xl-6">
             <div className="card border-0 shadow-sm h-100">
                 <div className="card-header bg-white border-bottom py-3">
                 <h6 className="fw-bold mb-0">
-                    <i className="bi bi-shield-check text-primary me-2"></i>
+                    <i className="bi bi-shield-check text-primary me-2" />
                     Verificación pública
                 </h6>
                 </div>
 
                 <div className="card-body p-4">
-                <div className="mb-4">
-                    <small className="text-muted d-block mb-2">
-                    Código de verificación
-                    </small>
-
+                {!isIssued ? (
+                    <div className="d-flex align-items-start">
                     <div
-                    className="bg-light rounded-3 p-3 small font-monospace"
-                    style={{
-                        wordBreak: "break-all",
-                    }}
+                        className="d-flex align-items-center justify-content-center rounded-3 bg-secondary bg-opacity-10 text-secondary me-3"
+                        style={{
+                        width: "44px",
+                        height: "44px",
+                        minWidth: "44px",
+                        }}
                     >
-                    {info.verificationHash ?? "-"}
+                        <i className="bi bi-shield-lock" />
                     </div>
-                </div>
 
-                <div>
-                    <small className="text-muted d-block mb-2">
-                    Verificación pública
-                    </small>
+                    <div>
+                        <h6 className="fw-semibold mb-1">
+                        Verificación no disponible
+                        </h6>
 
-                    <Link
-                    to={`/verify/${info.publicId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-success"
-                    >
-                    <i className="bi bi-box-arrow-up-right me-2"></i>
-                    Verificar certificado
-                    </Link>
-                </div>
+                        <p className="text-muted small mb-0">
+                        El certificado debe estar emitido para poder ser
+                        consultado públicamente.
+                        </p>
+                    </div>
+                    </div>
+                ) : (
+                    <>
+                    <div className="mb-4">
+                        <small className="text-muted d-block mb-2">
+                        Código de verificación
+                        </small>
+
+                        <div
+                        className="bg-light rounded-3 p-3 small font-monospace"
+                        style={{
+                            wordBreak: "break-all",
+                        }}
+                        >
+                        {info.verificationHash ?? "-"}
+                        </div>
+                    </div>
+
+                    <div>
+                        <small className="text-muted d-block mb-2">
+                        Verificación pública
+                        </small>
+
+                        <Link
+                        to={`/verify/${info.publicId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-success"
+                        >
+                        <i className="bi bi-box-arrow-up-right me-2" />
+                        Verificar certificado
+                        </Link>
+                    </div>
+                    </>
+                )}
                 </div>
             </div>
             </div>
 
             {/* =================================================
-                                    DOCUMENTO OFICIAL
+                                DOCUMENTO OFICIAL
                     ================================================== */}
 
             <div className="col-12 col-xl-6">
             <div className="card border-0 shadow-sm h-100">
                 <div className="card-header bg-white border-bottom py-3">
                 <h6 className="fw-bold mb-0">
-                    <i className="bi bi-file-earmark-check text-primary me-2"></i>
+                    <i className="bi bi-file-earmark-check text-primary me-2" />
                     Documento oficial
                 </h6>
                 </div>
 
                 <div className="card-body p-4">
                 {!hasDocumentReference ? (
-                    /* SIN DOCUMENTO */
                     <div className="d-flex flex-column flex-sm-row align-items-start gap-3">
                     <div
                         className="d-flex align-items-center justify-content-center rounded-3 bg-secondary bg-opacity-10 text-secondary"
@@ -315,7 +383,7 @@ export default function CertificateSummaryCard({
                         minWidth: "44px",
                         }}
                     >
-                        <i className="bi bi-file-earmark-x"></i>
+                        <i className="bi bi-file-earmark-x" />
                     </div>
 
                     <div className="flex-grow-1">
@@ -333,19 +401,18 @@ export default function CertificateSummaryCard({
                         className="btn btn-primary btn-sm"
                         onClick={onDocumentAction}
                         >
-                        <i className="bi bi-file-earmark-plus me-2"></i>
+                        <i className="bi bi-file-earmark-plus me-2" />
                         Registrar documento
                         </button>
                     </div>
                     </div>
                 ) : (
-                    /* CON DOCUMENTO */
                     <>
                     <div className="mb-4">
                         <p className="text-muted small mb-0">
-                        CERVALID no almacena el archivo original. Esta información
-                        permite consultar o comprobar el documento conservado por
-                        la institución.
+                        CERVALID no almacena permanentemente el archivo original.
+                        Se conserva su referencia y su huella digital para
+                        comprobar su integridad.
                         </p>
                     </div>
 
@@ -363,7 +430,7 @@ export default function CertificateSummaryCard({
                             rel="noopener noreferrer"
                             className="btn btn-outline-primary"
                         >
-                            <i className="bi bi-box-arrow-up-right me-2"></i>
+                            <i className="bi bi-box-arrow-up-right me-2" />
                             Consultar documento
                         </a>
                         </div>
@@ -372,7 +439,7 @@ export default function CertificateSummaryCard({
                     {/* HASH */}
 
                     {hasDocumentHash && (
-                        <div className={hasDocumentUrl ? "" : "mb-0"}>
+                        <div>
                         <small className="text-muted d-block mb-2">
                             Hash del documento
                         </small>
@@ -393,7 +460,7 @@ export default function CertificateSummaryCard({
                         </div>
                     )}
 
-                    {/* ACCIÓN DE ACTUALIZACIÓN */}
+                    {/* ACTUALIZAR */}
 
                     <div className="border-top mt-4 pt-3">
                         <button
@@ -401,7 +468,7 @@ export default function CertificateSummaryCard({
                         className="btn btn-outline-primary btn-sm"
                         onClick={onDocumentAction}
                         >
-                        <i className="bi bi-pencil-square me-2"></i>
+                        <i className="bi bi-pencil-square me-2" />
                         Actualizar documento
                         </button>
                     </div>
@@ -412,20 +479,20 @@ export default function CertificateSummaryCard({
             </div>
 
             {/* =================================================
-                                    BLOCKCHAIN
+                            INTEGRIDAD Y TRAZABILIDAD
                     ================================================== */}
 
             <div className="col-12 col-xl-6">
             <div className="card border-0 shadow-sm h-100">
                 <div className="card-header bg-white border-bottom py-3">
                 <h6 className="fw-bold mb-0">
-                    <i className="bi bi-link-45deg text-primary me-2"></i>
-                    Registro blockchain
+                    <i className="bi bi-fingerprint text-primary me-2" />
+                    Integridad y trazabilidad
                 </h6>
                 </div>
 
                 <div className="card-body p-4">
-                {!hasBlockchain ? (
+                {!hasIntegrity ? (
                     <div className="d-flex align-items-start">
                     <div
                         className="d-flex align-items-center justify-content-center rounded-3 bg-warning bg-opacity-10 text-warning me-3"
@@ -435,64 +502,120 @@ export default function CertificateSummaryCard({
                         minWidth: "44px",
                         }}
                     >
-                        <i className="bi bi-hourglass-split"></i>
+                        <i className="bi bi-hourglass-split" />
                     </div>
 
                     <div>
-                        <h6 className="fw-semibold mb-1">Registro pendiente</h6>
+                        <h6 className="fw-semibold mb-1">Información pendiente</h6>
 
                         <p className="text-muted small mb-0">
-                        El certificado todavía no ha sido registrado en
-                        blockchain.
+                        Todavía no existen registros de integridad o trazabilidad
+                        para este certificado.
                         </p>
                     </div>
                     </div>
                 ) : (
                     <>
-                    <div className="row g-4 mb-4">
-                        <div className="col-sm-6">
-                        <small className="text-muted d-block mb-1">Red</small>
+                    {/* HASH CERTIFICADO */}
 
-                        <span className="fw-semibold">
-                            {certificate.network ?? "-"}
-                        </span>
-                        </div>
-
-                        <div className="col-sm-6">
-                        <small className="text-muted d-block mb-1">Bloque</small>
-
-                        <span className="fw-semibold">
-                            {certificate.blockNumber ?? "-"}
-                        </span>
-                        </div>
-
-                        <div className="col-12">
-                        <small className="text-muted d-block mb-1">
-                            Fecha de anclaje
-                        </small>
-
-                        <span className="fw-semibold">
-                            {certificate.anchoredAt
-                            ? new Date(certificate.anchoredAt).toLocaleString()
-                            : "-"}
-                        </span>
-                        </div>
-                    </div>
-
-                    <div>
+                    {info.certificateHash && (
+                        <div className="mb-4">
                         <small className="text-muted d-block mb-2">
-                        Transaction Hash
+                            Huella del certificado
                         </small>
 
                         <div
-                        className="bg-light rounded-3 p-3 small font-monospace"
-                        style={{
+                            className="bg-light rounded-3 p-3 small font-monospace"
+                            style={{
                             wordBreak: "break-all",
-                        }}
+                            }}
                         >
-                        {info.blockchainTxHash}
+                            {info.certificateHash}
                         </div>
-                    </div>
+                        </div>
+                    )}
+
+                    {/* HASH VERIFICACIÓN */}
+
+                    {info.verificationHash && (
+                        <div className="mb-4">
+                        <small className="text-muted d-block mb-2">
+                            Huella de verificación
+                        </small>
+
+                        <div
+                            className="bg-light rounded-3 p-3 small font-monospace"
+                            style={{
+                            wordBreak: "break-all",
+                            }}
+                        >
+                            {info.verificationHash}
+                        </div>
+                        </div>
+                    )}
+
+                    {/* RED / BLOQUE */}
+
+                    {(certificate.network || certificate.blockNumber) && (
+                        <div className="row g-4">
+                        {certificate.network && (
+                            <div className="col-sm-6">
+                            <small className="text-muted d-block mb-1">
+                                Red de registro
+                            </small>
+
+                            <span className="fw-semibold">
+                                {certificate.network}
+                            </span>
+                            </div>
+                        )}
+
+                        {certificate.blockNumber && (
+                            <div className="col-sm-6">
+                            <small className="text-muted d-block mb-1">
+                                Bloque
+                            </small>
+
+                            <span className="fw-semibold">
+                                {certificate.blockNumber}
+                            </span>
+                            </div>
+                        )}
+                        </div>
+                    )}
+
+                    {/* IDENTIFICADOR */}
+
+                    {info.blockchainTxHash && (
+                        <div className="mt-4">
+                        <small className="text-muted d-block mb-2">
+                            Identificador del registro
+                        </small>
+
+                        <div
+                            className="bg-light rounded-3 p-3 small font-monospace"
+                            style={{
+                            wordBreak: "break-all",
+                            }}
+                        >
+                            {info.blockchainTxHash}
+                        </div>
+                        </div>
+                    )}
+
+                    {/* FECHA DE REGISTRO */}
+
+                    {certificate.anchoredAt && (
+                        <div className="mt-4">
+                        <small className="text-muted d-block mb-1">
+                            Fecha de registro
+                        </small>
+
+                        <span className="fw-semibold">
+                            {formatDateTime(certificate.anchoredAt)}
+                        </span>
+                        </div>
+                    )}
                     </>
                 )}
                 </div>
@@ -500,20 +623,22 @@ export default function CertificateSummaryCard({
             </div>
 
             {/* =================================================
-                                    INFORMACIÓN ACADÉMICA
+                                INFORMACIÓN ACADÉMICA
                     ================================================== */}
 
             <div className="col-12 col-xl-6">
             <div className="card border-0 shadow-sm h-100">
                 <div className="card-header bg-white border-bottom py-3">
                 <h6 className="fw-bold mb-0">
-                    <i className="bi bi-mortarboard text-primary me-2"></i>
+                    <i className="bi bi-mortarboard text-primary me-2" />
                     Información académica
                 </h6>
                 </div>
 
                 <div className="card-body p-4">
                 <div className="row g-4">
+                    {/* CÓDIGO */}
+
                     <div className="col-sm-6">
                     <small className="text-muted d-block mb-1">
                         Código de estudiante
@@ -523,6 +648,8 @@ export default function CertificateSummaryCard({
                         {snapshot.student?.studentCode ?? "-"}
                     </span>
                     </div>
+
+                    {/* NOMBRE */}
 
                     <div className="col-sm-6">
                     <small className="text-muted d-block mb-1">
@@ -534,6 +661,8 @@ export default function CertificateSummaryCard({
                     </span>
                     </div>
 
+                    {/* INSTITUCIÓN */}
+
                     <div className="col-12">
                     <small className="text-muted d-block mb-1">Institución</small>
 
@@ -542,7 +671,9 @@ export default function CertificateSummaryCard({
                     </span>
                     </div>
 
-                    <div className="col-6">
+                    {/* PROGRAMA */}
+
+                    <div className="col-sm-6">
                     <small className="text-muted d-block mb-1">
                         Programa académico
                     </small>
@@ -550,13 +681,7 @@ export default function CertificateSummaryCard({
                     <span className="fw-semibold">{program}</span>
                     </div>
 
-                    <div className="col-sm-6">
-                    <small className="text-muted d-block mb-1">
-                        Ciclo Académico
-                    </small>
-
-                    <span className="fw-semibold">{currentCycle}</span>
-                    </div>
+                    {/* FACULTAD */}
 
                     <div className="col-sm-6">
                     <small className="text-muted d-block mb-1">Facultad</small>
@@ -564,10 +689,22 @@ export default function CertificateSummaryCard({
                     <span className="fw-semibold">{faculty}</span>
                     </div>
 
+                    {/* MODALIDAD */}
+
                     <div className="col-sm-6">
                     <small className="text-muted d-block mb-1">Modalidad</small>
 
                     <span className="fw-semibold">{modality}</span>
+                    </div>
+
+                    {/* CICLO */}
+
+                    <div className="col-sm-6">
+                    <small className="text-muted d-block mb-1">
+                        Ciclo académico
+                    </small>
+
+                    <span className="fw-semibold">{currentCycle}</span>
                     </div>
                 </div>
                 </div>

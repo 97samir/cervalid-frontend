@@ -7,11 +7,21 @@ export const useUpdateStudent = () => {
 
     return useMutation({
         mutationFn: ({ publicId, data }) =>
+
         studentApi.updateStudent(publicId, data),
 
-        onSuccess: () => {
+        onSuccess: (_, variables) => {
+
+            const {publicId} = variables;
+
+            // actualiza lista de estudiantes
             queryClient.invalidateQueries({
                 queryKey: ["students"],
+            });
+
+            // actualiza detalle de estudiantes
+            queryClient.invalidateQueries({
+                queryKey: ["student", publicId],
             });
         }
     });

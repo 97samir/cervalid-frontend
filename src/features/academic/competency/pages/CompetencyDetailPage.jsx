@@ -105,7 +105,8 @@ export default function CompetencyDetailPage() {
                 type="button"
                 className="btn btn-outline-secondary"
                 onClick={() => navigate(-1)}
-            >
+            >   
+                <i className="bi bi-arrow-left me-2"></i>
                 Volver
             </button>
             </div>

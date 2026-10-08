@@ -11,9 +11,7 @@ export const useRevokeCredential = () => {
         onSuccess: (_, variables) => {
 
             queryClient.invalidateQueries({
-                queryKey: [
-                    "credential",
-                    variables.credentialPublicId,
+                queryKey: [ "credential", variables.credentialPublicId,
                 ],
             });
             
@@ -24,6 +22,19 @@ export const useRevokeCredential = () => {
 
             queryClient.invalidateQueries({
                 queryKey: ["studentCredentials"],
+            });
+
+            // ===========
+            queryClient.invalidateQueries({
+                queryKey: ["verification-dashboard"],
+            });
+
+            queryClient.invalidateQueries({
+                queryKey: ["verification-summary"],
+            });
+
+            queryClient.invalidateQueries({
+                queryKey: ["institution-verification-history"],
             });
         },
     });

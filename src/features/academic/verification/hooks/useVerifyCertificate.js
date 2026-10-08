@@ -17,11 +17,7 @@ export function useVerifyCertificate() {
             });
 
             queryClient.invalidateQueries({
-                queryKey: ["institution-verification-history"],
-            });
-
-            queryClient.invalidateQueries({
-                queryKey: ["certificate-verification-history"],
+                queryKey: ["verification-history"],
             });
         },
     });

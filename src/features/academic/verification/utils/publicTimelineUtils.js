@@ -3,9 +3,7 @@ import {
     academicFacultyLabels,
 } from "@/shared/utils/enumUtils";
 
-/* =========================================================
-   CONFIGURACIÓN DE EVENTOS
-========================================================= */
+// CONFIGURACIÓN DE EVENTOS
 
 const timelineEventConfig = {
     STUDENT_REGISTERED: {
