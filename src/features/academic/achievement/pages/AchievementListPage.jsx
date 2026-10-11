@@ -55,14 +55,14 @@ export default function AchievementListPage() {
                 <div className="d-flex align-items-center gap-2 mb-1">
                     <div
                     className="
-                                            rounded-circle
-                                            bg-warning-subtle
-                                            text-warning
-                                            d-flex
-                                            align-items-center
-                                            justify-content-center
-                                            flex-shrink-0
-                                        "
+                                                rounded-circle
+                                                bg-warning-subtle
+                                                text-warning
+                                                d-flex
+                                                align-items-center
+                                                justify-content-center
+                                                flex-shrink-0
+                                            "
                     style={{
                         width: "42px",
                         height: "42px",
@@ -82,7 +82,10 @@ export default function AchievementListPage() {
                 {/* ACCIONES */}
 
                 <div className="d-flex flex-column flex-sm-row gap-2">
-                <Link to={-1} className="btn btn-outline-secondary">
+                <Link
+                    to={`/institution/students/${studentPublicId}`}
+                    className="btn btn-outline-secondary"
+                >
                     <i className="bi bi-arrow-left me-2"></i>
                     Volver
                 </Link>

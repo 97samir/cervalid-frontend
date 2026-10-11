@@ -5,7 +5,7 @@ import {
     modalityLabels,
     academicProgramLabels,
     academicFacultyLabels,
- } from "@/shared/utils/enumUtils";
+} from "@/shared/utils/enumUtils";
 
 import AcademicProfileEditModal from "./AcademicProfileEditModal";
 import { useUpdateProfile } from "../hooks/useUpdateProfile";
@@ -51,25 +51,25 @@ export default function AcademicProfileCard({
                 {/* HEADER */}
                 <div className="card-header bg-white border-0 py-3">
                     <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 className="fw-bold mb-1">
-                        <i className="bi bi-person-vcard me-2 text-primary"></i>
-                        Perfil Académico
-                        </h5>
+                        <div>
+                            <h5 className="fw-bold mb-1">
+                            <i className="bi bi-person-vcard me-2 text-primary"></i>
+                            Perfil Académico
+                            </h5>
 
-                        <small className="text-muted">
-                        Información académica principal del estudiante
-                        </small>
-                    </div>
+                            <small className="text-muted">
+                            Información académica principal del estudiante
+                            </small>
+                        </div>
 
-                    <button
-                        type="button"
-                        className="btn btn-outline-primary"
-                        onClick={() => setShowEditModal(true)}
-                    >
-                        <i className="bi bi-pencil me-2"></i>
-                        Editar
-                    </button>
+                        <button
+                            type="button"
+                            className="btn btn-outline-primary btn-sm"
+                            onClick={() => setShowEditModal(true)}
+                        >
+                            <i className="bi bi-pencil me-2"></i>
+                            Editar
+                        </button>
                     </div>
                 </div>
 

@@ -4,6 +4,7 @@ import { useStudentTranscripts } from "../hooks/useStudentTranscripts";
 import TranscriptTable from "../components/TranscriptTable";
 
 export default function TranscriptListPage() {
+
     const { studentPublicId } = useParams();
 
     const {
@@ -86,18 +87,22 @@ export default function TranscriptListPage() {
                 {/* ACCIONES */}
 
                 <div className="d-flex flex-column flex-sm-row gap-2">
-                <Link to={-1} className="btn btn-outline-secondary">
-                    <i className="bi bi-arrow-left me-2"></i>
-                    Volver
-                </Link>
+                    
+                    <Link
+                        to={`/institution/students/${studentPublicId}`}
+                        className="btn btn-outline-secondary"
+                    >
+                        <i className="bi bi-arrow-left me-2"></i>
+                        Volver
+                    </Link>
 
-                <Link
-                    to={`/institution/students/${studentPublicId}/transcripts/create`}
-                    className="btn btn-primary"
-                >
-                    <i className="bi bi-plus-lg me-2"></i>
-                    Nuevo historial
-                </Link>
+                    <Link
+                        to={`/institution/students/${studentPublicId}/transcripts/create`}
+                        className="btn btn-primary"
+                    >
+                        <i className="bi bi-plus-lg me-2"></i>
+                        Nuevo historial
+                    </Link>
                 </div>
             </div>
             </div>
