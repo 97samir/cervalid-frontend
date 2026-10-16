@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import CertificateStatusBadge from "./CertificateStatusBadge";
 import CertificateTypeBadge from "./CertificateTypeBadge";
 
-//import { certificateTypeLabels } from "@/shared/utils/enumUtils";
-
 import { formatLocalDate, formatDateTime } from "@/shared/utils/dateUtils";
 
-export default function CertificateTable({ certificates = [] }) {
+export default function CertificateTable({ 
+    certificates = [] 
+}) {
+
+    // ordenar tabla - mas recien primero
+    const sortedCertificates = [...certificates].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     if (certificates.length === 0) {
         return (
         <div className="card shadow-sm border-0">
@@ -55,7 +61,7 @@ export default function CertificateTable({ certificates = [] }) {
             </thead>
 
             <tbody>
-                {certificates.map((certificate) => (
+                {sortedCertificates.map((certificate) => (
                 <tr key={certificate.publicId}>
                     {/* NÚMERO */}
 

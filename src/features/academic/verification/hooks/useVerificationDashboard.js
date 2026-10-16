@@ -7,6 +7,7 @@ export function useVerificationDashboard() {
 
         queryKey: ["verification-dashboard"],
         queryFn: verificationService.getVerificationDashboard,
-        staleTime: 30000,
+        staleTime: 0,
+        refetchOnWindowFocus: true,
     });
 }

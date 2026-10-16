@@ -55,6 +55,20 @@ const timelineEventConfig = {
         category: "Certificación",
     },
 
+    CREDENTIAL_ISSUED: {
+        label: "Título emitido",
+        title: "Título académico emitido",
+        icon: "bi-patch-check",
+        category: "Título o Grado",
+    },
+
+    CREDENTIAL_REVOKED: {
+        label: "Título revocado",
+        title: "Título académico revocado",
+        icon: "bi-exclamation-triangle",
+        category: "Título o Grado",
+    },
+
     SKILL_EARNED: {
         label: "Habilidad adquirida",
         title: "Habilidad adquirida",

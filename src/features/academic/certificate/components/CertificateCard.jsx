@@ -15,6 +15,11 @@ export default function CertificateCard({ studentPublicId }) {
         error,
     } = useCertificates(studentPublicId);
 
+    // ordenar tabla - mas recien primero
+    const sortedCertificates = [...certificates].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     if (isLoading) {
         return (
         <div className="card border-0 shadow-sm rounded-4">
@@ -112,7 +117,7 @@ export default function CertificateCard({ studentPublicId }) {
                 </thead>
 
                 <tbody>
-                    {certificates.slice(0, 3).map((certificate) => (
+                    {sortedCertificates.slice(0, 3).map((certificate) => (
                     <tr key={certificate.publicId}>
                         {/* NÚMERO */}
 

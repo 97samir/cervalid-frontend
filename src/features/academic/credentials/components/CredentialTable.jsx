@@ -9,6 +9,11 @@ export default function CredentialTable({
     credentials = [] 
 }) {
 
+    // ordenar tabla - mas recien primero
+    const sortedCredentials = [...credentials].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     if (credentials.length === 0) {
         return (
         <div className="card border-0 shadow-sm rounded-4">
@@ -51,7 +56,7 @@ export default function CredentialTable({
             </thead>
 
             <tbody>
-                {credentials.map((credential) => {
+                {sortedCredentials.map((credential) => {
 
                     return (
                         <tr key={credential.publicId}>

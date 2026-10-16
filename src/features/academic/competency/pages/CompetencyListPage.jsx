@@ -16,6 +16,11 @@ export default function CompetencyListPage() {
         error,
     } = useStudentCompetencies(studentPublicId);
 
+    // ordenar tabla - mas recien primero
+    const sortedCompetencies = [...competencies].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     const createCompetencyUrl = `/institution/students/${studentPublicId}/competencies/create`;
 
     if (isLoading) {
@@ -164,7 +169,7 @@ export default function CompetencyListPage() {
                 </thead>
 
                 <tbody>
-                    {competencies.map((competency) => (
+                    {sortedCompetencies.map((competency) => (
                     <tr key={competency.publicId}>
                         <td className="fw-semibold">{competency.name}</td>
 

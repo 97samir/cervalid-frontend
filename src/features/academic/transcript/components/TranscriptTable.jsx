@@ -10,6 +10,12 @@ export default function TranscriptTable({
     transcripts,
     studentPublicId,
 }) {
+
+    // ordenar tabla - mas recien primero
+    const sortedTranscripts = [...transcripts].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     if (transcripts.length === 0) {
         return (
             <div className="card border-0 shadow-sm rounded-4">
@@ -58,7 +64,7 @@ export default function TranscriptTable({
                     </thead>
 
                     <tbody>
-                        {transcripts.map((transcript) => {
+                        {sortedTranscripts.map((transcript) => {
 
                             const academicPeriodType =
                                 transcriptAcademicPeriodTypeLabels[

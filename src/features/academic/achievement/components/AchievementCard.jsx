@@ -11,6 +11,11 @@ export default function AchievementCard({ studentPublicId }) {
         error,
     } = useStudentAchievements(studentPublicId);
 
+    // ordenar tabla - mas recien primero
+    const sortedAchievements = [...achievements].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     if (isLoading) {
         return (
         <div className="card border-0 shadow-sm rounded-4">
@@ -98,7 +103,7 @@ export default function AchievementCard({ studentPublicId }) {
                 </thead>
 
                 <tbody>
-                    {achievements.slice(0, 3).map((achievement) => (
+                    {sortedAchievements.slice(0, 3).map((achievement) => (
                     <tr key={achievement.publicId}>
                         <td className="fw-semibold">{achievement.title}</td>
 

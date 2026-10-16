@@ -1,4 +1,6 @@
-export default function VerificationDashboardCards({ dashboard }) {
+export default function VerificationDashboardCards({ 
+    dashboard 
+}) {
 
     const cards = [
 
@@ -17,11 +19,18 @@ export default function VerificationDashboardCards({ dashboard }) {
         },
 
         {
-        title: "Hoy",
-        value: dashboard.today,
-        icon: "bi-calendar-day",
-        color: "warning",
+        title: "Total títulos",
+        value: dashboard.uniqueCredentials,
+        icon: "bi-award",
+        color: "success",
         },
+
+        // {
+        // title: "Hoy",
+        // value: dashboard.today,
+        // icon: "bi-calendar-day",
+        // color: "warning",
+        // },
 
         {
         title: "Esta semana",

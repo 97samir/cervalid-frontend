@@ -8,6 +8,11 @@ export default function TranscriptItemsTable({
 
     const items = transcript?.items ?? [];
 
+    // ordenar tabla - mas recien primero
+    const sortedTranscript = [...items].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     return (
         <div className="card shadow-sm border-0 mt-4">
         <div className="card-header bg-white">
@@ -59,7 +64,7 @@ export default function TranscriptItemsTable({
                     </thead>
 
                     <tbody>
-                        {items.map((item) => (
+                        {sortedTranscript.map((item) => (
                         <tr key={item.publicId}>
                             <td className="fw-semibold">{item.courseCode}</td>
 

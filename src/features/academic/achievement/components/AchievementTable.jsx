@@ -5,7 +5,14 @@ import AchievementTypeBadge from "./AchievementTypeBadge";
 
 import { formatAchievementDate } from "../utils/achievementDateUtils";
 
-export default function AchievementTable({ achievements }) {
+export default function AchievementTable({ 
+    achievements 
+}) {
+
+    // ordenar tabla - mas recien primero
+    const sortedAchievements = [...achievements].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
 
     if (achievements.length === 0) {
         return (
@@ -32,7 +39,7 @@ export default function AchievementTable({ achievements }) {
             </thead>
 
             <tbody>
-                {achievements.map((achievement) => (
+                {sortedAchievements.map((achievement) => (
                 <tr key={achievement.publicId}>
                     <td className="fw-semibold">{achievement.title}</td>
 

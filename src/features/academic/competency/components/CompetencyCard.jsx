@@ -4,13 +4,20 @@ import CompetencyStatusBadge from "./CompetencyStatusBadge";
 import CompetencyLevelBadge from "./CompetencyLevelBadge";
 //import CompetencySourceBadge from "./CompetencySourceBadge";
 
-export default function CompetencyCard({ studentPublicId }) {
+export default function CompetencyCard({ 
+    studentPublicId 
+}) {
     
     const {
         data: competencies = [],
         isLoading,
         error,
     } = useStudentCompetencies(studentPublicId);
+
+    // ordenar tabla - mas recien primero
+    const sortedCompetencies = [...competencies].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
 
     if (isLoading) {
         return (
@@ -101,7 +108,7 @@ export default function CompetencyCard({ studentPublicId }) {
                 </thead>
 
                 <tbody>
-                    {competencies.slice(0, 3).map((competency) => (
+                    {sortedCompetencies.slice(0, 3).map((competency) => (
                     <tr key={competency.publicId}>
                         <td className="fw-semibold">{competency.name}</td>
 

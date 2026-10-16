@@ -16,6 +16,11 @@ export default function CredentialCard({
         error,
     } = useStudentCredentials(studentPublicId);
 
+    // ordenar tabla - mas recien primero
+    const sortedCredentials = [...credentials].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     if (isLoading) {
         return (
         <div className="card border-0 shadow-sm rounded-4">
@@ -121,7 +126,7 @@ export default function CredentialCard({
                 </thead>
 
                 <tbody>
-                    {credentials.slice(0, 3).map((credential) => (
+                    {sortedCredentials.slice(0, 3).map((credential) => (
                     <tr key={credential.publicId}>
                         <td>
                         <span className="fw-semibold">

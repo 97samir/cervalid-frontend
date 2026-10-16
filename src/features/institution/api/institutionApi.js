@@ -1,6 +1,6 @@
 // llamadas HTTP
 
-import apiClient from "../../../core/api/apiClient";
+import apiClient from "@/core/api/apiClient";
 
 export async function getInstitutionDashboardStats() {
     const response = await apiClient.get("/institutions/dashboard-stats");

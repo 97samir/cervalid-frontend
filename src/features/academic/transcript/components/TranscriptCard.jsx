@@ -9,6 +9,11 @@ export default function TranscriptCard({ studentPublicId }) {
         error,
     } = useStudentTranscripts(studentPublicId);
 
+    // ordenar tabla - mas recien primero
+    const sortedTranscripts = [...transcripts].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     if (isLoading) {
         return (
         <div className="card border-0 shadow-sm rounded-4">
@@ -99,7 +104,7 @@ export default function TranscriptCard({ studentPublicId }) {
                 </thead>
 
                 <tbody>
-                    {transcripts.slice(0, 3).map((transcript) => (
+                    {sortedTranscripts.slice(0, 3).map((transcript) => (
                     <tr key={transcript.publicId}>
                         <td className="fw-semibold">{transcript.academicPeriod}</td>
 
