@@ -1,6 +1,10 @@
 import VerificationHashValue from "../shared/VerificationHashValue";
 import VerificationEmptyReference from "../shared/VerificationEmptyReference";
 
+import {
+    formatVerificationDate
+} from "../../utils/verificationUtils";
+
 export default function VerificationRecordIntegrity({
     result 
 }) {
@@ -133,7 +137,7 @@ function BlockchainReference({
             {anchoredAt && (
                 <div className="verification-blockchain-item">
                     <span>Registro</span>
-                    <strong>{anchoredAt}</strong>
+                    <strong>{formatVerificationDate(anchoredAt)}</strong>
                 </div>
             )}
 
