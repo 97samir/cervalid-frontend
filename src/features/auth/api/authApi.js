@@ -1,6 +1,6 @@
 // Contiene todas las llamadas API relacionadas con autenticación
 
-import apiClient from "../../../core/api/apiClient";
+import apiClient from "@/core/api/apiClient";
 
 export const loginRequest = async (data) => {
   const response = await apiClient.post("/auth/login", data);

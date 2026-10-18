@@ -33,8 +33,9 @@
 /* =========================================================
    NAVBAR INNER
 ========================================================= */
-
+/* height: 76px; altura fija  */
 .public-navbar-inner {
+    height: 76px;
     min-height: 76px;
 
     display: flex;
@@ -88,6 +89,27 @@
     font-size: 1.1rem;
 }
 
+/* Logo del navbar */
+.public-navbar-brand {
+    padding: 0;
+    margin: 0;
+
+    line-height: 1;
+
+    color: #14213d;
+
+    transition: opacity 0.2s ease;
+}
+.public-navbar-logo {
+    display: block;
+
+    width: 160px;
+    max-width: 100%;
+    height: 55px;
+
+    object-fit: contain;
+    flex-shrink: 0;
+}
 
 /* =========================================================
    COLLAPSE
@@ -537,6 +559,11 @@
         height: 34px;
 
         font-size: 1rem;
+    }
+
+    /* logo */
+    .public-navbar-logo {
+        width: 140px;
     }
 }
 

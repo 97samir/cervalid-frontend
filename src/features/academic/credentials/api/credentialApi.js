@@ -1,5 +1,23 @@
 import apiClient from "@/core/api/apiClient";
 
+const BASE_URL = "/academic/credentials";
+
+export const getCredentialDashboardSummary = async () => {
+    const { data } = await apiClient.get(
+        `${BASE_URL}/dashboard/summary`
+    );
+
+    return data;
+};
+
+export const getCredentialDashboardCredentials = async (params) => {
+    const { data } = await apiClient.get(BASE_URL, {
+        params,
+    });
+
+    return data;
+};
+
 // Obtiene los Credentials de un estudiante
 export const getStudentCredentials = async (
     studentPublicId

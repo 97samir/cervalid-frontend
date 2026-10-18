@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+//import cervalidLogo from "@/assets/img/cervalid-logo.svg";
+
 export default function PublicFooter() {
     const currentYear = new Date().getFullYear();
 
@@ -10,16 +12,29 @@ export default function PublicFooter() {
             {/* BRAND*/}
             <div className="col-12 col-lg-4">
                 <Link
-                to="/"
-                className="public-footer-brand"
-                aria-label="Cervalid - Inicio"
+                    to="/"
+                    className="public-footer-brand"
+                    aria-label="Cervalid - Inicio"
                 >
-                <span className="public-brand-mark">
-                    <i className="bi bi-patch-check-fill"></i>
-                </span>
+                    <span className="public-brand-mark">
+                        <i className="bi bi-patch-check-fill"></i>
+                    </span>
 
-                <span>Cervalid</span>
+                    <span>Cervalid</span>
                 </Link>
+
+                {/* <Link
+                    to="/"
+                    className="navbar-brand public-navbar-brand"
+                    aria-label="Cervalid - Inicio"
+                >
+                    <img
+                        src={cervalidLogo}
+                        alt=""
+                        className="public-navbar-logo"
+                        aria-hidden="true"
+                    />
+                </Link> */}
 
                 <p className="public-footer-description">
                 Plataforma de certificación académica para emitir, verificar y

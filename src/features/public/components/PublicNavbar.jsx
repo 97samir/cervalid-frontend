@@ -1,5 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 
+import cervalidLogo from "@/assets/img/cervalid-logo.svg";
+
 export default function PublicNavbar() {
     
     const navLinkClass = ({ isActive }) =>
@@ -7,13 +9,14 @@ export default function PublicNavbar() {
 
     return (
         <header className="public-navbar">
+
         <div className="container">
             <nav className="navbar navbar-expand-lg public-navbar-inner">
             {/* =================================================
                             BRAND
                         ================================================== */}
 
-            <Link
+            {/* <Link
                 to="/"
                 className="navbar-brand public-navbar-brand"
                 aria-label="Cervalid - Inicio"
@@ -23,6 +26,19 @@ export default function PublicNavbar() {
                 </span>
 
                 <span>Cervalid</span>
+            </Link> */}
+
+            <Link
+                to="/"
+                className="navbar-brand public-navbar-brand"
+                aria-label="Cervalid - Inicio"
+            >
+                <img
+                    src={cervalidLogo}
+                    alt=""
+                    className="public-navbar-logo"
+                    aria-hidden="true"
+                />
             </Link>
 
             {/* =================================================

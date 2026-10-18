@@ -1,5 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 
+import cervalidLogo from "@/assets/img/cervalid-logo.svg";
+
 export default function AuthLayout() {
     
     const currentYear = new Date().getFullYear();
@@ -8,13 +10,30 @@ export default function AuthLayout() {
         <div className="auth-layout">
         <header className="auth-header">
             <div className="container">
-            <Link to="/" className="auth-brand" aria-label="Cervalid - Inicio">
+
+
+            {/* <Link to="/" className="auth-brand" aria-label="Cervalid - Inicio">
                 <span className="public-brand-mark">
                 <i className="bi bi-patch-check-fill"></i>
                 </span>
 
                 <span>Cervalid</span>
+            </Link> */}
+
+            <Link
+                to="/"
+                className="auth-brand"
+                aria-label="Cervalid - Inicio"
+            >
+                <img
+                    src={cervalidLogo}
+                    alt=""
+                    className="auth-navbar-logo"
+                    aria-hidden="true"
+                />
             </Link>
+
+
             </div>
         </header>
 

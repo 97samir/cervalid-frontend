@@ -1,0 +1,84 @@
+.certificate-dashboard-page {
+    padding-bottom: 2rem;
+    min-width: 0;
+}
+
+.certificate-dashboard-page .card {
+    border-radius: 0.85rem;
+}
+
+.certificate-dashboard-card {
+    transition: box-shadow 0.2s ease;
+}
+
+.certificate-dashboard-card:hover {
+    box-shadow: 0 0.35rem 1.2rem rgb(0 0 0 / 7%) !important;
+}
+
+.certificate-dashboard-card-icon {
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 3rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.75rem;
+    font-size: 1.35rem;
+}
+
+.certificate-dashboard-page .form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--bs-body-color);
+}
+
+.certificate-dashboard-page .form-control,
+.certificate-dashboard-page .form-select {
+    min-height: 2.65rem;
+    border-radius: 0.55rem;
+}
+
+.certificate-dashboard-page .form-control:focus,
+.certificate-dashboard-page .form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgb(13 110 253 / 12%);
+}
+
+.certificate-dashboard-page .table th {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--bs-secondary-color);
+    white-space: nowrap;
+    padding: 0.9rem 1rem;
+}
+
+.certificate-dashboard-page .table td {
+    padding: 0.9rem 1rem;
+    font-size: 0.875rem;
+}
+
+.certificate-dashboard-page .badge {
+    font-weight: 500;
+    padding: 0.45rem 0.65rem;
+    border-radius: 0.45rem;
+    white-space: nowrap;
+}
+
+.certificate-dashboard-page .pagination .page-link {
+    min-width: 2rem;
+    text-align: center;
+}
+
+@media (max-width: 767.98px) {
+    .certificate-dashboard-page {
+        padding-bottom: 1.25rem;
+    }
+
+    .certificate-dashboard-page .table th,
+    .certificate-dashboard-page .table td {
+        padding: 0.75rem;
+    }
+
+    .certificate-dashboard-page .pagination {
+        justify-content: center;
+    }
+}

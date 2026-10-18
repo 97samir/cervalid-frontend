@@ -27,11 +27,13 @@ import AchievementDetailPage from "@/features/academic/achievement/pages/Achieve
 // Certificate
 import CertificateListPage from "@/features/academic/certificate/pages/CertificateListPage";
 import CertificateDetailPage from "@/features/academic/certificate/pages/CertificateDetailPage";
+import CertificateDashboardPage from "@/features/academic/certificate/pages/CertificateDashboardPage";
 
 // credentials
 import CredentialListPage from "@/features/academic/credentials/pages/CredentialListPage";
 import CredentialDetailPage from "@/features/academic/credentials/pages/CredentialDetailPage";
 import CreateCredentialPage from "@/features/academic/credentials/pages/CreateCredentialPage";
+import CredentialDashboardPage from "@/features/academic/credentials/pages/CredentialDashboardPage";
 
 // Timeline
 import StudentTimelinePage from "@/features/academic/timeline/pages/StudentTimelinePage";
@@ -127,6 +129,11 @@ export const academicRoutes = (
         element={<CertificateDetailPage />}
         />
 
+        <Route
+        path="/institution/certificates"
+        element={<CertificateDashboardPage />}
+        />
+
         {/* TIMELINE*/}
         <Route
         path="/institution/students/:publicId/timeline"
@@ -164,6 +171,11 @@ export const academicRoutes = (
         <Route
             path="/institution/students/:studentPublicId/credentials/create"
             element={<CreateCredentialPage />}
+        />
+
+        <Route
+            path="/institution/credentials"
+            element={<CredentialDashboardPage />}
         />
     </>
 );

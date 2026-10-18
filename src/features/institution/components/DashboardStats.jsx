@@ -38,10 +38,10 @@ export default function DashboardStats({ stats }) {
             value: stats?.totalCredentials ?? 0,
             icon: "bi-award",
             description: "Títulos generados",
-            to: "/institution/certificates",
+            to: "/institution/credentials",
         },
         {
-            label: "Certificados verificados",
+            label: "Documentos verificados",
             value: stats?.totalVerifications ?? 0,
             icon: "bi-patch-check",
             description: "Verificaciones realizadas",
