@@ -7,8 +7,6 @@ import App from './App.jsx'
 import AuthStoreProvider from './app/store/auth/AuthStoreProvider'
 import ReactQueryProvider from "./app/providers/ReactQueryProvider";
 
-// importar css
-//import "@/features/student/styles/timeline.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'

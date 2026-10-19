@@ -1,23 +1,43 @@
-// protege rutas que requieren autenticación.
-// Si está logueado, permite entrar, de lo contrario, bloquea
 
 import { Navigate } from "react-router-dom";
 import useAuthStore from "../store/auth/useAuthStore";
 
 export default function PrivateRoute({ children }) {
+    const { user, loading, authError, loadUser } = useAuthStore();
 
-  const { user, loading } = useAuthStore();
+    if (loading) {
+        return (
+            <div className="text-center mt-5">
+                Validando sesión...
+            </div>
+        );
+    }
 
-  console.log("PrivateRoute user:", user);
-  console.log("PrivateRoute loading:", loading);
+    if (authError && !user) {
+        return (
+            <div className="container mt-5">
+                <div className="alert alert-warning" role="alert">
+                    <h5>No pudimos validar tu sesión</h5>
+                    <p>
+                        Comprueba tu conexión e inténtalo nuevamente.
+                    </p>
 
-  if (loading) {
-    return <div className="text-center mt-5">Validando sesión...</div>;
-  }
-  // Si no hay usuario logueado -> redirige a login
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => loadUser().catch(() => {})}
+                    >
+                        Reintentar
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
-  return children;
+    // si no hay usuario - redirigi a :
+    if (!user) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return children;
 }

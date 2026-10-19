@@ -2,36 +2,75 @@
 // JavaScript (por seguridad), el frontend valida la sesión
 // consultando el endpoint /auth/me
 
+const SESSION_KEY = "cervalid_session";
+const INSTITUTION_CONTEXT_KEY = "institution_context";
+const PENDING_INSTITUTIONS_KEY = "cervalid_pending_institutions";
+
 const tokenManager = {
+    hasSession() {
+        return sessionStorage.getItem(SESSION_KEY) === "true";
+    },
 
-  //Verifica si existe una sesión activa
-  hasSession() {
-    return !! sessionStorage.getItem("cervalid_session");
-  },
+    setSession() {
+        sessionStorage.setItem(SESSION_KEY, "true");
+    },
 
-  //Marca la sesión como activa
-  setSession() {
-    sessionStorage.setItem("cervalid_session", "true");
-  },
+    clearSession() {
+        sessionStorage.removeItem(SESSION_KEY);
+    },
 
-  // Limpia la sesión del cliente
-  clearSession() {
-    sessionStorage.clear();
-  },
+    setInstitutionContext(institution) {
+        sessionStorage.setItem(
+            INSTITUTION_CONTEXT_KEY,
+            JSON.stringify(institution),
+        );
+    },
 
-  setInstitutionContext(institution) {
-    sessionStorage.setItem("institution_context", JSON.stringify(institution));
-  },
+    getInstitutionContext() {
+        const data = sessionStorage.getItem(INSTITUTION_CONTEXT_KEY);
 
-  getInstitutionContext() {
-    const data = sessionStorage.getItem("institution_context");
-    return data ? JSON.parse(data) : null;
-  },
+        if (!data) {
+            return null;
+        }
 
-  clearInstitutionContext() {
-    sessionStorage.removeItem("institution_context");
-  }
+        try {
+            return JSON.parse(data);
+        } catch {
+            sessionStorage.removeItem(INSTITUTION_CONTEXT_KEY);
+            return null;
+        }
+    },
 
+    clearInstitutionContext() {
+        sessionStorage.removeItem(INSTITUTION_CONTEXT_KEY);
+    },
+
+    setPendingInstitutions(institutions) {
+        sessionStorage.setItem(
+            PENDING_INSTITUTIONS_KEY,
+            JSON.stringify(institutions),
+        );
+    },
+
+    getPendingInstitutions() {
+        const data = sessionStorage.getItem(PENDING_INSTITUTIONS_KEY);
+
+        if (!data) {
+            return [];
+        }
+
+        try {
+            const institutions = JSON.parse(data);
+            return Array.isArray(institutions) ? institutions : [];
+        } catch {
+            sessionStorage.removeItem(PENDING_INSTITUTIONS_KEY);
+            return [];
+        }
+    },
+
+    clearPendingInstitutions() {
+        sessionStorage.removeItem(PENDING_INSTITUTIONS_KEY);
+    },
 };
 
 export default tokenManager;

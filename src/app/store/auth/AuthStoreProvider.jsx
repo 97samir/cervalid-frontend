@@ -1,137 +1,174 @@
-// motor del sistema de autenticación del frontend
-// Aquí se guarda el usuario autenticado
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import AuthContext from "./AuthContext";
 import tokenManager from "@/core/security/tokenManager";
 import apiClient from "@/core/api/apiClient";
 
-import { useState, useEffect } from "react";
-import { getCurrentUser } from "@/features/auth/api/authApi";
-import { exitInstitution } from "@/features/auth/api/authApi";
+import { getCurrentUser, exitInstitution } from "@/features/auth/api/authApi";
 
-export default function AuthStoreProvider({ 
-  children 
-}) {
+const AUTH_CHANNEL_NAME = "cervalid-auth";
 
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function AuthStoreProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [authError, setAuthError] = useState(false);
 
-  // CARGA PRINCIPAL DEL USUARIO
-  const loadUser = async () => {
+    const authChannelRef = useRef(null);
 
-    setLoading(true);
-    
-    try {
+    const loadUser = useCallback(async () => {
+        setLoading(true);
+        setAuthError(false);
 
-      console.log("Intentando cargar usuario...");
+        try {
+        const data = await getCurrentUser();
 
-      const data = await getCurrentUser(); // GET /auth/me
-      console.log("Usuario cargado /auth/me:", data);
+        if (!data?.userId || !data?.role) {
+            setUser(null);
+            tokenManager.clearSession();
+            tokenManager.clearInstitutionContext();
 
-      if (data && data.userId) {
+            return null;
+        }
+
         setUser(data);
-        tokenManager.setSession(); // solo si hay usuario real
-      } else {
-        console.warn("Respuesta inválida de /auth/me");
-        setUser(null);
+        tokenManager.setSession();
+
+        return data;
+        } catch (error) {
+        const status = error.response?.status;
+
+        if (status === 401) {
+            setUser(null);
+            tokenManager.clearSession();
+            tokenManager.clearInstitutionContext();
+
+            return null;
+        }
+
+        setAuthError(true);
+        throw error;
+        } finally {
+        setLoading(false);
+        }
+    }, []);
+
+    // Crear el canal de comunicación entre pestañas.
+    useEffect(() => {
+        if (typeof BroadcastChannel === "undefined") {
+        return;
+        }
+
+        const channel = new BroadcastChannel(AUTH_CHANNEL_NAME);
+
+        authChannelRef.current = channel;
+
+        channel.onmessage = (event) => {
+        const messageType = event.data?.type;
+
+        if (messageType === "LOGIN") {
+            // La otra pestaña inició sesión.
+            // Validamos al usuario mediante la cookie HttpOnly.
+            loadUser().catch((error) => {
+            console.error("No se pudo sincronizar el inicio de sesión:", error);
+            });
+
+            return;
+        }
+
+        if (messageType === "LOGOUT") {
+            // La otra pestaña cerró sesión.
+            tokenManager.clearSession();
+            tokenManager.clearInstitutionContext();
+            tokenManager.clearPendingInstitutions();
+
+            setUser(null);
+            setAuthError(false);
+            setLoading(false);
+
+            // Si la pestaña estaba en una ruta privada,
+            // volver al login sin necesidad de recargarla.
+            if (window.location.pathname !== "/login") {
+            window.location.href = "/login";
+            }
+        }
+        };
+
+        return () => {
+        channel.close();
+        authChannelRef.current = null;
+        };
+    }, [loadUser]);
+
+    // Validar la sesión al iniciar la aplicación.
+    useEffect(() => {
+        loadUser().catch((error) => {
+        console.error("No se pudo validar la sesión:", error);
+        });
+    }, [loadUser]);
+
+    // Notificar a las demás pestañas después de un login correcto.
+    const notifyLogin = useCallback(() => {
+        authChannelRef.current?.postMessage({
+        type: "LOGIN",
+        });
+    }, []);
+
+    const logoutUser = async (callBackend = true) => {
+        try {
+        if (callBackend) {
+            await apiClient.post("/auth/logout");
+        }
+        } catch (error) {
+        console.warn("No se pudo completar el logout en el backend:", error);
+        } finally {
         tokenManager.clearSession();
         tokenManager.clearInstitutionContext();
-      }
-
-      console.log("Sesión activa:", tokenManager.hasSession());
-      
-      return data;
-
-    } catch (err) {
-
-      if (err.response?.status === 401) {
-        console.warn("Usuario no autenticado (esperado)");
+        tokenManager.clearPendingInstitutions();
 
         setUser(null);
-        tokenManager.clearSession();
+        setAuthError(false);
+        setLoading(false);
+
+        authChannelRef.current?.postMessage({
+            type: "LOGOUT",
+        });
+
+        if (window.location.pathname !== "/login") {
+            window.location.href = "/login";
+        }
+        }
+    };
+
+    const exitInstitutionContext = async () => {
+        try {
+        await exitInstitution();
+
         tokenManager.clearInstitutionContext();
 
-        return null;
+        const updatedUser = await loadUser();
 
-      } else {
-        console.error("Error inesperado:", err);
-      }
-    } finally {
-      setLoading(false);
-      console.log("Finalizó carga de usuario");
+        return updatedUser;
+        } catch (error) {
+        console.error("Error saliendo del contexto institucional:", error);
 
-      if (!tokenManager.hasSession()) {
-        tokenManager.clearSession();
-      }
-      console.log("Finalizó carga de usuario");
-    }
-  };
+        throw error;
+        }
+    };
 
-  // INICIALIZACIÓN CONTROLADA (SIN LOOPS)
-  useEffect(() => {
-    const publicRoutes = ["/login", "/activate"];
-
-    const isPublic = publicRoutes.includes(window.location.pathname); 
-    
-    if (isPublic) {
-      console.log("Ruta pública: no se valida sesión");
-      setLoading(false);
-      return;
-    }
-
-    loadUser();
-  }, []);
-
-  // LOGOUT
-  const logoutUser = async(callBackend = true) => {
-    console.warn("Cerrando sesión...");
-
-    try {
-      if (callBackend) {
-        await apiClient.post("/auth/logout"); // llamar solo si viene de logout()
-      }
-    } catch (err) {
-      console.warn("Error logout backend:", err);
-    }
-
-    tokenManager.clearSession();
-    tokenManager.clearInstitutionContext();
-    
-    setUser(null);
-
-    if (window.location.pathname !== "/login") {
-      window.location.href = "/login";
-    }
-  };
-
-  
-  // logout bajo contexto (caso superadmin)
-  const exitInstitutionContext = async () => {
-
-    try {
-
-      await exitInstitution();
-      const updateUser = await loadUser();
-      //setUser(updateUser);
-      //window.location.href = "/superadmin";
-      return updateUser;
-
-    } catch (error) {
-      console.error("Error saliendo de institución", error);
-    }
-  };
-
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        setUser,
-        logoutUser,
-        loadUser,
-        exitInstitutionContext,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider
+        value={{
+            user,
+            loading,
+            authError,
+            setUser,
+            loadUser,
+            notifyLogin,
+            logoutUser,
+            exitInstitutionContext,
+        }}
+        >
+        {children}
+        </AuthContext.Provider>
+    );
 }

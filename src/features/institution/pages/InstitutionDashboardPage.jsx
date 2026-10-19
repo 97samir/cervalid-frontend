@@ -127,10 +127,18 @@ export default function InstitutionDashboardPage() {
                 Certificados
                 </Link>
 
+                <Link
+                to="/institution/credentials"
+                className="btn btn-outline-secondary"
+                >
+                <i className="bi bi-award me-2"></i>
+                Títulos o grados
+                </Link>
+
                 {/* Verificaciones */}
 
                 <Link
-                to="/institution/verification/history"
+                to="/institution/verification"
                 className="btn btn-outline-secondary"
                 >
                 <i className="bi bi-patch-check me-2"></i>
