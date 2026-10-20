@@ -898,101 +898,172 @@
     line-height: 1.6;
 }
 
-
-/* =========================================================
-   DEMO
-========================================================= */
+/* =====================================================
+   DEMO DE VERIFICACIÓN
+===================================================== */
 
 .verification-demo-section {
     max-width: 900px;
 
-    margin: 52px auto 0;
+    margin: 4rem auto 0rem;
+    scroll-margin-top: 2rem;
 }
 
 .verification-demo-card {
     display: flex;
-    align-items: center;
-
-    gap: 16px;
-
-    padding: 20px 22px;
-
-    background: #ffffff;
-
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 2rem;
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 1.25rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.05);
 }
 
 .verification-demo-icon {
-    width: 42px;
-    height: 42px;
-
-    flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    border-radius: 10px;
-
-    background: #eef2ff;
-    color: #4f46e5;
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    color: var(--bs-primary);
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    border-radius: 0.9rem;
+    font-size: 1.35rem;
 }
 
 .verification-demo-content {
     flex: 1;
-
     min-width: 0;
 }
 
 .verification-demo-label {
-    display: block;
-
-    margin-bottom: 3px;
-
-    color: #4f46e5;
-
-    font-size: 0.7rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: var(--bs-primary);
+    font-size: 0.78rem;
     font-weight: 700;
-
-    text-transform: uppercase;
     letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
 .verification-demo-content h2 {
-    margin: 0 0 3px;
-
-    color: #111827;
-
-    font-size: 0.95rem;
+    margin: 0 0 0.65rem;
+    font-size: 1.35rem;
     font-weight: 700;
+    line-height: 1.4;
 }
 
-.verification-demo-content p {
-    margin: 0;
-
-    color: #6b7280;
-
-    font-size: 0.76rem;
+.verification-demo-content > p {
+    margin-bottom: 1.25rem;
+    color: var(--bs-secondary-color);
+    line-height: 1.65;
 }
 
-.verification-demo-code {
-    flex-shrink: 0;
+.verification-demo-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
 
-    padding: 9px 12px;
+.verification-demo-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-width: 0;
+    padding: 1rem;
+    background: var(--bs-tertiary-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.75rem;
+}
 
-    border-radius: 8px;
+.verification-demo-field-label {
+    color: var(--bs-secondary-color);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-right: 10px;
+}
 
-    background: #f8fafc;
+.verification-demo-detail strong {
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+}
 
-    color: #374151;
+.verification-demo-detail code {
+    color: var(--bs-primary);
+    font-size: 0.875rem;
+    overflow-wrap: anywhere;
+}
 
-    font-family: monospace;
-
-    font-size: 0.78rem;
+.verification-demo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.15rem;
+    color: #fff;
+    background: var(--bs-primary);
+    border: 1px solid var(--bs-primary);
+    border-radius: 0.75rem;
     font-weight: 600;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
+.verification-demo-btn:hover {
+    color: #fff;
+    background: var(--bs-primary-text-emphasis);
+    border-color: var(--bs-primary-text-emphasis);
+}
+
+.verification-demo-btn:focus-visible {
+    outline: 3px solid rgba(var(--bs-primary-rgb), 0.35);
+    outline-offset: 3px;
+}
+
+/* El scroll no debe dejar el formulario pegado al borde */
+.verification-form-section,
+.verification-result-section {
+    scroll-margin-top: 2rem;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 767.98px) {
+    .verification-demo-section {
+        margin-top: 2.5rem;
+    }
+
+    .verification-demo-card {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.25rem;
+        border-radius: 1rem;
+    }
+
+    .verification-demo-content h2 {
+        font-size: 1.2rem;
+    }
+
+    .verification-demo-details {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .verification-demo-btn {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .verification-demo-btn {
+        transition: none;
+    }
+}
 
 /* =========================================================
    RESPONSIVE — TABLET

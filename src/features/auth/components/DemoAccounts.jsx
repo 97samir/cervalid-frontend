@@ -1,22 +1,22 @@
 const demoAccounts = [
     {
         role: "Estudiante",
-        email: "estudiante@demo.com",
+        email: "demo.student01@cervalid.local",
         icon: "bi-mortarboard-fill",
     },
     {
         role: "Institución",
-        email: "institucion@demo.com",
+        email: "demo.admin@cervalid.local",
         icon: "bi-building-fill",
     },
     {
         role: "Empresa",
-        email: "empresa@demo.com",
+        email: "demo.recruiter@cervalid.local",
         icon: "bi-briefcase-fill",
     },
     {
-        role: "Superadmin",
-        email: "admin@demo.com",
+        role: "Institución",
+        email: "demo.subadmin@cervalid.local",
         icon: "bi-shield-lock-fill",
     },
 ];
@@ -81,7 +81,7 @@ export default function DemoAccounts({ onSelect }) {
                 <i className="bi bi-key-fill" aria-hidden="true"></i>
 
                 <span>
-                    Contraseña para todas: <strong>demo123</strong>
+                    Contraseña para todas: <strong>123456</strong>
                 </span>
             </div>
         </section>

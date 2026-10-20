@@ -4,12 +4,13 @@ export default function VerificationSearchCard({
     loading = false,
     onVerify,
     verificationType = "CERTIFICATE",
+    initialValues = {},
 }) {
     const isCredential = verificationType === "CREDENTIAL";
 
     const [form, setForm] = useState({
-        resourceNumber: "",
-        verificationHash: "",
+        resourceNumber: initialValues.resourceNumber ?? "",
+        verificationHash: initialValues.verificationHash ?? "",
     });
 
     const resourceLabel = isCredential

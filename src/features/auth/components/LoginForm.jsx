@@ -95,7 +95,7 @@ export default function LoginForm() {
 
     const handleDemoAccount = (account) => {
         setEmail(account.email);
-        setPassword("demo123");
+        setPassword("123456");
         setError("");
     };
 

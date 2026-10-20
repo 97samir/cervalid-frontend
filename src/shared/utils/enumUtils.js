@@ -110,7 +110,7 @@ export const competencyStatusLabels = {
 // CERTIFICATE
 export const certificateTypeLabels = {
 
-    DEGREE: "Título profesional",
+    //DEGREE: "Título profesional",
     ACADEMIC: "Grado académico",
     DIPLOMA: "Diploma",
     CERTIFICATION: "Certificación",
