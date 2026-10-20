@@ -233,7 +233,7 @@ export default function LoginForm() {
             </button>
         </div>
 
-        {import.meta.env.DEV && <DemoAccounts onSelect={handleDemoAccount} />}
+            <DemoAccounts onSelect={handleDemoAccount} />
         </div>
     );
 }
